@@ -1,0 +1,168 @@
+---
+sidebar: sidebar 
+permalink: task-managing-object-storage.html 
+keywords: object storage, mirror object storage, create object storage, remove object storage, swap object storage, display object storage, license 
+summary: 将本地ONTAP集群配置为将数据分层到特定对象存储后，您可以在NetApp Cloud Tiering 中执行其他对象存储任务。您可以添加新的对象存储、将分层数据镜像到辅助对象存储、交换主对象存储和镜像对象存储、从聚合中删除镜像对象存储等等。 
+---
+= 管理NetApp Cloud Tiering 中用于数据分层的对象存储
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+在配置本地ONTAP集群以将数据分层到特定对象存储后，您可以使用NetApp Cloud Tiering 执行其他对象存储任务。您可以添加新的对象存储、将分层数据镜像到辅助对象存储、交换主对象存储和镜像对象存储、从聚合中删除镜像对象存储等等。
+
+
+
+== 查看为集群配置的对象存储
+
+您可以查看为每个集群配置的所有对象存储以及它们所附加到的聚合。
+
+.步骤
+. 从*Clusters*页面中，选择集群的菜单图标并选择*Object Store Info*。
+. 从*Clusters*页面中，选择集群的菜单图标并选择*Object Store Info*。
+. 查看有关对象存储的详细信息。
++
+此示例显示了附加到集群上不同聚合的 Amazon S3 和 Azure Blob 对象存储。
+
++
+image:screenshot_tiering_object_store_view.png["显示对象存储信息的屏幕截图，其中详细说明了总使用容量、附加到对象存储的聚合、对象存储的名称以及更多信息。"]
+
+
+
+
+
+== 添加新的对象存储
+
+您可以为集群中的聚合添加新的对象存储。创建后，您可以将其附加到聚合。
+
+.步骤
+. 从*Clusters*页面中，选择集群的菜单图标并选择*Object Store Info*。
+. 从*Clusters*页面中，选择集群的菜单图标并选择*Object Store Info*。
+. 从对象存储信息页面中，选择*创建新对象存储*。
+. 从对象存储信息页面中，选择*创建新对象存储*。
++
+image:screenshot_tiering_object_store_create_button.png["显示用于创建新对象存储的“创建新对象存储”按钮的屏幕截图。"]
+
++
+对象存储向导启动。下面的示例展示了如何在 Amazon S3 中创建对象存储。
+
+. *定义对象存储名称*：输入此对象存储的名称。它必须与您可能在此集群上与聚合一起使用的任何其他对象存储不同。
+. *选择提供商*：选择提供商，例如*Amazon Web Services*，然后选择*继续*。
+. 完成*创建对象存储*页面上的步骤：
++
+.. *S3 存储桶*：添加一个新的 S3 存储桶或选择一个以前缀 _fabric-pool_ 开头的现有 S3 存储桶。然后输入提供对存储桶访问权限的 AWS 账户 ID，选择存储桶区域，然后选择*继续*。
++
+_fabric-pool_ 前缀是必需的，因为控制台代理的 IAM 策略允许实例对以该精确前缀命名的存储桶执行 S3 操作。例如，您可以将 S3 存储桶命名为 _fabric-pool-AFF1_，其中 AFF1 是集群的名称。
+
+.. *存储类生命周期*：云分层管理分层数据的生命周期转换。数据从_Standard_类开始，但您可以创建规则，在一定天数后将不同的存储类应用于数据。
++
+选择要将分层数据转换到的 S3 存储类以及将数据分配到该类之前的天数，然后选择*继续*。例如，下面的屏幕截图显示，分层数据在对象存储中存储 45 天后从 _Standard_ 类分配给 _Standard-IA_ 类。
+
++
+如果您选择“将数据保留在此存储类中”，则数据将保留在“标准”存储类中，并且不应用任何规则。link:reference-aws-support.html["查看支持的存储类别"^] 。
+
++
+image:screenshot_tiering_lifecycle_selection_aws.png["该屏幕截图显示了如何选择在一定天数后分配给您的数据的另一个存储类别。"]
+
++
+请注意，生命周期规则适用于所选存储桶中的所有对象。
+
+.. *凭证*：输入具有所需 S3 权限的 IAM 用户的访问密钥 ID 和密钥，然后选择*继续*。
++
+IAM 用户必须与您在 *S3 Bucket* 页面上选择或创建的存储桶位于同一 AWS 账户中。请参阅有关激活分层的部分中所需的权限。
+
+.. *集群网络*：选择ONTAP应用于连接对象存储的 IP 空间，然后选择*继续*。
++
+选择正确的 IP 空间可确保 Cloud Tiering 可以建立从ONTAP到云提供商的对象存储的连接。
+
+
+
+
+
+对象存储已创建。
+
+现在您可以将对象存储附加到集群中的聚合。
+
+
+
+== 将第二个对象存储附加到聚合以进行镜像
+
+您可以将第二个对象存储附加到聚合以创建FabricPool镜像，从而将数据同步分层到两个对象存储。您必须有一个对象存储已附加到聚合。 https://docs.netapp.com/us-en/ontap/fabricpool/create-mirror-task.html["了解有关FabricPool镜子的更多信息"^] 。
+
+使用MetroCluster配置时，最佳做法是使用位于不同可用区域的公共云中的对象存储。 https://docs.netapp.com/us-en/ontap/fabricpool/setup-object-stores-mcc-task.html["请参阅ONTAP文档，了解有关MetroCluster要求的更多信息"^] 。在MetroCluster中，不建议使用未镜像的聚合，否则会显示错误消息。
+
+当您在MetroCluster配置中使用StorageGRID作为对象存储时，两个ONTAP系统都可以对单个StorageGRID系统执行FabricPool分层。每个ONTAP系统必须将数据分层到不同的存储桶中。
+
+.步骤
+. 从“*集群*”页面中，为所选集群选择“*高级设置*”。
++
+image:screenshot_tiering_advanced_setup_button.png["显示集群的高级设置按钮的屏幕截图。"]
+
+. 从高级设置页面中，将要使用的对象存储拖到镜像对象存储的位置。
++
+image:screenshot_tiering_mirror_config.png["该屏幕截图显示了如何将第二个对象存储拖到聚合以创建分层镜像。"]
+
+. 在附加对象存储对话框中，选择*附加*，第二个对象存储将附加到聚合。
++
+image:screenshot_tiering_mirror_config_complete.png["屏幕截图显示了附加到聚合的第二个对象存储。"]
+
+
+
+当两个对象存储同步时，镜像状态将显示为“同步进行中”。同步完成后，状态将变为“已同步”。
+
+
+
+== 交换主对象存储和镜像对象存储
+
+您可以将主对象存储和镜像对象存储交换为聚合。对象存储镜像将成为主存储，而原始主存储将成为镜像。
+
+.步骤
+. 从“*集群*”页面中，为所选集群选择“*高级设置*”。
++
+image:screenshot_tiering_advanced_setup_button.png["显示集群的高级设置按钮的屏幕截图。"]
+
+. 在高级设置页面中，选择聚合的菜单图标并选择*交换目的地*。
++
+image:screenshot_tiering_mirror_swap.png["显示聚合的交换目标选项的屏幕截图。"]
+
+. 在对话框中批准该操作，主对象存储和镜像对象存储将被交换。
+
+
+
+
+== 从聚合中删除镜像对象存储
+
+如果您不再需要复制到其他对象存储，则可以删除FabricPool镜像。
+
+.步骤
+. 从“*集群*”页面中，为所选集群选择“*高级设置*”。
++
+image:screenshot_tiering_advanced_setup_button.png["显示集群的高级设置按钮的屏幕截图。"]
+
+. 从高级设置页面中，选择聚合的菜单图标并选择*取消镜像对象存储*。
++
+image:screenshot_tiering_mirror_delete.png["显示聚合的 Unmirror 对象存储选项的屏幕截图。"]
+
+
+
+镜像对象存储从聚合中删除，并且分层数据不再复制。
+
+
+NOTE: 从MetroCluster配置中删除镜像对象存储时，系统会提示您是否也要删除主对象存储。您可以选择将主对象存储保留到聚合，或者将其删除。
+
+
+
+== 将分层数据迁移到其他云提供商
+
+云分层使您能够轻松地将分层数据迁移到不同的云提供商。例如，如果您想从 Amazon S3 迁移到 Azure Blob，则可以按照以下顺序执行上面列出的步骤：
+
+. 添加 Azure Blob 对象存储。
+. 将这个新的对象存储作为镜像附加到现有的聚合。
+. 交换主对象存储和镜像对象存储。
+. 取消镜像 Amazon S3 对象存储。
+

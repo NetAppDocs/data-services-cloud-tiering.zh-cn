@@ -1,0 +1,535 @@
+---
+sidebar: sidebar 
+permalink: faq-cloud-tiering.html 
+keywords: faq, questions, requirements, service connector, agent, object store, object storage, aws, azure, bucket, cluster, aggregate, s3, storage class, standard, inactive data reporting, auto, volume tiering policy, policy, tiering policy, snapshot, cold, inactive, infrequent, agent, netapp console, console,cloud tier 
+summary: 如果您只是想快速找到问题的答案，此常见问题解答可以为您提供帮助。 
+---
+= NetApp Cloud Tiering 技术常见问题解答
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+如果您只是想快速找到有关NetApp Cloud Tiering 的问题的答案，那么此常见问题解答可以为您提供帮助。
+
+
+
+== 云分层服务
+
+以下常见问题解答与云分层的工作原理有关。
+
+
+
+=== 使用 Cloud Tiering 服务有哪些好处？
+
+云分层解决了数据快速增长带来的挑战，为您带来以下好处：
+
+* 轻松将数据中心扩展到云端，提供高达 50 倍的空间
+* 存储优化，平均节省 70% 的存储
+* 平均降低 30% 的总拥有成本
+* 无需重构应用程序
+
+
+
+
+=== 什么样的数据对于分层到云是有用的？
+
+本质上，任何在主存储系统和辅助存储系统上被视为非活动的数据都是迁移到云端的良好目标。在主系统上，此类数据可以包括快照、历史记录和已完成的项目。在辅助系统上，这包括为 DR 和备份目的而制作的主数据副本的所有卷。
+
+
+
+=== 我可以对 NAS 卷和 SAN 卷中的数据进行分层吗？
+
+是的，您可以将数据从 NAS 卷分层到公共云或私有云，例如StorageGRID。当您对通过 SAN 协议访问的数据进行分层时， NetApp建议使用私有云，因为 SAN 协议对连接问题比 NAS 更敏感。
+
+
+
+=== 非活动数据或不常使用的数据的定义是什么？如何控制？
+
+冷数据的定义也可以是：“一段时间内未被访问的卷块（元数据除外）。  “时间量”由名为冷却日的分层策略属性决定。
+
+
+
+=== 云分层是否会保留云层中的存储效率节省？
+
+是的，将数据移动到云层时， ONTAP卷级存储效率（例如压缩、重复数据删除和压缩）得以保留。
+
+
+
+=== FabricPool和 Cloud Tiering 之间有什么区别？
+
+FabricPool是ONTAP分层技术，可以通过ONTAP CLI 和系统管理器进行自我管理，也可以通过云分层以服务形式进行管理。  Cloud Tiering 将FabricPool转变为一种托管服务，在ONTAP和云中均具有先进的自动化流程，从而提供对混合和多云部署中分层的更高可见性和控制力。
+
+
+
+=== 分层到云的数据可以用于灾难恢复或备份/存档吗？
+
+不可以。由于卷的元数据从未从性能层分层，因此无法直接访问存储在对象存储中的数据。
+
+但是，通过在辅助系统和SnapMirror目标卷（DP 卷）上启用 Cloud Tiering，可以实现经济高效的备份和 DR，从而对所有数据（元数据除外）进行分层，从而减少数据中心占用空间和 TCO。
+
+
+
+=== 云分层是在卷级别还是聚合级别应用？
+
+通过将分层策略与每个卷关联起来，可以在卷级别启用云分层。冷数据识别是在块级别完成的。
+
+
+
+=== Cloud Tiering 如何确定将哪些块分层到云？
+
+与卷相关的分层策略是控制何时对哪些块进行分层的机制。该策略定义了数据块的类型（快照、用户数据或两者）和冷却期。看link:concept-cloud-tiering.html#volume-tiering-policies["卷分层策略"]了解详情。
+
+
+
+=== Cloud Tiering 如何影响卷容量？
+
+云分层对卷的容量没有影响，但对聚合的性能层使用情况有影响。
+
+
+
+=== Cloud Tiering 是否支持非活动数据报告？
+
+是的，Cloud Tiering 在每个聚合上启用非活动数据报告 (IDR)。此设置使我们能够识别可以分层到低成本对象存储的非活动数据量。
+
+
+
+=== 从我开始运行 IDR 开始，需要多长时间才能显示信息？
+
+配置的冷却期过后，IDR 开始显示信息。使用ONTAP 9.7 及更早版本时，IDR 的不可调节冷却期为 31 天。从ONTAP 9.8 开始，IDR 冷却期最多可配置为 183 天。
+
+
+
+== 许可证和费用
+
+以下常见问题解答与使用 Cloud Tiering 的许可和成本有关。
+
+
+
+=== 使用 Cloud Tiering 的费用是多少？
+
+将冷数据分层到公共云时：
+
+* 对于按使用量付费 (PAYGO) 的订阅：每月每 GB 0.05 美元。
+* 对于年度（BYOL）、基于期限的订阅：起价为每 GB/月 0.033 美元。
+
+
+https://bluexp.netapp.com/pricing["查看定价详情"] 。
+
+将冷数据分层到NetApp StorageGRID系统（私有云）时无需任何成本。
+
+
+
+=== 我可以为同一个ONTAP集群同时拥有 BYOL 和 PAYGO 许可证吗？
+
+是Cloud Tiering 允许您使用 BYOL 许可证、PAYGO 订阅或两者的组合。
+
+
+
+=== 如果我达到了 BYOL 容量限制，或者我的 BYOL 许可证过期了，会发生什么情况？
+
+如果您达到 BYOL 容量限制或 BYOL 许可证过期，新冷数据的分层将停止，新冷数据的分层将停止。所有先前分层的数据仍然可以访问；这意味着您可以检索和使用这些数据。检索后，这些数据将从云端移回性能层。
+
+但是，如果您在 PAYGO 市场订阅了_BlueXP - 部署和管理云数据服务_，新的冷数据将继续分层到对象存储，并且您将按每次使用支付这些费用。
+
+
+
+=== Cloud Tiering 许可证是否包含来自云提供商的出口费用？
+
+不，不是这样的。
+
+
+
+=== 本地系统的补水是否需要支付云提供商收取的出口费用？
+
+是所有来自公共云的读取均需缴纳出口费。
+
+
+
+=== 我如何估算我的云费用？云分层是否有“假设”模式？
+
+估算云提供商托管数据收费的最佳方法是使用他们的计算器： https://calculator.aws/#/["AWS"] ， https://azure.microsoft.com/en-us/pricing/calculator/["Azure"]和 https://cloud.google.com/products/calculator["Google Cloud"]。
+
+
+
+=== 云提供商对于从对象存储读取/检索数据到本地存储是否收取额外费用？
+
+
+
+=== 云提供商对于从对象存储读取/检索数据到本地存储是否收取额外费用？
+
+是查看 https://aws.amazon.com/s3/pricing/["Amazon S3 定价"]， https://azure.microsoft.com/en-us/pricing/details/storage/blobs/["Block Blob 定价"] ， 和 https://cloud.google.com/storage/pricing["云存储定价"]了解数据读取/检索产生的额外定价。
+
+
+
+=== 在启用云分层之前，如何估算卷的节省并获取冷数据报告？
+
+要获得估算，请将您的ONTAP集群添加到NetApp控制台并通过 Cloud Tiering Clusters 页面进行检查。选择集群的“计算潜在的分层节省”以启动 https://bluexp.netapp.com/cloud-tiering-service-tco["云分层 TCO 计算器"^]看看您能节省多少钱。
+
+
+
+=== 当我使用ONTAP MetroCluster时，如何收取分层费用？
+
+在MetroCluster环境中使用时，总分层许可证适用于两个集群的使用。例如，如果您拥有 100TiB 分层许可证，则每个集群使用的分层容量将计入 100TiB 的总容量。
+
+
+
+== ONTAP
+
+以下问题与ONTAP相关。
+
+
+
+=== Cloud Tiering 支持哪些ONTAP版本？
+
+Cloud Tiering 支持ONTAP 9.2 及更高版本。
+
+
+
+=== 支持哪些类型的ONTAP系统？
+
+单节点和高可用性AFF、 FAS和ONTAP Select集群支持 Cloud Tiering。  FabricPool Mirror 配置和MetroCluster配置中的集群也受支持。
+
+
+
+=== 我可以仅使用 HDD 对FAS系统中的数据进行分层吗？
+
+是的，从ONTAP 9.8 开始，您可以对 HDD 聚合上托管的卷中的数据进行分层。
+
+
+
+=== 我可以将AFF中的数据分层到具有带 HDD 的FAS节点的集群吗？
+
+是可以将 Cloud Tiering 配置为对任何聚合上托管的卷进行分层。数据分层配置与所使用的控制器类型以及集群是否异构无关。
+
+
+
+=== 那么Cloud Volumes ONTAP怎么样？
+
+如果您有Cloud Volumes ONTAP系统，您会在 Cloud Tiering Clusters 页面中找到它们，这样您就可以全面了解混合云基础架构中的数据分层。但是， Cloud Volumes ONTAP系统从 Cloud Tiering 来看是只读的。您无法从 Cloud Tiering 在Cloud Volumes ONTAP上设置数据分层。 https://docs.netapp.com/us-en/bluexp-cloud-volumes-ontap/task-tiering.html["您可以从NetApp控制台中的ONTAP系统设置Cloud Volumes ONTAP系统的分层"^] 。
+
+
+
+=== 我的ONTAP集群还需要哪些其他要求？
+
+这取决于冷数据的分层位置。请参阅以下链接以了解更多详细信息：
+
+* link:task-tiering-onprem-aws.html#prepare-your-ontap-cluster["将数据分层到 Amazon S3"]
+* link:task-tiering-onprem-azure.html#preparing-your-ontap-clusters["将数据分层到 Azure Blob 存储"]
+* link:task-tiering-onprem-gcp.html#preparing-your-ontap-clusters["将数据分层存储到 Google Cloud Storage"]
+* link:task-tiering-onprem-storagegrid.html#preparing-your-ontap-clusters["将数据分层到StorageGRID"]
+* link:task-tiering-onprem-s3-compat.html#preparing-your-ontap-clusters["将数据分层到 S3 对象存储"]
+
+
+
+
+== 对象存储
+
+以下问题与对象存储有关。
+
+
+
+=== 支持哪些对象存储提供商？
+
+Cloud Tiering 支持以下对象存储提供商：
+
+* Amazon S3
+* 微软 Azure Blob
+* Google Cloud Storage
+* NetAppStorageGRID
+* 与 S3 兼容的对象存储（例如 MinIO）
+* IBM Cloud Object Storage（必须使用 System Manager 或ONTAP CLI 完成FabricPool配置）
+
+
+
+
+=== 我可以使用自己的桶/容器吗？
+
+是的，你可以。设置数据分层时，您可以选择添加新的存储桶/容器或选择现有的存储桶/容器。
+
+
+
+=== 支持哪些地区？
+
+* link:reference-aws-support.html["支持的 AWS 区域"]
+* link:reference-azure-support.html["支持的 Azure 区域"]
+* link:reference-google-support.html["支持的 Google Cloud 区域"]
+
+
+
+
+=== 支持哪些 S3 存储类别？
+
+Cloud Tiering 支持将数据分层为_标准_、_标准-不频繁访问_、_单区-不频繁访问_、_智能分层_和_Glacier 即时检索_存储类。看link:reference-aws-support.html["支持的 S3 存储类别"]了解更多详情。
+
+
+
+=== 为什么 Cloud Tiering 不支持 Amazon S3 Glacier Flexible 和 S3 Glacier Deep Archive？
+
+不支持 Amazon S3 Glacier Flexible 和 S3 Glacier Deep Archive 的主要原因是 Cloud Tiering 被设计为高性能分层解决方案，因此数据必须持续可用且可快速检索。使用 S3 Glacier Flexible 和 S3 Glacier Deep Archive，数据检索可以持续几分钟到 48 小时。
+
+
+
+=== 我可以将其他与 S3 兼容的对象存储服务（例如 MinIO）与 Cloud Tiering 一起使用吗？
+
+是的，使用ONTAP 9.8 及更高版本的集群支持通过分层 UI 配置与 S3 兼容的对象存储。link:task-tiering-onprem-s3-compat.html["详情请见此处"] 。
+
+
+
+=== 支持哪些 Azure Blob 访问层？
+
+Cloud Tiering 支持将非活动数据分层到_Hot_或_Cool_访问层。看link:reference-azure-support.html["支持的 Azure Blob 访问层"]了解更多详情。
+
+
+
+=== Google Cloud Storage 支持哪些存储类别？
+
+Cloud Tiering 支持将数据分层为 _Standard_、_Nearline_、_Coldline_ 和 _Archive_ 存储类。看link:reference-google-support.html["支持的 Google Cloud 存储类别"]了解更多详情。
+
+
+
+=== Cloud Tiering 是否支持使用生命周期管理策略？
+
+是您可以启用生命周期管理，以便 Cloud Tiering 在一定天数后将数据从默认存储类/访问层转换到更具成本效益的层。生命周期规则适用于 Amazon S3 和 Google Cloud 存储所选存储桶中的所有对象，以及 Azure Blob 所选存储帐户中的所有容器。
+
+
+
+=== Cloud Tiering 是否对整个集群使用一个对象存储，还是每个聚合使用一个对象存储？
+
+在典型配置中，整个集群有一个对象存储。从 2022 年 8 月开始，您可以使用 *高级设置* 页面为集群添加其他对象存储，然后将不同的对象存储附加到不同的聚合，或者将 2 个对象存储附加到聚合以进行镜像。
+
+
+
+=== 可以将多个存储桶附加到同一个聚合吗？
+
+为了镜像的目的，每个聚合最多可以附加两个存储桶，其中冷数据同步分层到两个存储桶中。这些存储桶可以来自不同的提供商和不同的位置。从 2022 年 8 月开始，您可以使用 *高级设置* 页面将两个对象存储附加到单个聚合。
+
+
+
+=== 不同的存储桶可以附加到同一集群中的不同聚合吗？
+
+是一般最佳做法是将单个存储桶附加到多个聚合体。但是，使用公共云时，对象存储服务的最大 IOPS 限制，因此必须考虑多个存储桶。
+
+
+
+=== 当您将卷从一个集群迁移到另一个集群时，分层数据会发生什么情况？
+
+将卷从一个集群迁移到另一个集群时，所有冷数据都从云层读取。目标集群上的写入位置取决于是否启用分层以及源卷和目标卷上使用的分层策略类型。
+
+
+
+=== 当您将卷从同一集群中的一个节点移动到另一个节点时，分层数据会发生什么情况？
+
+如果目标聚合没有附加的云层，则从源聚合的云层读取数据并将其完全写入目标聚合的本地层。如果目标聚合具有附加的云层，则从源聚合的云层读取数据并首先写入目标聚合的本地层，以便于快速切换。之后，根据所使用的分层策略，将其写入云层。
+
+从ONTAP 9.6 开始，如果目标聚合使用与源聚合相同的云层，则冷数据不会移回本地层。
+
+
+
+=== 如何将分层数据带回本地性能层？
+
+写回通常在读取时执行，并且取决于分层策略类型。在ONTAP 9.8 之前，可以使用“volume move”操作写回整个卷。从ONTAP 9.8 开始，分层 UI 具有“恢复所有数据”或“恢复活动文件系统”选项。link:task-managing-tiering.html#migrating-data-from-the-cloud-tier-back-to-the-performance-tier["了解如何将数据移回性能层"] 。
+
+
+
+=== 当用新的AFF/ FAS控制器替换现有的 AFF / FAS 控制器时，分层数据是否会迁移回本地？
+
+不。在“换头”过程中，唯一改变的是集合体的所有权。在这种情况下，它将被更改为新的控制器，而无需任何数据移动。
+
+
+
+=== 我可以使用云提供商的控制台或对象存储浏览器来查看存储桶分层的数据吗？如果不通过ONTAP，我可以直接使用对象存储中存储的数据吗？
+
+不可以。构建并分层到云中的对象不包含单个文件，而是包含来自多个文件的最多 1,024 个 4KB 块。卷的元数据始终保留在本地层。
+
+
+
+== 控制台代理
+
+以下问题与控制台代理有关。
+
+
+
+=== 什么是控制台代理？
+
+控制台代理是在您的云帐户或本地的计算实例上运行的软件，它使NetApp控制台能够安全地管理云资源。要使用 Cloud Tiering 服务，您必须部署代理。
+
+
+
+=== 控制台代理需要安装在哪里？
+
+* 当您将数据分层到 S3 时，代理可以驻留在 AWS VPC 或您的场所。
+* 当您将数据分层到 Blob 存储时，代理可以驻留在 Azure VNet 中或您的本地。
+* 当您将数据分层到 Google Cloud Storage 时，代理必须驻留在 Google Cloud Platform VPC 中。
+* 当您将数据分层到StorageGRID或其他 S3 兼容存储提供商时，代理必须驻留在您的场所。
+
+
+
+
+=== 我可以在本地部署控制台代理吗？
+
+是您可以下载代理软件并将其手动安装在您网络中的 Linux 主机上。 https://docs.netapp.com/us-en/bluexp-setup-admin/task-install-connector-on-prem.html["了解如何在您的场所安装代理"] 。
+
+
+
+=== 使用 Cloud Tiering 之前是否需要拥有云服务提供商的帐户？
+
+是您必须先拥有一个帐户，然后才能定义要使用的对象存储。在 VPC 或 VNet 上的云中设置代理时，还需要具有云存储提供商的帐户。
+
+
+
+=== 如果控制台代理失败，会有什么后果？
+
+如果代理发生故障，则仅分层环境的可见性会受到影响。所有数据均可访问，新识别的冷数据会自动分层到对象存储。
+
+
+
+== 分层策略
+
+
+
+=== 有哪些可用的分层策略？
+
+有四种分层策略：
+
+* 无：将所有数据归类为始终热；防止将卷中的任何数据移动到对象存储。
+* 冷快照（仅快照）：仅将冷快照块移动到对象存储。
+* 冷用户数据和快照（自动）：冷快照块和冷用户数据块都移动到对象存储。
+* 所有用户数据（全部）：将所有数据归类为冷数据；立即将整个卷移动到对象存储。
+
+
+link:concept-cloud-tiering.html#volume-tiering-policies["了解有关分层策略的更多信息"] 。
+
+
+
+=== 在什么情况下我的数据被视为冷数据？
+
+由于数据分层是在块级别完成的，因此在一定时间内未访问数据块后，该数据块将被视为冷数据块，该时间由分层策略的最低冷却天数属性定义。适用范围为ONTAP 9.7 及更早版本中的 2-63 天，或从ONTAP 9.8 开始中的 2-183 天。
+
+
+
+=== 数据分层到云层之前的默认冷却期是多长？
+
+冷快照策略的默认冷却期为 2 天，而冷用户数据和快照的默认冷却期为 31 天。冷却天数参数不适用于所有分层策略。
+
+
+
+=== 当我进行完整备份时，是否会从对象存储中检索所有分层数据？
+
+在完整备份期间，将读取所有冷数据。数据的检索取决于所使用的分层策略。使用全部和冷用户数据和快照策略时，冷数据不会写回到性能层。使用冷快照策略时，只有在使用旧快照进行备份的情况下才会检索其冷块。
+
+
+
+=== 您可以选择每个卷的分层大小吗？
+
+不可以。但是，您可以选择哪些卷符合分层条件、要分层的数据类型及其冷却期。这是通过将分层策略与该卷关联起来来实现的。
+
+
+
+=== 所有用户数据策略是数据保护卷的唯一选择吗？
+
+否。数据保护 (DP) 卷可以与三种可用策略中的任何一种相关联。源卷和目标 (DP) 卷上使用的策略类型决定了数据的写入位置。
+
+
+
+=== 将卷的分层策略重置为“无”是否会重新补充冷数据或只是阻止未来的冷块移动到云中？
+
+重置分层策略时不会发生补水，但它会阻止新的冷块移动到云层。
+
+
+
+=== 将数据分层到云端后，我可以更改分层策略吗？
+
+是更改后的行为取决于新的关联策略。
+
+
+
+=== 如果我想确保某些数据不会被移动到云端，我该怎么做？
+
+不要将分层策略与包含该数据的卷关联。
+
+
+
+=== 文件的元数据存储在哪里？
+
+卷的元数据始终存储在本地的性能层上——它永远不会分层到云端。
+
+
+
+== 网络和安全
+
+以下问题与网络和安全有关。
+
+
+
+=== 网络要求是什么？
+
+* ONTAP集群通过端口 443 启动与您的对象存储提供程序的 HTTPS 连接。
++
+ONTAP从对象存储中读取和写入数据。对象存储从不启动，它只是响应。
+
+* 对于StorageGRID， ONTAP集群通过用户指定的端口启动与StorageGRID 的HTTPS 连接（该端口可在分层设置期间配置）。
+* 代理需要通过端口 443 建立到ONTAP集群、对象存储和 Cloud Tiering 服务的出站 HTTPS 连接。
+
+
+有关详细信息，请参阅：
+
+* link:task-tiering-onprem-aws.html["将数据分层到 Amazon S3"]
+* link:task-tiering-onprem-azure.html["将数据分层到 Azure Blob 存储"]
+* link:task-tiering-onprem-gcp.html["将数据分层存储到 Google Cloud Storage"]
+* link:task-tiering-onprem-storagegrid.html["将数据分层到StorageGRID"]
+* link:task-tiering-onprem-s3-compat.html["将数据分层到 S3 对象存储"]
+
+
+
+
+=== 我可以使用哪些工具进行监控和报告以管理存储在云中的冷数据？
+
+除了云分层之外， https://docs.netapp.com/us-en/active-iq-unified-manager/["Active IQ Unified Manager"^]和 https://docs.netapp.com/us-en/active-iq/index.html["数字顾问"^]可用于监测和报告。
+
+
+
+=== 如果与云提供商的网络链接出现故障，会有什么影响？
+
+如果发生网络故障，本地性能层仍保持在线并且热数据仍然可访问。但是，已经移动到云层的块将无法访问，并且应用程序在尝试访问该数据时将收到错误消息。一旦恢复连接，所有数据将无缝访问。
+
+
+
+=== 有网络带宽建议吗？
+
+底层FabricPool分层技术读取延迟取决于与云层的连接。尽管分层适用于任何带宽，但建议将集群间 LIF 放置在 10 Gbps 端口上以提供足够的性能。对于代理没有任何建议或带宽限制。
+
+此外，您可以限制将非活动数据从卷传输到对象存储期间所使用的网络带宽量。在配置集群进行分层时，可以使用“最大传输速率”设置，之后可以从“*集群*”页面使用。
+
+
+
+=== 当用户尝试访问分层数据时是否存在延迟？
+
+是云层无法提供与本地层相同的延迟，因为延迟取决于连接性。为了估计对象存储的延迟和吞吐量，Cloud Tiering 提供了云性能测试（基于ONTAP对象存储分析器），可以在连接对象存储之后和设置分层之前使用。
+
+
+
+=== 我的数据如何得到保护？
+
+性能层和云层均维护 AES-256-GCM 加密。  TLS 1.2 加密用于在数据在层之间移动时对通过网络传输的数据进行加密，以及对代理与ONTAP集群和对象存储之间的通信进行加密。
+
+
+
+=== 我是否需要在AFF上安装和配置以太网端口？
+
+是必须在 HA 对内的每个节点的以太网端口上配置集群间 LIF，该节点托管您计划分层到云的数据卷。有关更多信息，请参阅您计划分层数据的云提供商的要求部分。
+
+
+
+=== 需要什么权限？
+
+* link:task-tiering-onprem-aws.html#set-up-s3-permissions["对于亚马逊，需要权限来管理 S3 bucket"] 。
+* 对于 Azure，除了需要向NetApp控制台提供的权限之外，不需要其他额外权限。
+* link:task-tiering-onprem-gcp.html#preparing-google-cloud-storage["对于 Google Cloud，需要具有存储访问密钥的服务帐号的存储管理员权限"] 。
+* link:task-tiering-onprem-storagegrid.html#preparing-storagegrid["对于StorageGRID，需要 S3 权限"] 。
+* link:task-tiering-onprem-s3-compat.html#preparing-s3-compatible-object-storage["对于与 S3 兼容的对象存储，需要 S3 权限"] 。
+

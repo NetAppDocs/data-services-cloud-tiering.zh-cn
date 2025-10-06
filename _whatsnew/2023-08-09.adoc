@@ -1,0 +1,15 @@
+= 使用自定义前缀作为存储桶名称
+:allow-uri-read: 
+
+
+
+
+=== 使用自定义前缀作为存储桶名称
+
+过去，定义存储桶名称时需要使用默认的“fabric-pool”前缀，例如 _fabric-pool-bucket1_。现在您可以在命名存储桶时使用自定义前缀。仅当将数据分层到 Amazon S3 时，此功能才可用。 https://docs.netapp.com/us-en/bluexp-tiering/task-tiering-onprem-aws.html#prepare-your-aws-environment["了解更多"] 。
+
+
+
+=== 在所有BlueXP连接器中搜索集群
+
+如果您使用多个连接器来管理环境中的所有存储系统，则您想要实施分层的某些集群可能位于不同的连接器中。如果您不确定哪个连接器正在管理某个集群，您可以使用 Cloud Tiering 在所有连接器中进行搜索。 https://docs.netapp.com/us-en/bluexp-tiering/task-managing-tiering.html#search-for-a-cluster-across-all-bluexp-connectors["了解更多"] 。

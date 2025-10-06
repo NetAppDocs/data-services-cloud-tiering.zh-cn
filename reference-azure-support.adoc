@@ -1,0 +1,35 @@
+---
+sidebar: sidebar 
+permalink: reference-azure-support.html 
+keywords: microsoft azure, azure, hot, access tier, cold, regions, cloud tiering, tier, bluexp 
+summary: NetApp Cloud Tiering 支持两个访问层和大多数区域。 
+---
+= NetApp Cloud Tiering 支持的 Azure Blob 访问层和区域
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+NetApp Cloud Tiering 支持两个访问层和大多数区域。
+
+
+
+== 支持的 Azure Blob 访问层
+
+当您从本地ONTAP系统设置到 Azure 的数据分层时，Cloud Tiering 会自动使用_Hot_访问层来存储您的非活动数据。  Cloud Tiering 可以应用生命周期规则，以便数据在一定天数后从_Hot_访问层转换到_Cool_访问层。
+
+如果您不选择_Cool_访问层，则数据将保留在_Hot_访问层，并且不应用任何规则。
+
+配置 Cloud Tiering 生命周期规则时，在 Azure 帐户中设置容器时不得配置任何生命周期规则。
+
+https://docs.microsoft.com/en-us/azure/storage/blobs/access-tiers-overview["了解 Azure Blob 访问层"^] 。
+
+
+
+== 支持的 Azure 区域
+
+除中国外，所有 Azure 区域均支持云分层，在中国，Microsoft Azure 由世纪互联运营。

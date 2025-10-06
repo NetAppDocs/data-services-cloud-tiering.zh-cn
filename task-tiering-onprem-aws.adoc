@@ -1,0 +1,396 @@
+---
+sidebar: sidebar 
+permalink: task-tiering-onprem-aws.html 
+keywords: data tiering, fabricpool, cloud tiering, tiering cold data, tiering inactive data, tiering aff, tiering fas, tiering ontap, tiering volumes, tier data, tier cold data, tier fas, tier aff, tier ontap, aws, amazon, s3 
+summary: 通过将非活动数据分层到 Amazon S3 来释放本地ONTAP集群上的空间。 
+---
+= 将本地ONTAP集群中的数据分层到NetApp Cloud Tiering 中的 Amazon S3
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+通过将非活动数据分层到NetApp Cloud Tiering 中的 Amazon S3，释放本地ONTAP集群上的空间。
+
+
+
+== 快速启动
+
+按照以下步骤快速开始。本主题的以下部分提供了每个步骤的详细信息。
+
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-1.png["一个"]确定您将使用的配置方法
+[role="quick-margin-para"]
+选择是否通过公共互联网将本地ONTAP集群直接连接到 AWS S3，或者是否使用 VPN 或 AWS Direct Connect 并通过私有 VPC 终端节点接口将流量路由到 AWS S3。
+
+[role="quick-margin-para"]
+<<连接选项的网络图,查看可用的连接方法。>>
+
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-2.png["两个"]准备控制台代理
+[role="quick-margin-para"]
+如果您已经在 AWS VPC 或您的场所部署了控制台代理，那么一切就绪了。如果没有，那么您将需要创建代理以将ONTAP数据分层到 AWS S3 存储。您还需要自定义代理的网络设置，以便它可以连接到 AWS S3。
+
+[role="quick-margin-para"]
+<<Prepare your agent,了解如何创建代理以及如何定义所需的网络设置。>>
+
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-3.png["三"]准备本地ONTAP集群
+[role="quick-margin-para"]
+在NetApp控制台中发现您的ONTAP集群，验证集群是否满足最低要求，并自定义网络设置，以便集群可以连接到 AWS S3。
+
+[role="quick-margin-para"]
+<<准备ONTAP集群,了解如何准备好您的本地ONTAP集群。>>
+
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-4.png["四个"]准备 Amazon S3 作为分层目标
+[role="quick-margin-para"]
+设置代理创建和管理 S3 存储桶的权限。您还需要为本地ONTAP集群设置权限，以便它可以读取和写入 S3 存储桶的数据。
+
+[role="quick-margin-para"]
+<<设置 S3 权限,了解如何为代理和本地集群设置权限。>>
+
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-5.png["五"]在系统上启用云分层
+[role="quick-margin-para"]
+选择一个本地系统，为云分层服务选择*启用*，然后按照提示将数据分层到 Amazon S3。
+
+[role="quick-margin-para"]
+<<将第一个集群中的非活动数据分层到 Amazon S3,了解如何为您的卷启用分层。>>
+
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-6.png["六"]设置许可
+[role="quick-margin-para"]
+免费试用结束后，您可以通过即用即付订阅、 ONTAP Cloud Tiering BYOL 许可证或两者结合的方式支付 Cloud Tiering 费用：
+
+[role="quick-margin-list"]
+* 要从 AWS Marketplace 订阅， https://aws.amazon.com/marketplace/pp/prodview-oorxakq6lq7m4?sr=0-8&ref_=beagle&applicationId=AWSMPContessa["前往市场"^] ，选择*订阅*，然后按照提示操作。
+* 要使用 Cloud Tiering BYOL 许可证付款，请发邮件至：ng-cloud-tiering@netapp.com?subject=Licensing[如果您需要购买，请联系我们]，然后link:https://docs.netapp.com/us-en/bluexp-digital-wallet/task-manage-data-services-licenses.html["将其添加到NetApp控制台"]。
+
+
+
+
+== 连接选项的网络图
+
+配置从本地ONTAP系统到 AWS S3 的分层时，可以使用两种连接方法。
+
+* 公共连接 - 使用公共 S3 端点将ONTAP系统直接连接到 AWS S3。
+* 私有连接 - 使用 VPN 或 AWS Direct Connect 并通过使用私有 IP 地址的 VPC Endpoint 接口路由流量。
+
+
+下图显示了*公共连接*方法以及您需要在组件之间准备的连接。您可以使用在您的场所安装的控制台代理，或者在 AWS VPC 中部署的代理。
+
+image:diagram_cloud_tiering_aws_public.png["该图表显示了 Cloud Tiering 如何通过公共连接与集群上的卷以及非活动数据所在的 AWS S3 存储进行通信。"]
+
+下图显示了*私有连接*方法以及您需要在组件之间准备的连接。您可以使用在您的场所安装的控制台代理，或者在 AWS VPC 中部署的代理。
+
+image:diagram_cloud_tiering_aws_private.png["该图表显示了 Cloud Tiering 如何通过私有连接与集群上的卷以及非活动数据所在的 AWS S3 存储进行通信。"]
+
+
+NOTE: 代理和 S3 之间的通信仅用于对象存储设置。
+
+
+
+== 准备控制台代理
+
+该代理可通过NetApp控制台启用分层功能。需要代理来对非活动ONTAP数据进行分层。
+
+
+
+=== 创建或切换代理
+
+如果您已经在 AWS VPC 或您的场所部署了代理，那么一切就绪了。如果没有，那么您需要在任一位置创建一个代理，以将ONTAP数据分层到 AWS S3 存储。您不能使用部署在其他云提供商中的代理。
+
+* https://docs.netapp.com/us-en/bluexp-setup-admin/concept-connectors.html["了解控制台代理"^]
+* https://docs.netapp.com/us-en/bluexp-setup-admin/task-quick-start-connector-aws.html["在 AWS 中部署代理"^]
+* https://docs.netapp.com/us-en/bluexp-setup-admin/task-quick-start-connector-on-prem.html["在 Linux 主机上安装代理"^]
+
+
+
+
+=== 代理网络要求
+
+* 确保安装代理的网络启用以下连接：
++
+** 通过端口 443 建立到 Cloud Tiering 服务和 S3 对象存储的 HTTPS 连接(https://docs.netapp.com/us-en/bluexp-setup-admin/task-set-up-networking-aws.html#endpoints-contacted-for-day-to-day-operations["查看端点列表"^]）
+** 通过端口 443 建立到ONTAP集群管理 LIF 的 HTTPS 连接
+
+
+* https://docs.netapp.com/us-en/bluexp-setup-admin/reference-permissions-aws.html#cloud-tiering["确保代理具有管理 S3 存储桶的权限"^]
+* 如果您有从ONTAP集群到 VPC 的 Direct Connect 或 VPN 连接，并且您希望代理和 S3 之间的通信保持在 AWS 内部网络（*私有*连接）中，则需要启用到 S3 的 VPC Endpoint 接口。<<使用 VPC 终端节点接口配置系统以进行私有连接,了解如何设置 VPC 端点接口。>>
+
+
+
+
+== 准备ONTAP集群
+
+将数据分层到 Amazon S3 时，您的ONTAP集群必须满足以下要求。
+
+
+
+=== ONTAP要求
+
+支持的ONTAP平台::
++
+--
+* 使用ONTAP 9.8 及更高版本时：您可以从AFF系统或具有全 SSD 聚合或全 HDD 聚合的FAS系统分层数据。
+* 使用ONTAP 9.7 及更早版本时：您可以从AFF系统或具有全 SSD 聚合的FAS系统分层数据。
+
+
+--
+支持的ONTAP版本::
++
+--
+* ONTAP 9.2 或更高版本
+* 如果您计划使用 AWS PrivateLink 连接对象存储，则需要ONTAP 9.7 或更高版本
+
+
+--
+支持的卷和聚合:: Cloud Tiering 可以分层的卷总数可能少于ONTAP系统上的卷数。这是因为卷不能从某些聚合中分层。请参阅ONTAP文档 https://docs.netapp.com/us-en/ontap/fabricpool/requirements-concept.html#functionality-or-features-not-supported-by-fabricpool["FabricPool不支持的功能或特性"^]。
+
+
+
+NOTE: 从ONTAP 9.5 开始，Cloud Tiering 支持FlexGroup卷。设置方式与任何其他卷相同。
+
+
+
+=== 集群网络要求
+
+* 集群需要从控制台代理到集群管理 LIF 的入站 HTTPS 连接。
++
+集群和 Cloud Tiering 之间不需要连接。
+
+* 每个托管要分层的卷的ONTAP节点上都需要一个集群间 LIF。这些集群间 LIF 必须能够访问对象存储。
++
+集群通过端口 443 启动从集群间 LIF 到 Amazon S3 存储的出站 HTTPS 连接，以执行分层操作。  ONTAP从对象存储读取和写入数据 - 对象存储从不启动，它只是响应。
+
+* 集群间 LIF 必须与ONTAP用于连接对象存储的 _IPspace_ 相关联。 https://docs.netapp.com/us-en/ontap/networking/standard_properties_of_ipspaces.html["了解有关 IP 空间的更多信息"^] 。
++
+当您设置 Cloud Tiering 时，系统会提示您输入要使用的 IP 空间。您应该选择与这些 LIF 关联的 IP 空间。这可能是“默认” IP 空间或您创建的自定义 IP 空间。
+
++
+如果您使用的 IP 空间与“默认”不同，那么您可能需要创建静态路由来访问对象存储。
+
++
+IP 空间内的所有集群间 LIF 都必须具有对象存储的访问权限。如果您无法为当前 IP 空间配置此功能，则需要创建一个专用 IP 空间，其中所有集群间 LIF 都可以访问对象存储。
+
+* 如果您在 AWS 中使用私有 VPC 接口端点进行 S3 连接，那么为了使用 HTTPS/443，您需要将 S3 端点证书加载到ONTAP集群中。<<使用 VPC 终端节点接口配置系统以进行私有连接,了解如何设置 VPC 端点接口并加载 S3 证书。>>
+* <<设置 S3 权限,确保您的ONTAP集群有权访问 S3 存储桶。>>
+
+
+
+
+=== 在NetApp控制台中发现您的ONTAP集群
+
+您需要先在NetApp控制台中发现您的本地ONTAP集群，然后才能开始将冷数据分层到对象存储。您需要知道集群管理 IP 地址和管理员用户帐户的密码才能添加集群。
+
+https://docs.netapp.com/us-en/bluexp-ontap-onprem/task-discovering-ontap.html["了解如何发现集群"^] 。
+
+
+
+== 准备您的 AWS 环境
+
+当您为新集群设置数据分层时，系统会提示您是否希望服务创建 S3 存储桶，或者是否要在设置代理的 AWS 账户中选择现有的 S3 存储桶。  AWS 帐户必须具有您可以在 Cloud Tiering 中输入的权限和访问密钥。  ONTAP集群使用访问密钥将数据分层到 S3 中和从 S3 中分层。
+
+默认情况下，云分层会为您创建存储桶。如果您想使用自己的存储桶，您可以在启动分层激活向导之前创建一个存储桶，然后在向导中选择该存储桶。 https://docs.netapp.com/us-en/bluexp-s3-storage/task-add-s3-bucket.html["了解如何从NetApp控制台创建 S3 存储桶"^] 。该存储桶必须专门用于存储卷中的非活动数据 - 不能用于任何其他目的。  S3 bucket 必须位于link:reference-aws-support.html#supported-aws-regions["支持 Cloud Tiering 的区域"]。
+
+
+NOTE: 如果您计划将 Cloud Tiering 配置为使用成本较低的存储类，您的分层数据将在一定天数后转换到该存储类，则在 AWS 帐户中设置存储桶时不得选择任何生命周期规则。  Cloud Tiering 管理生命周期转换。
+
+
+
+=== 设置 S3 权限
+
+您需要配置两组权限：
+
+* 代理的权限，以便它可以创建和管理 S3 存储桶。
+* 本地ONTAP集群的权限，以便它可以读取和写入 S3 存储桶的数据。
+
+
+.步骤
+. *控制台代理权限*：
++
+** 确认 https://docs.netapp.com/us-en/bluexp-setup-admin/reference-permissions-aws.html#iam-policies["这些 S3 权限"^]是向代理提供权限的 IAM 角色的一部分。当您首次部署代理时，它们应该默认包含在内。如果没有，您将需要添加任何缺少的权限。查看 https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_manage-edit.html["AWS 文档：编辑 IAM 策略"^]以获取说明。
+** Cloud Tiering 创建的默认存储桶具有“fabric-pool”前缀。如果您想为您的存储桶使用不同的前缀，您需要使用您想要使用的名称来自定义权限。在 S3 权限中，你会看到一行 `"Resource": ["arn:aws:s3:::fabric-pool*"]`。您需要将“fabric-pool”更改为您想要使用的前缀。例如，如果您想使用“tiering-1”作为存储桶的前缀，则将此行更改为 `"Resource": ["arn:aws:s3:::tiering-1*"]`。
++
+如果您想要对同一NetApp控制台组织中其他集群使用的存储桶使用不同的前缀，则可以添加另一行带有其他存储桶前缀的前缀。例如：
+
++
+`"Resource": ["arn:aws:s3:::tiering-1*"]`
+`"Resource": ["arn:aws:s3:::tiering-2*"]`
+
++
+如果您正在创建自己的存储桶并且不使用标准前缀，则应将此行更改为 `"Resource": ["arn:aws:s3:::*"]`这样任何桶都可以被识别。但是，这可能会暴露您的所有存储桶，而不是那些您设计用来保存卷中非活动数据的存储桶。
+
+
+
+. *集群权限*：
++
+** 当您激活该服务时，分层向导将提示您输入访问密钥和密钥。这些凭证被传递到ONTAP集群，以便ONTAP可以将数据分层到 S3 存储桶。为此，您需要创建具有以下权限的 IAM 用户：
++
+[source, json]
+----
+"s3:ListAllMyBuckets",
+"s3:ListBucket",
+"s3:GetBucketLocation",
+"s3:GetObject",
+"s3:PutObject",
+"s3:DeleteObject"
+----
++
+查看 https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_create_for-user.html["AWS 文档：创建角色以将权限委托给 IAM 用户"^]了解详情。
+
+
+
+. 创建或找到访问密钥。
++
+Cloud Tiering 将访问密钥传递给ONTAP集群。凭据未存储在 Cloud Tiering 服务中。
+
++
+https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html["AWS 文档：管理 IAM 用户的访问密钥"^]
+
+
+
+
+
+=== 使用 VPC 终端节点接口配置系统以进行私有连接
+
+如果您计划使用标准公共互联网连接，则所有权限均由代理设置，您无需执行任何其他操作。此类连接显示在<<连接选项的网络图,上面的第一张图>>。
+
+如果您希望通过互联网从本地数据中心到 VPC 建立更安全的连接，则可以在分层激活向导中选择 AWS PrivateLink 连接。如果您计划使用 VPN 或 AWS Direct Connect 通过使用私有 IP 地址的 VPC 终端节点接口连接您的本地系统，则需要它。这种连接类型显示在<<连接选项的网络图,上面的第二张图>>。如果您希望通过互联网从本地数据中心到 VPC 建立更安全的连接，则可以在分层激活向导中选择 AWS PrivateLink 连接。如果您计划使用 VPN 或 AWS Direct Connect 通过使用私有 IP 地址的 VPC 终端节点接口连接您的本地系统，则需要它。这种连接类型显示在<<连接选项的网络图,上面的第二张图>>。
+
+. 使用 Amazon VPC 控制台或命令行创建接口终端节点配置。 https://docs.aws.amazon.com/AmazonS3/latest/userguide/privatelink-interface-endpoints.html["查看有关将 AWS PrivateLink 用于 Amazon S3 的详细信息"^] 。
+. 修改与代理关联的安全组配置。您必须将策略更改为“自定义”（从“完全访问”），并且您必须<<设置 S3 权限,添加所需的 S3 代理权限>>如前所示。
++
+image:screenshot_tiering_aws_sec_group.png["与代理关联的 AWS 安全组的屏幕截图。"]
+
++
+如果您使用端口 80（HTTP）与私有端点进行通信，则一切就绪。您现在可以在集群上启用 Cloud Tiering。
+
++
+如果您使用端口 443（HTTPS）与私有端点通信，则必须从 VPC S3 端点复制证书并将其添加到您的ONTAP集群，如接下来的 4 个步骤所示。
+
+. 从 AWS 控制台获取端点的 DNS 名称。
++
+image:screenshot_endpoint_dns_aws_console.png["来自 AWS 控制台的 VPC 端点的 DNS 名称的屏幕截图。"]
+
+. 从 VPC S3 端点获取证书。你可以通过以下方式做到这一点 https://docs.netapp.com/us-en/bluexp-setup-admin/task-maintain-connectors.html#connect-to-the-linux-vm["登录到托管代理的虚拟机"^]并运行以下命令。输入端点的 DNS 名称时，在开头添加“bucket”，替换“*”：
++
+[source, text]
+----
+[ec2-user@ip-10-160-4-68 ~]$ openssl s_client -connect bucket.vpce-0ff5c15df7e00fbab-yxs7lt8v.s3.us-west-2.vpce.amazonaws.com:443 -showcerts
+----
+. 从此命令的输出中，复制 S3 证书的数据（BEGIN / END CERTIFICATE 标签之间（包括 BEGIN / END CERTIFICATE 标签）的所有数据）：
++
+[source, text]
+----
+Certificate chain
+0 s:/CN=s3.us-west-2.amazonaws.com`
+   i:/C=US/O=Amazon/OU=Server CA 1B/CN=Amazon
+-----BEGIN CERTIFICATE-----
+MIIM6zCCC9OgAwIBAgIQA7MGJ4FaDBR8uL0KR3oltTANBgkqhkiG9w0BAQsFADBG
+…
+…
+GqvbOz/oO2NWLLFCqI+xmkLcMiPrZy+/6Af+HH2mLCM4EsI2b+IpBmPkriWnnxo=
+-----END CERTIFICATE-----
+----
+. 登录ONTAP集群 CLI 并使用以下命令应用您复制的证书（替换您自己的存储虚拟机名称）：
++
+[source, text]
+----
+cluster1::> security certificate install -vserver <svm_name> -type server-ca
+Please enter Certificate: Press <Enter> when done
+----
+
+
+
+
+== 将第一个集群中的非活动数据分层到 Amazon S3
+
+准备好 AWS 环境后，开始从第一个集群分层非活动数据。
+
+.你需要什么
+* https://docs.netapp.com/us-en/bluexp-ontap-onprem/task-discovering-ontap.html["控制台中的托管本地系统"^] 。
+* 具有所需 S3 权限的 IAM 用户的 AWS 访问密钥。
+
+
+.步骤
+. 选择本地ONTAP系统。
+. 单击右侧面板中的“启用云分层”****。
++
+如果 Amazon S3 分层目标作为系统存在于系统页面上，则可以将集群拖到系统上以启动设置向导。
+
++
+image:screenshot_setup_tiering_onprem.png["屏幕截图显示了选择本地ONTAP系统后屏幕右侧出现的启用选项。"]
+
+. *定义对象存储名称*：输入此对象存储的名称。它必须与您可能在此集群上与聚合一起使用的任何其他对象存储不同。
+. *选择提供商*：选择*Amazon Web Services*并选择*继续*。
+. *选择提供商*：选择*Amazon Web Services*并选择*继续*。
++
+image:screenshot_tiering_aws_s3_bucket.png["屏幕截图显示了设置 S3 存储桶分层必须提供的数据。"]
+
+. 完成“分层设置”页面中的部分：
++
+.. *S3 存储桶*：添加新的 S3 存储桶或选择现有的 S3 存储桶，选择存储桶区域，然后选择*继续*。
+.. *S3 存储桶*：添加新的 S3 存储桶或选择现有的 S3 存储桶，选择存储桶区域，然后选择*继续*。
++
+使用本地代理时，您必须输入可访问现有 S3 存储桶或将要创建的新 S3 存储桶的 AWS 账户 ID。
+
++
+默认情况下使用 _fabric-pool_ 前缀，因为代理的 IAM 策略允许实例对以该精确前缀命名的存储桶执行 S3 操作。例如，您可以将 S3 存储桶命名为 _fabric-pool-AFF1_，其中 AFF1 是集群的名称。您还可以定义用于分层的存储桶的前缀。看<<设置 S3 权限,设置 S3 权限>>确保您具有可识别您计划使用的任何自定义前缀的 AWS 权限。
+
+.. *存储类别*：云分层管理分层数据的生命周期转换。数据从_Standard_类开始，但您可以创建规则，在一定天数后将不同的存储类应用于数据。
++
+选择要将分层数据转换到的 S3 存储类以及将数据分配到该类之前的天数，然后选择*继续*。例如，下面的屏幕截图显示，分层数据在对象存储中存储 45 天后从 _Standard_ 类分配给 _Standard-IA_ 类。
+
++
+如果您选择“将数据保留在此存储类中”，则数据将保留在“标准”存储类中，并且不应用任何规则。link:reference-aws-support.html["查看支持的存储类别"^] 。
+
++
+image:screenshot_tiering_lifecycle_selection_aws.png["该屏幕截图显示了如何选择在一定天数后分配给您的数据的另一个存储类别。"]
+
++
+请注意，生命周期规则适用于所选存储桶中的所有对象。
+
+.. *凭证*：输入具有所需 S3 权限的 IAM 用户的访问密钥 ID 和密钥，然后选择*继续*。
++
+IAM 用户必须与您在 *S3 Bucket* 页面上选择或创建的存储桶位于同一 AWS 账户中。
+
+.. *网络*：输入网络详细信息并选择*继续*。
++
+选择要分层的卷所在的ONTAP集群中的 IP 空间。此 IP 空间的集群间 LIF 必须具有出站互联网访问权限，以便它们可以连接到您的云提供商的对象存储。
+
++
+或者，选择是否使用您之前配置的 AWS PrivateLink。<<使用 VPC 终端节点接口配置系统以进行私有连接,请参阅上面的设置信息。>>将显示一个对话框来帮助指导您完成端点配置。
+
++
+您还可以通过定义“最大传输速率”来设置可用于将非活动数据上传到对象存储的网络带宽。选择*Limited*单选按钮并输入可使用的最大带宽，或选择*Unlimited*表示没有限制。
+
+
+
+. 在“Tier Volumes”页面上，选择要配置分层的卷并启动“Tiering Policy”页面：
++
+** 要选择所有卷，请选中标题行中的复选框（image:button_backup_all_volumes.png[""] ) 并选择 *配置卷*。
+** 要选择多个卷，请选中每个卷对应的复选框（image:button_backup_1_volume.png[""] ) 并选择 *配置卷*。
+** 要选择单个卷，请选择行（或image:screenshot_edit_icon.gif["编辑铅笔图标"]图标）来表示音量。
++
+image:screenshot_tiering_initial_volumes.png["屏幕截图显示了如何选择单个卷、多个卷或所有卷以及修改选定卷按钮。"]
+
+
+
+. 在“分层策略”对话框中，选择分层策略，选择性地调整所选卷的冷却天数，然后选择“应用”。
++
+link:concept-cloud-tiering.html#volume-tiering-policies["了解有关容量分层策略和冷却天数的更多信息"] 。
+
++
+image:screenshot_tiering_initial_policy_settings.png["显示可配置分层策略设置的屏幕截图。"]
+
+
+
+.结果
+您已成功设置从集群上的卷到 S3 对象存储的数据分层。
+
+.下一步是什么？
+link:task-licensing-cloud-tiering.html["请务必订阅 Cloud Tiering 服务"] 。
+
+您可以查看有关集群上活动和非活动数据的信息。link:task-managing-tiering.html["了解有关管理分层设置的更多信息"] 。
+
+如果您希望将数据从集群上的某些聚合分层到不同的对象存储，您还可以创建额外的对象存储。或者，如果您计划使用FabricPool Mirroring，将分层数据复制到其他对象存储。link:task-managing-object-storage.html["了解有关管理对象存储的更多信息"] 。

@@ -1,0 +1,68 @@
+---
+settings:
+  name: NetApp Cloud Tiering
+  platform: cloud
+  internal:
+    pdf_enabled: true
+  prod:
+    pdf_enabled: true
+    harmony_enabled: false
+  rss_page: whats-new.html
+  langs: zh-cn,us-en,de-de,es-es,fr-fr,it-it,pt-br,ja-jp,ko-kr,zh-tw
+sidebar:
+  entries:
+  - title: NetApp云分层文档
+    url: "/index.html"
+  - title: 发行说明
+    url: "/whats-new.html"
+  - title: 开始使用
+    entries:
+    - title: 了解NetApp云分层
+      url: "/concept-cloud-tiering.html"
+    - title: 将本地数据分层到云
+      entries:
+      - title: 升级至 Amazon S3
+        url: "/task-tiering-onprem-aws.html"
+      - title: Azure Blob 存储层
+        url: "/task-tiering-onprem-azure.html"
+      - title: Google Cloud Storage 层级
+        url: "/task-tiering-onprem-gcp.html"
+      - title: 层级至StorageGRID
+        url: "/task-tiering-onprem-storagegrid.html"
+      - title: 层级至 S3 对象存储
+        url: "/task-tiering-onprem-s3-compat.html"
+    - title: 设置许可
+      url: "/task-licensing-cloud-tiering.html"
+    - title: 常见问题解答
+      url: "/faq-cloud-tiering.html"
+  - title: 使用NetApp Cloud Tiering
+    entries:
+    - title: 管理数据分层
+      url: "/task-managing-tiering.html"
+    - title: 管理对象存储
+      url: "/task-managing-object-storage.html"
+    - title: 测试云性能
+      url: "/task-tiering-test.html"
+    - title: 查看所有集群的分层概览
+      url: "/task-tiering-onprem-overview.html"
+    - title: 监控分层警报的状态
+      url: "/task-monitor-tiering-alerts.html"
+  - title: 参考
+    entries:
+    - title: 支持的 Amazon S3 存储类别和区域
+      url: "/reference-aws-support.html"
+    - title: 支持的 Azure 访问层和区域
+      url: "/reference-azure-support.html"
+    - title: 支持的 Google Cloud 存储类别和区域
+      url: "/reference-google-support.html"
+  - title: 知识和支持
+    entries:
+    - title: 注册以获得支持
+      url: "/task-support-registration.html"
+    - title: 获取帮助
+      url: "/task-get-help.html"
+  - title: 法律声明
+    url: "/legal-notices.html"
+product-family:
+  name: NetApp Data Services
+  repo: data-services-family

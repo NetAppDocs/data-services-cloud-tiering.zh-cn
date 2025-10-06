@@ -1,0 +1,6 @@
+= 
+:allow-uri-read: 
+
+
+支持的卷和聚合:: Cloud Tiering 可以分层的卷总数可能少于ONTAP系统上的卷数。这是因为卷不能从某些聚合中分层。请参阅ONTAP文档 https://docs.netapp.com/us-en/ontap/fabricpool/requirements-concept.html#functionality-or-features-not-supported-by-fabricpool["FabricPool不支持的功能或特性"^]。
+

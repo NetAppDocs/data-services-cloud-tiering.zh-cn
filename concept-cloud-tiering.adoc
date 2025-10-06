@@ -1,0 +1,244 @@
+---
+sidebar: sidebar 
+permalink: concept-cloud-tiering.html 
+keywords: cloud tiering, overview, conceptual, value, features, cost, charging, tiering policies, cooling period, fabricpool, netapp console, console, bluexp 
+summary: NetApp 的 Cloud Tiering 服务可自动将非活动数据从本地ONTAP集群分层到对象存储，从而将您的数据中心扩展到云端。这释放了集群上的宝贵空间以用于更多工作负载，而无需更改应用程序层。云分层可以降低数据中心的成本，并使您能够从 CAPEX 模型切换到 OPEX 模型。 
+---
+= 了解NetApp云分层
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+NetApp Cloud Tiering 通过自动将非活动数据从本地ONTAP集群分层到对象存储，将您的数据中心扩展到云。这释放了集群上的宝贵空间以用于更多工作负载，而无需更改应用程序层。云分层可以降低数据中心的成本，并使您能够从 CAPEX 模型切换到 OPEX 模型。
+
+Cloud Tiering 利用了 _FabricPool_ 的功能。 FabricPool是一种NetApp Data Fabric 技术，可实现数据自动分层到低成本对象存储。活动（热）数据保留在本地层（内部ONTAP聚合），而非活动（冷）数据则移动到云层 - 同时保持ONTAP数据效率。
+
+最初，在具有全 SSD 聚合的AFF、 FAS和ONTAP Select系统上受支持，从ONTAP 9.8 开始，您可以从由 HDD 和高性能 SSD 组成的聚合中分层数据。看 https://docs.netapp.com/us-en/ontap/fabricpool/requirements-concept.html["使用FabricPool的注意事项和要求"^]了解详情。
+
+您可以使用FabricPool Mirror 为单节点集群、HA 配置的集群、分层镜像配置中的集群以及MetroCluster配置配置分层。  Cloud Tiering 许可证在您的所有集群之间共享。
+
+https://bluexp.netapp.com/cloud-tiering-service-tco["使用云分层 TCO 计算器来查看您可以节省多少钱"^] 。
+
+
+
+== NetApp控制台
+
+可通过NetApp控制台访问NetApp Cloud Tiering。
+
+NetApp控制台可在企业范围内跨本地和云环境集中管理NetApp存储和数据服务。需要控制台才能访问和使用NetApp数据服务。作为管理界面，它使您能够从一个界面管理许多存储资源。控制台管理员可以控制企业内所有系统的存储和服务的访问。
+
+您不需要许可证或订阅即可开始使用NetApp控制台，并且只有当您需要在云中部署控制台代理以确保与存储系统或NetApp数据服务的连接时才需要付费。但是，一些可从控制台访问的NetApp数据服务是需要许可或基于订阅的。
+
+详细了解 https://docs.netapp.com/us-en/bluexp-setup-admin/concept-overview.html["NetApp控制台"]。
+
+
+
+== 功能
+
+Cloud Tiering 提供自动化、监控、报告和通用管理界面：
+
+* 自动化使得从本地ONTAP集群到云的数据分层的设置和管理变得更加容易。
+* 您可以选择默认的云提供商存储类/访问层，或者使用生命周期管理为较旧的分层数据分配更具成本效益的层。
+* 您可以创建与其他对象存储的连接，这些对象存储可用于集群中的其他聚合。
+* 使用 UI，您可以将对象存储拖到聚合以进行分层和FabricPool镜像。
+* 单一管理平台消除了跨多个集群独立管理FabricPool 的需要。
+* 报告显示每个集群上的活动和非活动数据量。
+* 分层健康状况可帮助您识别并纠正出现的问题。
+* 如果您有Cloud Volumes ONTAP系统，您会在 Clusters 页面中找到它们，这样您就可以全面了解混合云基础架构中的数据分层。
+
+
+有关 Cloud Tiering 提供的价值的更多详细信息， https://bluexp.netapp.com/cloud-tiering["查看NetApp Console 网站上的 Cloud Tiering 页面"^] 。
+
+
+TIP: Cloud Volumes ONTAP系统从 Cloud Tiering 来看是只读的。 https://docs.netapp.com/us-en/bluexp-cloud-volumes-ontap/task-tiering.html["您可以在NetApp控制台中为Cloud Volumes ONTAP系统设置分层。"^] 。
+
+
+
+== 支持的对象存储提供商
+
+您可以将本地ONTAP系统中的非活动数据分层到以下对象存储提供程序：
+
+* Amazon S3
+* 微软 Azure Blob
+* Google Cloud Storage
+* NetAppStorageGRID
+* 与 S3 兼容的对象存储（例如 MinIO）
+
+
+Cloud Tiering 许可证还可以与将数据分层到 IBM Cloud Object Storage 的集群共享。必须使用 System Manager 或ONTAP CLI 设置FabricPool配置，但link:task-licensing-cloud-tiering.html#apply-bluexp-tiering-licenses-to-clusters-in-special-configurations["此类配置的许可是使用 Cloud Tiering 完成的。"]
+
+
+NOTE: 您可以将数据从 NAS 卷分层到公共云或私有云，例如StorageGRID。当您对通过 SAN 协议访问的数据进行分层时，出于连接方面的考虑， NetApp建议使用私有云。
+
+
+
+=== 对象存储层
+
+ONTAP集群可以将非活动数据分层到单个对象存储或多个对象存储。设置数据分层时，您可以选择添加新的存储桶/容器或选择现有的存储桶/容器，以及存储类或访问层。
+
+* link:reference-aws-support.html["了解受支持的 AWS S3 存储类"]
+* link:reference-azure-support.html["了解受支持的 Azure Blob 访问层"]
+* link:reference-google-support.html["了解受支持的 Google Cloud 存储类别"]
+
+
+Cloud Tiering 使用云提供商默认存储类/访问层来存储您的非活动数据。但是，您可以应用生命周期规则，以便数据在一定天数后自动从默认存储类转换到另一个存储类。通过将非常冷的数据移动到较便宜的存储中，这可以帮助您降低成本。
+
+
+NOTE: 您无法为分层到StorageGRID或 S3 兼容存储的数据选择生命周期规则。
+
+
+
+== 定价和许可证
+
+通过按使用量付费订阅、年度订阅、自带NetApp分层许可证或组合方式支付云分层费用。如果您没有许可证，您的第一个集群可以享受 30 天的免费试用。
+
+将数据分层到StorageGRID时无需支付任何费用。不需要 BYOL 许可证或 PAYGO 注册。
+
+https://bluexp.netapp.com/pricing#tiering["查看定价详情"^] 。
+
+由于 Cloud Tiering 保留了源卷的存储效率，因此您需要为ONTAP效率之后的分层数据（应用重复数据删除和压缩后的较少量数据）向云提供商对象存储支付费用。
+
+
+
+=== 30天免费试用
+
+如果您没有 Cloud Tiering 许可证，则当您为第一个集群设置分层时，将开始 30 天的分层免费试用。  30 天免费试用期结束后，您需要通过即用即付订阅、年度订阅、BYOL 许可证或组合方式支付分层费用。
+
+如果您的免费试用期结束并且您尚未订阅或添加许可证，则ONTAP不再将冷数据分层到对象存储。所有先前分层的数据仍然可以访问；这意味着您可以检索和使用这些数据。检索后，这些数据将从云端移回性能层。
+
+
+
+=== 按需付费订阅
+
+Cloud Tiering 以即用即付模式提供基于消费的许可。通过云提供商的市场订阅后，您需要按 GB 为分层数据付费 - 无需预付款。您的云提供商将通过每月账单向您收费。
+
+即使您有免费试用版或自带许可证 (BYOL)，也应该订阅：
+
+* 订阅可确保免费试用结束后服务不会中断。
++
+试用期结束后，我们将根据您分层的数据量按小时向您收费。
+
+* 如果您分层的数据量超出了 BYOL 许可证所允许的范围，则数据分层将通过您的即用即付订阅继续进行。
++
+例如，如果您拥有 10 TB 的许可证，则超过 10 TB 的所有容量都将通过即用即付订阅收费。
+
+
+
+在免费试用期间或未超出 Cloud Tiering BYOL 许可证的情况下，您无需支付即用即付订阅费用。
+
+link:task-licensing-cloud-tiering.html#use-a-bluexp-tiering-paygo-subscription["了解如何设置即用即付订阅"] 。
+
+
+
+=== 年度合同
+
+当将非活动数据分层到 Amazon S3 或 Azure 时，Cloud Tiering 提供年度合同。其期限分为 1 年、2 年或 3 年。
+
+目前，分级到 Google CLoud 时不支持年度合同。
+
+
+
+=== 自带驾照
+
+通过从NetApp购买 *Cloud Tiering* 许可证（以前称为“Cloud Tiering”许可证）来自带许可证。您可以购买 1 年、2 年或 3 年期许可证，并指定任意数量的分层容量（最低 10 TiB）。 BYOL Cloud Tiering 许可证是一种浮动许可证，您可以在多个本地ONTAP集群中使用它。您在 Cloud Tiering 许可证中定义的总分层容量可供所有本地集群使用。
+
+购买 Cloud Tiering 许可证后，您需要将该许可证添加到NetApp控制台。link:task-licensing-cloud-tiering.html#use-a-bluexp-tiering-byol-license["了解如何使用 Cloud Tiering BYOL 许可证"] 。
+
+如上所述，即使您已经购买了 BYOL 许可证，我们也建议您设置即用即付订阅。
+
+
+NOTE: 从 2021 年 8 月开始，旧的 * FabricPool* 许可证被 * Cloud Tiering * 许可证取代。link:task-licensing-cloud-tiering.html#bluexp-tiering-byol-licensing-starting-in-2021["详细了解 Cloud Tiering 许可证与FabricPool许可证的区别"] 。
+
+
+
+== 云分层的工作原理
+
+Cloud Tiering 是一项NetApp管理的服务，它使用FabricPool技术将内部ONTAP集群中的非活动（冷）数据自动分层到公共云或私有云中的对象存储。通过控制台代理可以连接到ONTAP 。
+
+下图显示了各个组件之间的关系：
+
+image:diagram_cloud_tiering.png["架构图像显示了云分层服务与云提供商中的控制台代理的连接、与ONTAP集群的连接以及ONTAP集群与云提供商中的对象存储之间的连接。活动数据驻留在ONTAP集群中，而非活动数据驻留在对象存储中。"]
+
+从高层次来看，云分层的工作原理如下：
+
+. 您可以从NetApp控制台发现您的内部部署集群。
+. 您可以通过提供有关对象存储的详细信息来设置分层，包括存储桶/容器、存储类或访问层以及分层数据的生命周期规则。
+. 控制台将ONTAP配置为使用对象存储提供程序并发现集群上的活动和非活动数据量。
+. 您选择要分层的卷以及要应用于这些卷的分层策略。
+. 一旦数据达到被视为非活动的阈值， ONTAP就会开始将非活动数据分层到对象存储中（请参阅<<卷分层策略>>）。
+. 如果您已将生命周期规则应用于分层数据（仅适用于某些提供商），则较旧的分层数据将在一定天数后分配到更具成本效益的层。
+
+
+
+
+=== 卷分层策略
+
+当您选择要分层的卷时，您可以选择一个应用于每个卷的_卷分层策略_。分层策略决定何时或是否将卷的用户数据块移动到云端。
+
+您还可以调整*冷却期*。这是卷中的用户数据在被视为“冷”并移动到对象存储之前必须保持不活动的天数。对于允许您调整冷却期的分层策略，有效值为：
+
+* 使用ONTAP 9.8 及更高版本时为 2 至 183 天
+* 对于早期ONTAP版本，需要 2 至 63 天
+
+
+2 到 63 是建议的最佳做法。
+
+无政策（无）:: 将数据保存在性能层的卷上，防止其移动到云层。
+冷快照（仅限快照）:: ONTAP将卷中未与活动文件系统共享的冷快照块分层到对象存储。如果读取，云层上的冷数据块会变热并被移动到性能层。
++
+--
+仅当聚合达到 50% 容量并且数据达到冷却期后，才会对数据进行分层。默认的冷却天数为 2，但您可以调整此数字。
+
+
+NOTE: 仅当有空间时，重新加热的数据才会写回到性能层。如果性能层容量已满 70% 以上，则可以继续从云层访问块。
+
+--
+冷用户数据和快照（自动）:: ONTAP将卷中的所有冷块（不包括元数据）分层到对象存储。冷数据不仅包括 Snapshot 副本，还包括来自活动文件系统的冷用户数据。
++
+--
+* 如果通过随机读取，云层上的冷数据块会变热并被移动到性能层。
+* 如果通过顺序读取（例如与索引和防病毒扫描相关的读取），则云层上的冷数据块将保持冷状态并且不会写入性能层。
++
+此策略从ONTAP 9.4 开始可用。
+
++
+仅当聚合达到 50% 容量并且数据达到冷却期后，才会对数据进行分层。默认的冷却天数为 31 天，但您可以调整此数字。
+
++
+
+NOTE: 仅当有空间时，重新加热的数据才会写回到性能层。如果性能层容量已满 70% 以上，则可以继续从云层访问块。
+
+
+
+--
+所有用户数据（全部）:: 所有数据（不包括元数据）都会立即标记为冷数据，并尽快分层到对象存储。无需等待 48 小时让卷中的新块变冷。在设置全部策略之前位于卷中的块需要 48 小时才能冷却。
++
+--
+如果读取，云层上的冷数据块将保持冷状态并且不会写回性能层。此策略从ONTAP 9.6 开始可用。
+
+在选择此分层策略之前，请考虑以下事项：
+
+* 分层数据会立即降低存储效率（仅限内联）。
+* 仅当您确信卷上的冷数据不会改变时才应使用此策略。
+* 对象存储不是事务性的，如果发生变化，将导致严重的碎片化。
+* 在将所有分层策略分配给数据保护关系中的源卷之前，请考虑SnapMirror传输的影响。
++
+由于数据是立即分层的，因此SnapMirror将从云层而不是性能层读取数据。这将导致SnapMirror操作速度变慢 - 甚至可能减慢队列中后面的其他SnapMirror操作速度 - 即使它们使用不同的分层策略。
+
+* NetApp Backup and Recovery 同样受到采用分层策略设置的卷的影响。 https://docs.netapp.com/us-en/bluexp-backup-recovery/concept-ontap-backup-to-cloud.html#fabricpool-tiering-policy-considerations["了解备份和恢复的分层策略注意事项"^] 。
+
+
+--
+所有 DP 用户数据（备份）:: 数据保护卷上的所有数据（不包括元数据）都会立即移动到云层。如果读取，云层上的冷数据块将保持冷状态并且不会写回性能层（从ONTAP 9.4 开始）。
++
+--
+
+NOTE: 此策略适用于ONTAP 9.5 或更早版本。从ONTAP 9.6 开始，它被 *All* 分层策略所取代。
+
+--
+

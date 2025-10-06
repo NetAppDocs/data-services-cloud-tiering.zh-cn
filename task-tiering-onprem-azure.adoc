@@ -1,0 +1,244 @@
+---
+sidebar: sidebar 
+permalink: task-tiering-onprem-azure.html 
+keywords: data tiering, fabricpool, cloud tiering, tiering cold data, tiering inactive data, tiering aff, tiering fas, tiering ontap, tiering volumes, tier data, tier cold data, tier fas, tier aff, tier ontap, azure, blob, azure blob 
+summary: 通过将非活动数据分层到 Azure Blob 存储来释放本地ONTAP集群上的空间。 
+---
+= 将本地ONTAP集群中的数据分层到NetApp Cloud Tiering 中的 Azure Blob 存储
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+通过将非活动数据分层到 Azure Blob 存储来释放本地ONTAP集群上的空间。通过将非活动数据分层到 Azure Blob 存储来释放本地ONTAP集群上的空间。
+
+
+
+== 快速启动
+
+按照以下步骤快速开始，或者向下滚动到其余部分以获取完整详细信息。
+
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-1.png["一个"]准备将数据分层到 Azure Blob 存储
+[role="quick-margin-para"]
+您需要以下内容：
+
+[role="quick-margin-list"]
+* 已添加到NetApp控制台的运行ONTAP 9.4 或更高版本的源本地ONTAP集群，以及与 Azure Blob 存储的 HTTPS 连接。 https://docs.netapp.com/us-en/bluexp-ontap-onprem/task-discovering-ontap.html["了解如何发现集群"^] 。
+* 安装在 Azure VNet 或您的本地的控制台代理。
+* 代理的网络可实现与数据中心中的ONTAP集群、Azure 存储和 Cloud Tiering 服务的出站 HTTPS 连接。
+
+
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-2.png["两个"]设置分层
+[role="quick-margin-para"]
+在NetApp控制台中，选择一个本地ONTAP系统，为分层服务选择“启用”，然后按照提示将数据分层到 Azure Blob 存储。
+
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-3.png["三"]设置许可
+[role="quick-margin-para"]
+免费试用结束后，您可以通过即用即付订阅、 ONTAP Cloud Tiering BYOL 许可证或两者结合的方式支付 Cloud Tiering 费用：
+
+[role="quick-margin-list"]
+* 要从 Azure 市场订阅， https://azuremarketplace.microsoft.com/en-us/marketplace/apps/netapp.cloud-manager?tab=Overview["前往市场"^] ，选择*订阅*，然后按照提示操作。
+* 要使用 Cloud Tiering BYOL 许可证付款，请发邮件至：ng-cloud-tiering@netapp.com?subject=Licensing[如果您需要购买，请联系我们]，然后link:https://docs.netapp.com/us-en/bluexp-digital-wallet/task-manage-data-services-licenses.html["将其添加到NetApp控制台"]。
+
+
+
+
+== 要求
+
+验证对ONTAP集群的支持、设置网络并准备对象存储。
+
+下图显示了每个组件以及您需要在它们之间准备的连接：
+
+image:diagram_cloud_tiering_azure.png["架构图像显示了云分层服务与云提供商中的控制台代理的连接、与ONTAP集群的连接以及ONTAP集群与云提供商中的对象存储之间的连接。活动数据驻留在ONTAP集群上，而非活动数据驻留在对象存储中。"]
+
+
+NOTE: 控制台代理和 Blob 存储之间的通信仅用于对象存储设置。代理可以驻留在您的场所，而不是在云中。
+
+
+
+=== 准备ONTAP集群
+
+将数据分层到 Azure Blob 存储时，您的ONTAP集群必须满足以下要求。
+
+支持的ONTAP平台::
++
+--
+* 使用ONTAP 9.8 及更高版本时：您可以从AFF系统或具有全 SSD 聚合或全 HDD 聚合的FAS系统分层数据。
+* 使用ONTAP 9.7 及更早版本时：您可以从AFF系统或具有全 SSD 聚合的FAS系统分层数据。
+
+
+--
+支持的ONTAP版本:: ONTAP 9.4 或更高版本
+集群网络要求::
++
+--
+* ONTAP集群通过端口 443 启动与 Azure Blob 存储的 HTTPS 连接。
++
+ONTAP从对象存储中读取和写入数据。对象存储从不启动，它只是响应。
+
++
+尽管 ExpressRoute 提供了更好的性能和更低的数据传输费用，但ONTAP集群和 Azure Blob 存储之间不需要它。但这样做是推荐的最佳做法。
+
+* 需要来自代理的入站连接，该代理可以驻留在 Azure VNet 中或您的本地。
++
+不需要集群和 Cloud Tiering 服务之间的连接。
+
+* 每个托管要分层的卷的ONTAP节点上都需要一个集群间 LIF。  LIF 必须与ONTAP用于连接对象存储的 _IPspace_ 相关联。
++
+当您设置数据分层时，Cloud Tiering 会提示您使用 IP 空间。您应该选择与每个 LIF 关联的 IP 空间。这可能是“默认” IP 空间或您创建的自定义 IP 空间。详细了解 https://docs.netapp.com/us-en/ontap/networking/create_a_lif.html["LIF"^]和 https://docs.netapp.com/us-en/ontap/networking/standard_properties_of_ipspaces.html["IP 空间"^]。
+
+
+
+--
+支持的卷和聚合:: Cloud Tiering 可以分层的卷总数可能少于ONTAP系统上的卷数。这是因为卷不能从某些聚合中分层。请参阅ONTAP文档 https://docs.netapp.com/us-en/ontap/fabricpool/requirements-concept.html#functionality-or-features-not-supported-by-fabricpool["FabricPool不支持的功能或特性"^]。
+
+
+
+NOTE: 从ONTAP 9.5 开始，Cloud Tiering 支持FlexGroup卷。设置方式与任何其他卷相同。
+
+
+
+=== 发现ONTAP集群
+
+您需要先将本地ONTAP系统添加到NetApp控制台，然后才能开始分层冷数据。
+
+https://docs.netapp.com/us-en/bluexp-ontap-onprem/task-discovering-ontap.html["了解如何发现集群"^] 。
+
+
+
+=== 创建或切换代理
+
+需要代理将数据分层到云端。将数据分层到 Azure Blob 存储时，您可以使用 Azure VNet 或您所在场所中的代理。您需要创建一个新的代理，确保当前选定的代理位于 Azure 或本地。
+
+* https://docs.netapp.com/us-en/bluexp-setup-admin/concept-connectors.html["了解代理"^]
+* https://docs.netapp.com/us-en/bluexp-setup-admin/task-quick-start-connector-azure.html["在 Azure 中部署代理"^]
+* https://docs.netapp.com/us-en/bluexp-setup-admin/task-quick-start-connector-on-prem.html["在 Linux 主机上安装代理"^]
+
+
+
+
+=== 验证您是否拥有必要的代理权限
+
+如果您使用 3.9.25 或更高版本创建了控制台代理，那么一切就绪了。默认情况下，将设置自定义角色，该角色提供代理管理 Azure 网络内的资源和流程所需的权限。查看 https://docs.netapp.com/us-en/bluexp-setup-admin/reference-permissions-azure.html#custom-role-permissions["所需的自定义角色权限"^]以及 https://docs.netapp.com/us-en/bluexp-setup-admin/reference-permissions-azure.html#cloud-tiering["Cloud Tiering 所需的特定权限"^]。
+
+如果您使用早期版本创建了代理，则需要编辑 Azure 帐户的权限列表以添加任何缺少的权限。
+
+
+
+=== 为控制台代理准备网络
+
+确保控制台代理具有所需的网络连接。该代理可以安装在本地或 Azure 中。
+
+.步骤
+. 确保安装代理的网络启用以下连接：
++
+** 通过端口 443 建立到 Cloud Tiering 服务和 Azure Blob 对象存储的 HTTPS 连接(https://docs.netapp.com/us-en/bluexp-setup-admin/task-set-up-networking-azure.html#endpoints-contacted-for-day-to-day-operations["查看端点列表"^]）
+** 通过端口 443 建立到ONTAP集群管理 LIF 的 HTTPS 连接
+
+
+. 如果需要，请启用 VNet 服务端点到 Azure 存储。
++
+如果您有从ONTAP集群到 VNet 的 ExpressRoute 或 VPN 连接，并且希望代理和 Blob 存储之间的通信保持在虚拟专用网络中，则建议使用 VNet 服务端点到 Azure 存储。
+
+
+
+
+
+=== 准备 Azure Blob 存储
+
+设置分层时，您需要确定要使用的资源组以及属于该资源组的存储帐户和 Azure 容器。存储帐户使 Cloud Tiering 能够对用于数据分层的 Blob 容器进行身份验证和访问。
+
+Cloud Tiering 支持分层到可通过代理访问的任何区域中的任何存储帐户。
+
+Cloud Tiering 仅支持通用 v2 和高级块 Blob 类型的存储帐户。
+
+
+NOTE: 如果您计划将 Cloud Tiering 配置为使用成本较低的访问层，并且分层数据将在一定天数后转换到该层，则在 Azure 帐户中设置容器时不得选择任何生命周期规则。  Cloud Tiering 管理生命周期转换。
+
+
+
+== 将第一个群集中的非活动数据分层到 Azure Blob 存储
+
+准备好 Azure 环境后，开始从第一个群集分层非活动数据。
+
+.你需要什么
+https://docs.netapp.com/us-en/bluexp-ontap-onprem/task-discovering-ontap.html["将本地ONTAP系统迁移到NetApp控制台"^] 。
+
+.步骤
+. 选择本地ONTAP系统。
+. 单击右侧面板中的分层服务的“启用”按钮。
++
+如果 Azure Blob 分层目标作为系统存在于“系统”页面上，则可以将集群拖到 Azure Blob 系统上以启动设置向导。
+
++
+image:screenshot_setup_tiering_onprem.png["屏幕截图显示了选择本地ONTAP系统后屏幕右侧出现的启用选项。"]
+
+. *定义对象存储名称*：输入此对象存储的名称。它必须与您可能在此集群上与聚合一起使用的任何其他对象存储不同。
+. *选择提供商*：选择*Microsoft Azure*并选择*继续*。
+. *选择提供商*：选择*Microsoft Azure*并选择*继续*。
+. 完成*创建对象存储*页面上的步骤：
++
+.. *资源组*：选择管理现有容器的资源组，或者选择您想要为分层数据创建新容器的资源组，然后选择*继续*。
+.. *资源组*：选择管理现有容器的资源组，或者选择您想要为分层数据创建新容器的资源组，然后选择*继续*。
++
+使用本地代理时，必须输入提供对资源组的访问权限的 Azure 订阅。
+
+.. *Azure 容器*：选择单选按钮将新的 Blob 容器添加到存储帐户或使用现有容器。然后选择存储帐户并选择现有容器，或输入新容器的名称。然后选择*继续*。
+.. *Azure 容器*：选择单选按钮将新的 Blob 容器添加到存储帐户或使用现有容器。然后选择存储帐户并选择现有容器，或输入新容器的名称。然后选择*继续*。
++
+此步骤中出现的存储帐户和容器属于您在上一步中选择的资源组。
+
+.. *访问层生命周期*：云分层管理分层数据的生命周期转换。数据从 _Hot_ 类开始，但您可以创建规则，在一定天数后将 _Cool_ 类应用于数据。
++
+选择要将分层数据转换到的访问层以及将数据分配到该层之前的天数，然后选择*继续*。例如，下面的屏幕截图显示，分层数据在对象存储中存储 45 天后从 _Hot_ 类分配给 _Cool_ 类。
+
++
+如果您选择“将数据保留在此访问层中”，则数据将保留在“热”访问层中，并且不应用任何规则。link:reference-azure-support.html["查看支持的访问层"^] 。
+
++
+image:screenshot_tiering_lifecycle_selection_azure.png["屏幕截图显示了如何选择另一个访问层，该访问层将在一定天数后分配给您的数据。"]
+
++
+请注意，生命周期规则适用于所选存储帐户中的所有 Blob 容器。
+
+.. *集群网络*：选择ONTAP应用于连接对象存储的 IP 空间，然后选择*继续*。
++
+选择正确的 IP 空间可确保 Cloud Tiering 可以建立从ONTAP到云提供商的对象存储的连接。
+
++
+您还可以通过定义“最大传输速率”来设置可用于将非活动数据上传到对象存储的网络带宽。选择*Limited*单选按钮并输入可使用的最大带宽，或选择*Unlimited*表示没有限制。
+
+
+
+. 在“Tier Volumes”页面上，选择要配置分层的卷并启动“Tiering Policy”页面：
++
+** 要选择所有卷，请选中标题行中的复选框（image:button_backup_all_volumes.png[""] ) 并选择 *配置卷*。
+** 要选择多个卷，请选中每个卷对应的复选框（image:button_backup_1_volume.png[""] ) 并选择 *配置卷*。
+** 要选择单个卷，请选择行（或image:screenshot_edit_icon.gif["编辑铅笔图标"]图标）来表示音量。
++
+image:screenshot_tiering_initial_volumes.png["屏幕截图显示了如何选择单个卷、多个卷或所有卷以及修改选定卷按钮。"]
+
+
+
+. 在“分层策略”对话框中，选择分层策略，选择性地调整所选卷的冷却天数，然后选择“应用”。
++
+link:concept-cloud-tiering.html#volume-tiering-policies["了解有关容量分层策略和冷却天数的更多信息"] 。
+
++
+image:screenshot_tiering_initial_policy_settings.png["显示可配置分层策略设置的屏幕截图。"]
+
+
+
+.结果
+您已成功设置从群集上的卷到 Azure Blob 对象存储的数据分层。
+
+.下一步是什么？
+link:task-licensing-cloud-tiering.html["请务必订阅 Cloud Tiering 服务"] 。
+
+您可以查看有关集群上活动和非活动数据的信息。link:task-managing-tiering.html["了解有关管理分层设置的更多信息"] 。
+
+如果您希望将数据从集群上的某些聚合分层到不同的对象存储，您还可以创建额外的对象存储。或者，如果您计划使用FabricPool Mirroring，将分层数据复制到其他对象存储。link:task-managing-object-storage.html["了解有关管理对象存储的更多信息"] 。

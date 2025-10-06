@@ -1,0 +1,223 @@
+---
+sidebar: sidebar 
+permalink: task-tiering-onprem-storagegrid.html 
+keywords: data tiering, fabricpool, cloud tiering, tiering cold data, tiering inactive data, tiering aff, tiering fas, tiering ontap, tiering volumes, tier data, tier cold data, tier fas, tier aff, tier ontap, storagegrid, tier to storagegrid, fabricpool storagegrid 
+summary: 通过将非活动数据分层到NetApp Cloud Tiering 中的StorageGRID ，释放本地ONTAP集群上的空间。 
+---
+= 将数据从本地ONTAP集群分层到NetApp Cloud Tiering 中的StorageGRID
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+通过将非活动数据分层到NetApp Cloud Tiering 中的StorageGRID ，释放本地ONTAP集群上的空间。
+
+
+
+== 快速启动
+
+按照以下步骤快速开始，或者向下滚动到其余部分以获取完整详细信息。
+
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-1.png["一个"]准备将数据分层到StorageGRID
+[role="quick-margin-para"]
+您需要以下内容：
+
+[role="quick-margin-list"]
+* 已添加到NetApp控制台的运行ONTAP 9.4 或更高版本的源本地ONTAP集群，以及通过用户指定端口到StorageGRID 的连接。 https://docs.netapp.com/us-en/bluexp-ontap-onprem/task-discovering-ontap.html["了解如何发现集群"^] 。
+* 具有 S3 权限的 AWS 访问密钥的StorageGRID 10.3 或更高版本。
+* 在您的场所安装控制台代理。
+* 代理的网络可实现与ONTAP集群、 StorageGRID和 Cloud Tiering 服务的出站 HTTPS 连接。
+
+
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-2.png["两个"]设置分层
+[role="quick-margin-para"]
+在NetApp控制台中，选择一个本地系统，选择“启用”云分层，然后按照提示将数据分层到StorageGRID。
+
+
+
+== 要求
+
+验证对ONTAP集群的支持、设置网络并准备对象存储。
+
+下图显示了每个组件以及您需要在它们之间准备的连接：
+
+image:diagram_cloud_tiering_storagegrid.png["架构图像显示了 Cloud Tiering 服务与您本地代理的连接、代理与您的ONTAP集群的连接以及ONTAP集群与对象存储之间的连接。活动数据驻留在ONTAP集群上，而非活动数据驻留在对象存储中。"]
+
+
+NOTE: 代理和StorageGRID之间的通信仅用于对象存储设置。
+
+
+
+=== 准备ONTAP集群
+
+将数据分层到StorageGRID时，您的ONTAP集群必须满足以下要求。
+
+支持的ONTAP平台::
++
+--
+* 使用ONTAP 9.8 及更高版本时：您可以从AFF系统或具有全 SSD 聚合或全 HDD 聚合的FAS系统分层数据。
+* 使用ONTAP 9.7 及更早版本时：您可以从AFF系统或具有全 SSD 聚合的FAS系统分层数据。
+
+
+--
+支持的ONTAP版本:: ONTAP 9.4 或更高版本
+许可:: 将数据分层到StorageGRID时，您的NetApp Console 组织不需要 Cloud Tiering 许可证， ONTAP集群上也不需要FabricPool许可证。
+集群网络要求::
++
+--
+* ONTAP集群通过用户指定的端口启动与StorageGRID网关节点的 HTTPS 连接（该端口可在分层设置期间配置）。
++
+ONTAP从对象存储中读取和写入数据。对象存储从不启动，它只是响应。
+
+* 需要来自代理的入站连接，该代理必须位于您的场所。
++
+不需要集群和 Cloud Tiering 服务之间的连接。
+
+* 每个托管要分层的卷的ONTAP节点上都需要一个集群间 LIF。  LIF 必须与ONTAP用于连接对象存储的 _IPspace_ 相关联。
++
+当您设置数据分层时，Cloud Tiering 会提示您使用 IP 空间。您应该选择与每个 LIF 关联的 IP 空间。这可能是“默认” IP 空间或您创建的自定义 IP 空间。详细了解 https://docs.netapp.com/us-en/ontap/networking/create_a_lif.html["LIF"^]和 https://docs.netapp.com/us-en/ontap/networking/standard_properties_of_ipspaces.html["IP 空间"^]。
+
+
+
+--
+支持的卷和聚合:: Cloud Tiering 可以分层的卷总数可能少于ONTAP系统上的卷数。这是因为卷不能从某些聚合中分层。请参阅ONTAP文档 https://docs.netapp.com/us-en/ontap/fabricpool/requirements-concept.html#functionality-or-features-not-supported-by-fabricpool["FabricPool不支持的功能或特性"^]。
+
+
+
+NOTE: 从ONTAP 9.5 开始，Cloud Tiering 支持FlexGroup卷。设置方式与任何其他卷相同。
+
+
+
+=== 发现ONTAP集群
+
+您需要先将本地ONTAP系统添加到NetApp控制台，然后才能开始分层冷数据。
+
+https://docs.netapp.com/us-en/bluexp-ontap-onprem/task-discovering-ontap.html["了解如何发现集群"^] 。
+
+
+
+=== 准备StorageGRID
+
+StorageGRID必须满足以下要求。
+
+支持的StorageGRID版本:: 支持StorageGRID 10.3 及更高版本。
+S3 凭证:: 当您设置分层到StorageGRID时，您需要向 Cloud Tiering 提供 S3 访问密钥和密钥。  Cloud Tiering 使用密钥来访问您的存储桶。
++
+--
+这些访问密钥必须与具有以下权限的用户相关联：
+
+[source, json]
+----
+"s3:ListAllMyBuckets",
+"s3:ListBucket",
+"s3:GetObject",
+"s3:PutObject",
+"s3:DeleteObject",
+"s3:CreateBucket"
+----
+--
+对象版本控制:: 您不能在对象存储桶上启用StorageGRID对象版本控制。
+
+
+
+
+=== 创建或切换控制台代理
+
+需要控制台代理将数据分层到云端。将数据分层到StorageGRID时，您的场所必须有代理可用。
+
+您必须具有组织管理员角色才能创建代理。
+
+* https://docs.netapp.com/us-en/bluexp-setup-admin/concept-connectors.html["了解代理"^]
+* https://docs.netapp.com/us-en/bluexp-setup-admin/task-install-connector-on-prem.html["在本地安装和设置代理"^]
+* https://docs.netapp.com/us-en/bluexp-setup-admin/task-manage-multiple-connectors.html#switch-between-connectors["在代理之间切换"^]
+
+
+
+
+=== 为控制台代理准备网络
+
+确保代理具有所需的网络连接。
+
+.步骤
+. 确保安装代理的网络启用以下连接：
++
+** 通过端口 443 建立到 Cloud Tiering 服务的 HTTPS 连接(https://docs.netapp.com/us-en/bluexp-setup-admin/task-set-up-networking-on-prem.html#endpoints-contacted-for-day-to-day-operations["查看端点列表"^]）
+** 通过端口 443 建立到StorageGRID系统的 HTTPS 连接
+** 通过端口 443 建立到ONTAP集群管理 LIF 的 HTTPS 连接
+
+
+
+
+
+
+== 将第一个集群中的非活动数据分层到StorageGRID
+
+准备好环境后，开始从第一个集群中分层非活动数据。
+
+.你需要什么
+* https://docs.netapp.com/us-en/bluexp-ontap-onprem/task-discovering-ontap.html["添加到NetApp控制台的本地系统"^] 。
+* StorageGRID网关节点的 FQDN 以及将用于 HTTPS 通信的端口。
+* 具有所需 S3 权限的 AWS 访问密钥。
+
+
+.步骤
+. 选择本地ONTAP系统。
+. 单击右侧面板中的“启用云分层”****。
++
+如果StorageGRID分层目标作为NetApp控制台中的系统存在，则可以将集群拖到StorageGRID系统上以启动设置向导。
+
++
+image:screenshot_setup_tiering_onprem.png["屏幕截图显示了选择本地ONTAP系统后屏幕右侧出现的“设置分层”选项。"]
+
+. *定义对象存储名称*：输入此对象存储的名称。它必须与您可能在此集群上与聚合一起使用的任何其他对象存储不同。
+. *选择提供商*：选择* StorageGRID*并选择*继续*。
+. *选择提供商*：选择* StorageGRID*并选择*继续*。
+. 完成*创建对象存储*页面上的步骤：
++
+.. *服务器*：输入StorageGRID网关节点的 FQDN、 ONTAP应使用 HTTPS 与StorageGRID进行通信的端口，以及具有所需 S3 权限的帐户的访问密钥和密钥。
+.. *Bucket*：添加一个新的 bucket 或选择一个以前缀 _fabric-pool_ 开头的现有 bucket，然后选择 *Continue*。
+.. *Bucket*：添加一个新的 bucket 或选择一个以前缀 _fabric-pool_ 开头的现有 bucket，然后选择 *Continue*。
++
+需要 _fabric-pool_ 前缀，因为代理的 IAM 策略允许实例对以该精确前缀命名的存储桶执行 S3 操作。例如，您可以将 S3 存储桶命名为 _fabric-pool-AFF1_，其中 AFF1 是集群的名称。
+
+.. *集群网络*：选择ONTAP应用于连接对象存储的 IP 空间，然后选择*继续*。
+.. *集群网络*：选择ONTAP应用于连接对象存储的 IP 空间，然后选择*继续*。
++
+选择正确的 IP 空间可确保 Cloud Tiering 可以建立从ONTAP到StorageGRID对象存储的连接。
+
++
+您还可以通过定义“最大传输速率”来设置可用于将非活动数据上传到对象存储的网络带宽。选择*Limited*单选按钮并输入可使用的最大带宽，或选择*Unlimited*表示没有限制。
+
+
+
+. 在“Tier Volumes”页面上，选择要配置分层的卷并启动“Tiering Policy”页面：
++
+** 要选择所有卷，请选中标题行中的复选框（image:button_backup_all_volumes.png[""] ) 并选择 *配置卷*。
+** 要选择多个卷，请选中每个卷对应的复选框（image:button_backup_1_volume.png[""] ) 并选择 *配置卷*。
+** 要选择单个卷，请选择行（或image:screenshot_edit_icon.gif["编辑铅笔图标"]图标）来表示音量。
+** 要选择所有卷，请选中标题行中的复选框（image:button_backup_all_volumes.png[""] ) 并选择 *配置卷*。
+** 要选择多个卷，请选中每个卷对应的复选框（image:button_backup_1_volume.png[""] ) 并选择 *配置卷*。
+** 要选择单个卷，请选择行（或image:screenshot_edit_icon.gif["编辑铅笔图标"]图标）来表示音量。
++
+image:screenshot_tiering_initial_volumes.png["屏幕截图显示了如何选择单个卷、多个卷或所有卷以及修改选定卷按钮。"]
+
+
+
+. 在“分层策略”对话框中，选择分层策略，选择性地调整所选卷的冷却天数，然后选择“应用”。
+. 在“分层策略”对话框中，选择分层策略，选择性地调整所选卷的冷却天数，然后选择“应用”。
++
+link:concept-cloud-tiering.html#volume-tiering-policies["了解有关容量分层策略和冷却天数的更多信息"] 。
+
++
+image:screenshot_tiering_initial_policy_settings.png["显示可配置分层策略设置的屏幕截图。"]
+
+
+
+.下一步是什么？
+您可以查看有关集群上活动和非活动数据的信息。link:task-managing-tiering.html["了解有关管理分层设置的更多信息"] 。
+
+如果您希望将数据从集群上的某些聚合分层到不同的对象存储，您还可以创建额外的对象存储。或者，如果您计划使用FabricPool Mirroring，将分层数据复制到其他对象存储。link:task-managing-object-storage.html["了解有关管理对象存储的更多信息"] 。

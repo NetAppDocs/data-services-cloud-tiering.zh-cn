@@ -1,0 +1,46 @@
+---
+sidebar: sidebar 
+permalink: task-tiering-onprem-overview.html 
+keywords: overview, tiering overview, tiered clusters, clusters enabled for tiering, data tiering overview, cold data, hot data, tiered data, savings, savings opportunities, saving opportunity, policies, cold snapshots, all dp user data, cold user data & snapshots, cold user data and snapshots, all user data, no policy, marketplace subscriptions, clusters associated 
+summary: Cloud Tiering 提供来自每个本地集群的数据分层的聚合视图。此概述清晰地描述了您的环境并使您能够采取适当的措施。 
+---
+= 了解NetApp Cloud Tiering 中集群的数据分层概述
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+NetApp Cloud Tiering 提供来自每个内部部署集群的数据分层的聚合视图。此概述清晰地描述了您的环境并使您能够采取适当的措施。
+
+选择“Cloud Tiering”>“On-Premises Dashboard”以查看有关您的环境的以下详细信息。
+
+image:screenshot_tiering_onprem_dashboard.png["本地仪表板页面的屏幕截图。"]
+
+发现的集群:: Cloud Tiering 发现的本地集群的数量。该图表概述了这些集群的分层状态。
++
+--
+* 高分层 - 集群中超过 20% 的冷数据被分层
+* 低分层 - 集群中冷数据的分层比例低于 20%
+* 无分层 - 集群不对任何数据进行分层
+* 不符合条件 - 不支持数据分层的集群
+
+
+--
+数据概览:: 所有已发现集群正在使用的数据量。该图表显示了这些集群分层的数据量。
++
+--
+* 分层数据 - 分层到云中的冷数据总量
+* 冷数据 - 未分层的冷数据总量
+* 热数据 - 正在使用中的活跃热数据总量
+* 不符合条件 - 由于群集或卷不支持数据分层，因此未分层的总数据
+
+
+--
+分层概述:: 当前正在分层的数据量，以及可能分层的冷数据量。
+策略:: 每个分层策略应用于卷的次数。
+市场订阅:: 与每种类型的市场订阅相关的集群数量以及有关您的订阅状态的指示。
+

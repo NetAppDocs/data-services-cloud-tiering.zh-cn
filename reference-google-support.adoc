@@ -1,0 +1,78 @@
+---
+sidebar: sidebar 
+permalink: reference-google-support.html 
+keywords: google, gcp, regions, google regions, gcp regions, storage class, standard, nearline, coldline, archive, cloud tiering, cloud tier, bluexp 
+summary: NetApp Cloud Tiering 支持多种 Google Cloud 存储类别和大多数区域。 
+---
+= NetApp Cloud Tiering 支持的 Google Cloud 存储类别和区域
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+NetApp Cloud Tiering 支持多种 Google Cloud 存储类别和大多数区域。
+
+
+
+== 支持的 GCP 存储类别
+
+当您从本地ONTAP系统设置到 GCP 的数据分层时，Cloud Tiering 会自动使用 _Standard_ 存储类来存储您的非活动数据。 Cloud Tiering 可以应用生命周期规则，以便数据在一定天数后从_标准_存储类转换到其他存储类。您可以从以下存储类别中进行选择：
+
+* 近线
+* 冷线
+* 归档
+
+
+如果您不选择其他存储类别，则数据将保留在_标准_存储类别中，并且不应用任何规则。
+
+配置 Cloud Tiering 生命周期规则时，您在 Google 帐户中设置存储桶时不得配置任何生命周期规则。
+
+https://cloud.google.com/storage/docs/storage-classes["了解 Google Cloud Storage 课程"^] 。
+
+
+
+== 支持的 Google Cloud 区域
+
+Cloud Tiering 支持以下区域。
+
+
+
+=== 美国
+
+* 爱荷华州
+* 洛杉矶
+* 蒙特利尔
+* 北弗吉尼亚州
+* 俄勒冈州
+* 圣保罗
+* 南卡罗来纳州
+
+
+
+
+=== 亚太地区
+
+* 香港
+* 孟买
+* 大阪
+* 新加坡
+* 悉尼
+* 台湾
+* 东京
+
+
+
+
+=== 欧洲
+
+* 比利时
+* 芬兰
+* 法兰克福
+* 伦敦
+* 荷兰
+* 苏黎世
+

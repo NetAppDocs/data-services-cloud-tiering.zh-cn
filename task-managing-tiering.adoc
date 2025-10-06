@@ -1,0 +1,288 @@
+---
+sidebar: sidebar 
+permalink: task-managing-tiering.html 
+keywords: discover, volumes, report, hot, cold, inactive, active, capacity, used capacity, savings, health, failed, console 
+summary: 现在您已经从本地ONTAP集群设置了数据分层，您可以从其他卷分层数据、更改卷的分层策略、发现其他集群等等。 
+---
+= 在NetApp Cloud Tiering 中管理集群的数据分层
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+现在您已经从本地ONTAP集群设置了数据分层，您可以使用NetApp Cloud Tiering 对其他卷中的数据进行分层、更改卷的分层策略、发现其他集群等。
+
+
+
+== 查看集群的分层信息
+
+检查云层、磁盘上的数据或集群磁盘上的热数据和冷数据量。或者，您可能想查看集群磁盘上的热数据和冷数据的数量。  Cloud Tiering 为每个集群提供此信息。
+
+.步骤
+. 从左侧导航菜单中，选择*移动性>云分层*。
+. 在“集群”页面中，选择菜单图标image:icon-action.png["操作图标"]对于集群并选择*集群信息*。
++
+image:screenshot_tiering_cluster_info_button.png["从“集群”页面选择“集群信息”按钮的屏幕截图。"]
+
+. 查看有关集群的详细信息。
++
+以下是一个例子：
+
++
+image:screenshot_tiering_cluster_info.png["显示集群总使用数据容量、集群已使用容量和集群信息的屏幕截图。"]
+
+
+
+请注意， Cloud Volumes ONTAP系统的显示有所不同。虽然Cloud Volumes ONTAP卷可以将数据分层到云，但它们不使用 Cloud Tiering 服务。 https://docs.netapp.com/us-en/bluexp-cloud-volumes-ontap/task-tiering.html["了解如何将Cloud Volumes ONTAP系统中的非活动数据分层到低成本对象存储"^] 。
+
+您还可以 https://docs.netapp.com/us-en/active-iq/task-informed-decisions-based-on-cloud-recommendations.html#tiering["从Active IQ Digital Advisor （也称为Digital Advisor）查看集群的分层信息"^]如果您熟悉此NetApp产品。从左侧导航窗格中选择“*云建议*”。
+
+image:screenshot_tiering_aiq_fabricpool_info.png["该屏幕截图显示了使用Digital Advisor的FabricPool Advisor 的集群的FabricPool信息。"]
+
+
+
+== 来自附加卷的层数据
+
+随时为附加卷设置数据分层 - 例如，在创建新卷之后。
+
+
+TIP: 您不需要配置对象存储，因为在您最初为集群设置分层时它已经配置好了。  ONTAP将来自任何附加卷的非活动数据分层到同一对象存储。
+
+.步骤
+. 从左侧导航菜单中，选择*移动性>云分层*。
+. 从“*集群*”页面中，为集群选择“层卷*”。
++
+image:screenshot_tiering_tier_volumes_button.png["显示如何为集群选择 Tier Volumes 按钮的屏幕截图。"]
+
+. 在“Tier Volumes”页面上，选择要配置分层的卷并启动“Tiering Policy”页面：
++
+** 要选择所有卷，请选中标题行中的复选框（image:button_backup_all_volumes.png[""] ) 并选择 *配置卷*。
+** 要选择多个卷，请选中每个卷对应的复选框（image:button_backup_1_volume.png[""] ) 并选择 *配置卷*。
+** 要选择单个卷，请选择行（或image:screenshot_edit_icon.gif["编辑铅笔图标"]图标）来表示音量。
++
+image:screenshot_tiering_tier_volumes.png["屏幕截图显示了如何选择单个卷、多个卷或所有卷以及修改选定卷按钮。"]
+
+
+
+. 在“分层策略”对话框中，选择分层策略，选择性地调整所选卷的冷却天数，然后选择“应用”。
+. 在“分层策略”对话框中，选择分层策略，选择性地调整所选卷的冷却天数，然后选择“应用”。
++
+link:concept-cloud-tiering.html#volume-tiering-policies["了解有关容量分层策略和冷却天数的更多信息"] 。
+
++
+image:screenshot_tiering_policy_settings.png["显示可配置分层策略设置的屏幕截图。"]
+
+
+
+.结果
+ONTAP开始将选定卷的数据分层到云。
+
+
+
+== 更改卷的分层策略
+
+更改卷的分层策略会改变ONTAP将冷数据分层到对象存储的方式。改变从你改变政策的那一刻就开始了。它仅改变卷的后续分层行为 - 它不会追溯将数据移动到云层。
+
+.步骤
+. 从左侧导航菜单中，选择*Mobility > CloudTiering*。
+. 从“*集群*”页面中，为集群选择“层卷*”。
+. 从“*集群*”页面中，为集群选择“层卷*”。
+. 单击卷的行，选择分层策略，选择性地调整冷却天数，然后选择*应用*。
+. 单击卷的行，选择分层策略，选择性地调整冷却天数，然后选择*应用*。
++
+link:concept-cloud-tiering.html#volume-tiering-policies["了解有关容量分层策略和冷却天数的更多信息"] 。
+
++
+image:screenshot_tiering_policy_settings.png["显示可配置分层策略设置的屏幕截图。"]
+
+
+
+
+NOTE: 如果您看到“检索分层数据”选项，请参阅<<将数据从云层迁移回性能层,将数据从云层迁移回性能层>>了解详情。
+
+.结果
+ONTAP更改分层策略并开始根据新策略对数据进行分层。
+
+
+
+== 更改可用于将非活动数据上传到对象存储的网络带宽
+
+当您为集群激活云分层时，默认情况下， ONTAP可以使用无限量的带宽将非活动数据从系统中的卷传输到对象存储。如果分层流量影响用户工作负载，则限制传输期间使用的网络带宽。您可以选择 1 到 10,000 Mbps 之间的值作为最大传输速率。
+
+. 从左侧导航菜单中，选择*移动性>分层*。
+. 在“集群”页面中，选择菜单图标image:icon-action.png["操作图标"]对于集群并选择*最大传输速率*。
+. 在“集群”页面中，选择菜单图标image:icon-action.png["操作图标"]对于集群并选择*最大传输速率*。
++
+image:screenshot_tiering_transfer_rate_button.png["从“集群”页面选择“最大传输速率”按钮的屏幕截图。"]
+
+. 在“最大传输速率”页面中，选择“限制”单选按钮并输入可使用的最大带宽，或者选择“无限制”以表示没有限制。然后选择*应用*。
+. 在“最大传输速率”页面中，选择“限制”单选按钮并输入可使用的最大带宽，或者选择“无限制”以表示没有限制。然后选择*应用*。
++
+image:screenshot_tiering_transfer_rate.png["集群的最大传输速率对话框的屏幕截图。"]
+
+
+
+此设置不会影响分配给分层数据的任何其他集群的带宽。
+
+
+
+== 下载卷的分层报告
+
+下载“层卷”页面的报告，以便您可以查看所管理集群上所有卷的分层状态。只需选择image:button_download.png["下载"]按钮。  Cloud Tiering 会生成一个 .CSV 文件，您可以根据需要查看并发送给其他组。  .CSV 文件包含最多 10,000 行数据。
+
+image:screenshot_tiering_report_download.png["该屏幕截图显示了如何生成列出所有卷的分层状态的 CSV 文件。"]
+
+
+
+== 将数据从云层迁移回性能层
+
+从云端访问的分层数据可能会被“重新加热”并移回性能层。但是，如果您想主动将数据从云层提升到性能层，您可以在“分层策略”对话框中执行此操作。使用ONTAP 9.8 及更高版本时可使用此功能。
+
+如果您想停止在卷上使用分层，或者决定将所有用户数据保留在性能层，但将 Snapshot 副本保留在云层，则可以执行此操作。
+
+有两个选项：
+
+[cols="22,45,35"]
+|===
+| 选项 | 描述 | 对分层策略的影响 
+
+
+| 恢复所有数据 | 检索云中分层的所有卷数据和 Snapshot 副本，并将它们提升到性能层。 | 分层策略更改为“无策略”。 
+
+
+| 恢复活动文件系统 | 仅检索云中分层的活动文件系统数据并将其提升到性能层（Snapshot 副本保留在云中）。 | 分层策略更改为“冷快照”。 
+|===
+
+NOTE: 您的云提供商可能会根据从云端传输的数据量向您收取费用。
+
+.步骤
+确保性能层有足够的空间来存储从云端移回的数据。
+
+. 从左侧导航菜单中，选择*移动性>云分层*。
+. 从“*集群*”页面中，为集群选择“层卷*”。
+. 从“*集群*”页面中，为集群选择“层卷*”。
+. 点击image:screenshot_edit_icon.gif["分层卷表中每行末尾显示的编辑图标"]卷的图标，选择要使用的检索选项，然后选择*应用*。
+. 点击image:screenshot_edit_icon.gif["分层卷表中每行末尾显示的编辑图标"]卷的图标，选择要使用的检索选项，然后选择*应用*。
++
+image:screenshot_tiering_policy_settings_with_retrieve.png["显示可配置分层策略设置的屏幕截图。"]
+
+
+
+.结果
+分层策略发生改变，分层数据开始迁移回性能层。根据云中的数据量，传输过程可能需要一些时间。
+
+
+
+== 管理聚合上的分层设置
+
+本地ONTAP系统中的每个聚合都有两个可以调整的设置：分层完整性阈值以及是否启用非活动数据报告。本地ONTAP系统中的每个聚合都有两个可以调整的设置：分层完整性阈值以及是否启用非活动数据报告。
+
+分层满度阈值:: 将阈值设置为较低的数字会减少分层之前需要存储在性能层上的数据量。这对于包含少量活动数据的大型聚合体可能很有用。
++
+--
+将阈值设置为更高的数字会增加分层之前需要存储在性能层上的数据量。这对于仅在聚合接近最大容量时分层的解决方案可能有用。
+
+--
+非活动数据报告:: 非活动数据报告 (IDR) 使用 31 天的冷却期来确定哪些数据被视为非活动数据。分层的冷数据量取决于卷上设置的分层策略。此数量可能与 IDR 使用 31 天冷却期检测到的冷数据量不同。
++
+--
+
+TIP: 最好保持 IDR 启用，因为它有助于识别您的非活动数据和节省机会。如果在聚合上启用了数据分层，则 IDR 必须保持启用状态。
+
+--
+
+
+.步骤
+. 从“*集群*”页面中，为所选集群选择“*高级设置*”。
+. 从“*集群*”页面中，为所选集群选择“*高级设置*”。
++
+image:screenshot_tiering_advanced_setup_button.png["显示集群的高级设置按钮的屏幕截图。"]
+
+. 从高级设置页面中，选择聚合的菜单图标并选择*修改聚合*。
+. 从高级设置页面中，选择聚合的菜单图标并选择*修改聚合*。
++
+image:screenshot_tiering_modify_aggr.png["显示聚合的“修改聚合”选项的屏幕截图。"]
+
+. 在显示的对话框中，修改满度阈值并选择是否启用或禁用非活动数据报告。
++
+image:screenshot_tiering_modify_aggregate.png["屏幕截图显示了用于修改分层完整度阈值的滑块和用于启用或禁用非活动数据报告的按钮。"]
+
+. 单击“*应用*”。
+
+
+
+
+== 修复运行健康问题
+
+如果发生故障，Cloud Tiering 会在集群仪表板上显示“失败”的运行健康状况。健康状况反映了ONTAP系统和NetApp控制台的状态。
+
+.步骤
+. 识别所有运行状况为“失败”的集群。
+. 将鼠标悬停在信息“i”图标上查看失败原因。
+. 纠正问题：
++
+.. 验证ONTAP集群是否正常运行以及是否具有与对象存储提供程序的入站和出站连接。
+.. 验证控制台是否具有与 Cloud Tiering 服务、对象存储以及它发现的ONTAP集群的出站连接。
+
+
+
+
+
+
+== 从 Cloud Tiering 发现更多集群
+
+您可以从分层_集群_页面将未发现的本地ONTAP集群添加到控制台，以便为集群启用分层。
+
+请注意，Tiering _On-Prem dashboard_ 页面上还会出现按钮，供您发现其他集群。
+
+.步骤
+. 从 Cloud Tiering 中，选择 *Clusters* 选项卡。
+. 要查看任何未发现的集群，请选择“显示未发现的集群”。
+. 要查看任何未发现的集群，请选择“显示未发现的集群”。
++
+image:screenshot_tiering_show_undiscovered_cluster.png["屏幕截图显示了分层仪表板上的“显示未发现的集群”按钮。"]
+
++
+如果您的 NSS 凭据已保存在控制台中，则您帐户中的集群将显示在列表中。
+
++
+如果您的 NSS 凭据未保存，系统会首先提示您添加凭据，然后您才能看到未发现的集群。
+
++
+image:screenshot_tiering_discover_cluster.png["该屏幕截图显示了如何发现现有集群以添加到控制台和分层仪表板。"]
+
+. 单击您想要通过控制台管理并实施数据分层的集群的“发现集群”。
+. 在“集群详细信息”页面中，输入管理员用户帐户的密码并选择“发现”。
+. 在“集群详细信息”页面中，输入管理员用户帐户的密码并选择“发现”。
++
+请注意，集群管理 IP 地址是根据您的 NSS 帐户中的信息填充的。
+
+. 在“详细信息和凭据”页面中，集群名称被添加为系统名称，因此选择“开始”。
+
+
+.结果
+控制台发现集群并将其添加到系统页面，使用集群名称作为系统名称。
+
+您可以在右侧面板中为该集群启用分层服务或其他服务。
+
+
+
+== 在所有控制台代理中搜索集群
+
+如果您使用多个代理来管理环境中的所有存储，那么您想要实施分层的某些集群可能位于另一个代理中。如果您不确定哪个代理正在管理某个集群，您可以使用 Cloud Tiering 在所有代理中进行搜索。
+
+.步骤
+. 在 Cloud Tiering 菜单栏中，选择操作菜单并选择*在所有代理中搜索集群*。
++
+image:screenshot_tiering_search for_cluster.png["屏幕截图显示了如何搜索可能存在于任何代理中的集群。"]
+
+. 在显示的搜索对话框中，输入集群名称并选择*搜索*。
++
+如果 Cloud Tiering 能够找到集群，则会显示代理的名称。
+
+. https://docs.netapp.com/us-en/bluexp-setup-admin/task-manage-multiple-connectors.html#switch-between-connectors["切换到代理并为集群配置分层"^] 。
+

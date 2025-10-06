@@ -1,0 +1,15 @@
+= 许可标签已被删除
+:allow-uri-read: 
+
+
+
+
+=== 许可标签已被删除
+
+许可选项卡已从 Cloud Tiering 界面中删除。现在可以从 Cloud Tiering On-Premises Dashboard 访问所有即用即付 (PAYGO) 订阅的许可。该页面还提供指向BlueXP digital wallet的链接，以便您可以查看和管理任何 Cloud Tiering 自带许可证 (BYOL)。
+
+
+
+=== 分层选项卡已重命名并更新
+
+“集群仪表板”选项卡已重命名为“集群”，“本地概览”选项卡已重命名为“本地仪表板”。这些页面添加了一些信息，可以帮助您评估是否可以通过额外的分层配置来优化存储空间。
