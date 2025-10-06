@@ -2,9 +2,9 @@
 sidebar: sidebar 
 permalink: task-managing-object-storage.html 
 keywords: object storage, mirror object storage, create object storage, remove object storage, swap object storage, display object storage, license 
-summary: 将本地ONTAP集群配置为将数据分层到特定对象存储后，您可以在NetApp Cloud Tiering 中执行其他对象存储任务。您可以添加新的对象存储、将分层数据镜像到辅助对象存储、交换主对象存储和镜像对象存储、从聚合中删除镜像对象存储等等。 
+summary: 在配置本地ONTAP集群以将数据分层到特定对象存储后，您可以在NetApp Cloud Tiering中执行其他对象存储任务。您可以添加新的对象存储、将分层数据镜像到辅助对象存储、交换主对象存储和镜像对象存储、从聚合中删除镜像对象存储等等。 
 ---
-= 管理NetApp Cloud Tiering 中用于数据分层的对象存储
+= 管理NetApp Cloud Tiering中用于数据分层的对象存储
 :hardbreaks:
 :allow-uri-read: 
 :nofooter: 
@@ -14,7 +14,7 @@ summary: 将本地ONTAP集群配置为将数据分层到特定对象存储后，
 
 
 [role="lead"]
-在配置本地ONTAP集群以将数据分层到特定对象存储后，您可以使用NetApp Cloud Tiering 执行其他对象存储任务。您可以添加新的对象存储、将分层数据镜像到辅助对象存储、交换主对象存储和镜像对象存储、从聚合中删除镜像对象存储等等。
+在配置本地ONTAP集群以将数据分层到特定对象存储后，您可以使用NetApp Cloud Tiering执行其他对象存储任务。您可以添加新的对象存储、将分层数据镜像到辅助对象存储、交换主对象存储和镜像对象存储、从聚合中删除镜像对象存储等等。
 
 
 

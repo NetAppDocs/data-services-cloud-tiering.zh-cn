@@ -11,17 +11,17 @@ settings:
   langs: zh-cn,us-en,de-de,es-es,fr-fr,it-it,pt-br,ja-jp,ko-kr,zh-tw
 sidebar:
   entries:
-  - title: NetApp云分层文档
+  - title: NetApp Cloud Tiering文档
     url: "/index.html"
   - title: 发行说明
     url: "/whats-new.html"
   - title: 开始使用
     entries:
-    - title: 了解NetApp云分层
+    - title: 了解NetApp Cloud Tiering
       url: "/concept-cloud-tiering.html"
     - title: 将本地数据分层到云
       entries:
-      - title: 升级至 Amazon S3
+      - title: 层级至 Amazon S3
         url: "/task-tiering-onprem-aws.html"
       - title: Azure Blob 存储层
         url: "/task-tiering-onprem-azure.html"

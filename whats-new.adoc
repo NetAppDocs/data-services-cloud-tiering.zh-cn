@@ -2,9 +2,9 @@
 sidebar: sidebar 
 permalink: whats-new.html 
 keywords: 'what"s new, features, new, release notes, bugs, limitations, known issues, enhancements, fixes, tiering' 
-summary: 了解NetApp Cloud Tiering 的新功能。 
+summary: 了解NetApp Cloud Tiering的新功能。 
 ---
-= NetApp Cloud Tiering 的新功能
+= NetApp Cloud Tiering的新功能
 :hardbreaks:
 :allow-uri-read: 
 :nofooter: 
@@ -14,7 +14,7 @@ summary: 了解NetApp Cloud Tiering 的新功能。
 
 
 [role="lead"]
-了解NetApp Cloud Tiering 的新功能。
+了解NetApp Cloud Tiering的新功能。
 
 
 
@@ -22,17 +22,17 @@ summary: 了解NetApp Cloud Tiering 的新功能。
 
 
 
-=== BlueXP tiering现已更名为NetApp Cloud Tiering
+=== BlueXP tiering现已更名NetApp Cloud Tiering
 
 BlueXP tiering已重命名为NetApp Cloud Tiering。
 
 
 
-=== BlueXP现在是NetApp控制台
+=== BlueXP现在是NetApp Console
 
-NetApp控制台建立在增强和重组的BlueXP基础之上，可在企业级内部和云环境中集中管理NetApp存储和NetApp数据服务，提供实时洞察、更快的工作流程和简化的管理，并且高度安全且合规。
+NetApp Console建立在增强和重组的BlueXP基础之上，可在企业级内部和云环境中集中管理NetApp存储和NetApp Data Services，提供实时洞察、更快的工作流程和简化的管理，并且高度安全且合规。
 
-有关更改的详细信息，请参阅link:https://docs.netapp.com/us-en/bluexp-relnotes/index.html["NetApp控制台发行说明"]。
+有关更改的详细信息，请参阅link:https://docs.netapp.com/us-en/bluexp-relnotes/index.html["NetApp Console发行说明"]。
 
 
 
@@ -42,7 +42,7 @@ NetApp控制台建立在增强和重组的BlueXP基础之上，可在企业级�
 
 === 使用自定义前缀作为存储桶名称
 
-过去，定义存储桶名称时需要使用默认的“fabric-pool”前缀，例如 _fabric-pool-bucket1_。现在您可以在命名存储桶时使用自定义前缀。仅当将数据分层到 Amazon S3 时，此功能才可用。 https://docs.netapp.com/us-en/bluexp-tiering/task-tiering-onprem-aws.html#prepare-your-aws-environment["了解更多"] 。
+过去，定义存储桶名称时需要使用默认的“fabric-pool”前缀，例如 _fabric-pool-bucket1_。现在您可以在命名存储桶时使用自定义前缀。仅当将数据分层到 Amazon S3 时此功能才可用。 https://docs.netapp.com/us-en/bluexp-tiering/task-tiering-onprem-aws.html#prepare-your-aws-environment["了解更多"] 。
 
 
 
@@ -90,7 +90,7 @@ NetApp控制台建立在增强和重组的BlueXP基础之上，可在企业级�
 
 
 
-=== 生成卷分层报告
+=== 生成卷的分层报告
 
 您可以从“层卷”页面下载报告，以便查看您正在管理的集群上所有卷的分层状态。  BlueXP Tiering 生成一个 .CSV 文件，您可以根据需要查看并发送给公司中的其他人。 https://docs.netapp.com/us-en/bluexp-tiering/task-managing-tiering.html#download-a-tiering-report-for-your-volumes["了解如何下载分层报告"] 。
 
@@ -136,7 +136,7 @@ NetApp控制台建立在增强和重组的BlueXP基础之上，可在企业级�
 
 在以前的版本中，提供这种通过 VPC 端点将集群连接到 S3 存储桶的安全方式非常耗时。现在您可以按照先决条件步骤 https://docs.netapp.com/us-en/bluexp-tiering/task-tiering-onprem-aws.html#configure-your-system-for-a-private-connection-using-a-vpc-endpoint-interface["使用 VPC 终端节点接口配置系统以进行私有连接"]，然后您可以在网络页面的分层设置向导期间选择 PrivateLink。
 
-https://docs.netapp.com/us-en/bluexp-tiering/task-tiering-onprem-aws.html["查看将非活动数据分层到 Amazon S3 的要求和步骤"] 。
+https://docs.netapp.com/us-en/bluexp-tiering/task-tiering-onprem-aws.html["查看将非活动数据分层到 Amazon S3 的要求和步骤"]。
 
 
 

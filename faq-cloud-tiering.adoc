@@ -4,7 +4,7 @@ permalink: faq-cloud-tiering.html
 keywords: faq, questions, requirements, service connector, agent, object store, object storage, aws, azure, bucket, cluster, aggregate, s3, storage class, standard, inactive data reporting, auto, volume tiering policy, policy, tiering policy, snapshot, cold, inactive, infrequent, agent, netapp console, console,cloud tier 
 summary: 如果您只是想快速找到问题的答案，此常见问题解答可以为您提供帮助。 
 ---
-= NetApp Cloud Tiering 技术常见问题解答
+= NetApp Cloud Tiering技术常见问题解答
 :hardbreaks:
 :allow-uri-read: 
 :nofooter: 
@@ -14,7 +14,7 @@ summary: 如果您只是想快速找到问题的答案，此常见问题解答�
 
 
 [role="lead"]
-如果您只是想快速找到有关NetApp Cloud Tiering 的问题的答案，那么此常见问题解答可以为您提供帮助。
+如果您只是想快速找到有关NetApp Cloud Tiering的问题的答案，那么此常见问题解答可以为您提供帮助。
 
 
 
@@ -118,7 +118,7 @@ FabricPool是ONTAP分层技术，可以通过ONTAP CLI 和系统管理器进行�
 * 对于年度（BYOL）、基于期限的订阅：起价为每 GB/月 0.033 美元。
 
 
-https://bluexp.netapp.com/pricing["查看定价详情"] 。
+https://bluexp.netapp.com/pricing["查看定价详情"]。
 
 将冷数据分层到NetApp StorageGRID系统（私有云）时无需任何成本。
 
@@ -168,7 +168,7 @@ https://bluexp.netapp.com/pricing["查看定价详情"] 。
 
 === 在启用云分层之前，如何估算卷的节省并获取冷数据报告？
 
-要获得估算，请将您的ONTAP集群添加到NetApp控制台并通过 Cloud Tiering Clusters 页面进行检查。选择集群的“计算潜在的分层节省”以启动 https://bluexp.netapp.com/cloud-tiering-service-tco["云分层 TCO 计算器"^]看看您能节省多少钱。
+要获得估算，请将您的ONTAP集群添加到NetApp Console并通过 Cloud Tiering Clusters 页面进行检查。选择集群的“计算潜在的分层节省”以启动 https://bluexp.netapp.com/cloud-tiering-service-tco["云分层 TCO 计算器"^]看看您能节省多少钱。
 
 
 
@@ -210,7 +210,7 @@ Cloud Tiering 支持ONTAP 9.2 及更高版本。
 
 === 那么Cloud Volumes ONTAP怎么样？
 
-如果您有Cloud Volumes ONTAP系统，您会在 Cloud Tiering Clusters 页面中找到它们，这样您就可以全面了解混合云基础架构中的数据分层。但是， Cloud Volumes ONTAP系统从 Cloud Tiering 来看是只读的。您无法从 Cloud Tiering 在Cloud Volumes ONTAP上设置数据分层。 https://docs.netapp.com/us-en/bluexp-cloud-volumes-ontap/task-tiering.html["您可以从NetApp控制台中的ONTAP系统设置Cloud Volumes ONTAP系统的分层"^] 。
+如果您有Cloud Volumes ONTAP系统，您会在 Cloud Tiering Clusters 页面中找到它们，这样您就可以全面了解混合云基础架构中的数据分层。但是， Cloud Volumes ONTAP系统从 Cloud Tiering 来看是只读的。您无法从 Cloud Tiering 在Cloud Volumes ONTAP上设置数据分层。 https://docs.netapp.com/us-en/bluexp-cloud-volumes-ontap/task-tiering.html["您可以从NetApp Console中的ONTAP系统设置Cloud Volumes ONTAP系统的分层"^] 。
 
 
 
@@ -342,7 +342,7 @@ Cloud Tiering 支持将数据分层为 _Standard_、_Nearline_、_Coldline_ 和 
 
 
 
-=== 我可以使用云提供商的控制台或对象存储浏览器来查看存储桶分层的数据吗？如果不通过ONTAP，我可以直接使用对象存储中存储的数据吗？
+=== 我可以使用云提供商的控制台或对象存储浏览器来查看存储桶分层的数据吗？我可以不使用ONTAP直接使用对象存储中存储的数据吗？
 
 不可以。构建并分层到云中的对象不包含单个文件，而是包含来自多个文件的最多 1,024 个 4KB 块。卷的元数据始终保留在本地层。
 
@@ -356,7 +356,7 @@ Cloud Tiering 支持将数据分层为 _Standard_、_Nearline_、_Coldline_ 和 
 
 === 什么是控制台代理？
 
-控制台代理是在您的云帐户或本地的计算实例上运行的软件，它使NetApp控制台能够安全地管理云资源。要使用 Cloud Tiering 服务，您必须部署代理。
+控制台代理是在您的云帐户或本地的计算实例上运行的软件，它使NetApp Console能够安全地管理云资源。要使用 Cloud Tiering 服务，您必须部署代理。
 
 
 
@@ -402,7 +402,7 @@ Cloud Tiering 支持将数据分层为 _Standard_、_Nearline_、_Coldline_ 和 
 * 所有用户数据（全部）：将所有数据归类为冷数据；立即将整个卷移动到对象存储。
 
 
-link:concept-cloud-tiering.html#volume-tiering-policies["了解有关分层策略的更多信息"] 。
+link:concept-cloud-tiering.html#volume-tiering-policies["了解有关分层策略的更多信息"]。
 
 
 
@@ -436,7 +436,7 @@ link:concept-cloud-tiering.html#volume-tiering-policies["了解有关分层策�
 
 
 
-=== 将卷的分层策略重置为“无”是否会重新补充冷数据或只是阻止未来的冷块移动到云中？
+=== 将卷的分层策略重置为“无”是否会重新补充冷数据或只是防止将来的冷块被移动到云中？
 
 重置分层策略时不会发生补水，但它会阻止新的冷块移动到云层。
 
@@ -527,9 +527,9 @@ ONTAP从对象存储中读取和写入数据。对象存储从不启动，它只
 
 === 需要什么权限？
 
-* link:task-tiering-onprem-aws.html#set-up-s3-permissions["对于亚马逊，需要权限来管理 S3 bucket"] 。
-* 对于 Azure，除了需要向NetApp控制台提供的权限之外，不需要其他额外权限。
-* link:task-tiering-onprem-gcp.html#preparing-google-cloud-storage["对于 Google Cloud，需要具有存储访问密钥的服务帐号的存储管理员权限"] 。
-* link:task-tiering-onprem-storagegrid.html#preparing-storagegrid["对于StorageGRID，需要 S3 权限"] 。
-* link:task-tiering-onprem-s3-compat.html#preparing-s3-compatible-object-storage["对于与 S3 兼容的对象存储，需要 S3 权限"] 。
+* link:task-tiering-onprem-aws.html#set-up-s3-permissions["对于亚马逊，需要权限来管理 S3 bucket"]。
+* 对于 Azure，除了需要向NetApp Console提供的权限之外，不需要其他额外权限。
+* link:task-tiering-onprem-gcp.html#preparing-google-cloud-storage["对于 Google Cloud，需要具有存储访问密钥的服务帐号的存储管理员权限"]。
+* link:task-tiering-onprem-storagegrid.html#preparing-storagegrid["对于StorageGRID，需要 S3 权限"]。
+* link:task-tiering-onprem-s3-compat.html#preparing-s3-compatible-object-storage["对于与 S3 兼容的对象存储，需要 S3 权限"]。
 

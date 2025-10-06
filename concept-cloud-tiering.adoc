@@ -4,7 +4,7 @@ permalink: concept-cloud-tiering.html
 keywords: cloud tiering, overview, conceptual, value, features, cost, charging, tiering policies, cooling period, fabricpool, netapp console, console, bluexp 
 summary: NetApp 的 Cloud Tiering 服务可自动将非活动数据从本地ONTAP集群分层到对象存储，从而将您的数据中心扩展到云端。这释放了集群上的宝贵空间以用于更多工作负载，而无需更改应用程序层。云分层可以降低数据中心的成本，并使您能够从 CAPEX 模型切换到 OPEX 模型。 
 ---
-= 了解NetApp云分层
+= 了解NetApp Cloud Tiering
 :hardbreaks:
 :allow-uri-read: 
 :nofooter: 
@@ -14,7 +14,7 @@ summary: NetApp 的 Cloud Tiering 服务可自动将非活动数据从本地ONTA
 
 
 [role="lead"]
-NetApp Cloud Tiering 通过自动将非活动数据从本地ONTAP集群分层到对象存储，将您的数据中心扩展到云。这释放了集群上的宝贵空间以用于更多工作负载，而无需更改应用程序层。云分层可以降低数据中心的成本，并使您能够从 CAPEX 模型切换到 OPEX 模型。
+NetApp Cloud Tiering通过自动将非活动数据从本地ONTAP集群分层到对象存储，将您的数据中心扩展到云端。这释放了集群上的宝贵空间以用于更多工作负载，而无需更改应用程序层。云分层可以降低数据中心的成本，并使您能够从 CAPEX 模型切换到 OPEX 模型。
 
 Cloud Tiering 利用了 _FabricPool_ 的功能。 FabricPool是一种NetApp Data Fabric 技术，可实现数据自动分层到低成本对象存储。活动（热）数据保留在本地层（内部ONTAP聚合），而非活动（冷）数据则移动到云层 - 同时保持ONTAP数据效率。
 
@@ -22,19 +22,19 @@ Cloud Tiering 利用了 _FabricPool_ 的功能。 FabricPool是一种NetApp Data
 
 您可以使用FabricPool Mirror 为单节点集群、HA 配置的集群、分层镜像配置中的集群以及MetroCluster配置配置分层。  Cloud Tiering 许可证在您的所有集群之间共享。
 
-https://bluexp.netapp.com/cloud-tiering-service-tco["使用云分层 TCO 计算器来查看您可以节省多少钱"^] 。
+https://bluexp.netapp.com/cloud-tiering-service-tco["使用云分层 TCO 计算器来查看您可以节省多少钱"^]。
 
 
 
-== NetApp控制台
+== NetApp Console
 
-可通过NetApp控制台访问NetApp Cloud Tiering。
+可通过NetApp Console访问NetApp Cloud Tiering 。
 
-NetApp控制台可在企业范围内跨本地和云环境集中管理NetApp存储和数据服务。需要控制台才能访问和使用NetApp数据服务。作为管理界面，它使您能够从一个界面管理许多存储资源。控制台管理员可以控制企业内所有系统的存储和服务的访问。
+NetApp Console可在企业范围内跨本地和云环境集中管理NetApp存储和数据服务。需要控制台才能访问和使用NetApp数据服务。作为管理界面，它使您能够从一个界面管理许多存储资源。控制台管理员可以控制企业内所有系统的存储和服务的访问。
 
-您不需要许可证或订阅即可开始使用NetApp控制台，并且只有当您需要在云中部署控制台代理以确保与存储系统或NetApp数据服务的连接时才需要付费。但是，一些可从控制台访问的NetApp数据服务是需要许可或基于订阅的。
+您不需要许可证或订阅即可开始使用NetApp Console，并且只有当您需要在云中部署控制台代理以确保与存储系统或NetApp数据服务的连接时才需要付费。但是，一些可从控制台访问的NetApp数据服务是需要许可或基于订阅的。
 
-详细了解 https://docs.netapp.com/us-en/bluexp-setup-admin/concept-overview.html["NetApp控制台"]。
+详细了解 https://docs.netapp.com/us-en/bluexp-setup-admin/concept-overview.html["NetApp Console"]。
 
 
 
@@ -52,10 +52,10 @@ Cloud Tiering 提供自动化、监控、报告和通用管理界面：
 * 如果您有Cloud Volumes ONTAP系统，您会在 Clusters 页面中找到它们，这样您就可以全面了解混合云基础架构中的数据分层。
 
 
-有关 Cloud Tiering 提供的价值的更多详细信息， https://bluexp.netapp.com/cloud-tiering["查看NetApp Console 网站上的 Cloud Tiering 页面"^] 。
+有关 Cloud Tiering 提供的价值的更多详细信息， https://bluexp.netapp.com/cloud-tiering["查看NetApp Console网站上的 Cloud Tiering 页面"^] 。
 
 
-TIP: Cloud Volumes ONTAP系统从 Cloud Tiering 来看是只读的。 https://docs.netapp.com/us-en/bluexp-cloud-volumes-ontap/task-tiering.html["您可以在NetApp控制台中为Cloud Volumes ONTAP系统设置分层。"^] 。
+TIP: Cloud Volumes ONTAP系统从 Cloud Tiering 来看是只读的。 https://docs.netapp.com/us-en/bluexp-cloud-volumes-ontap/task-tiering.html["您可以在NetApp Console中为Cloud Volumes ONTAP系统设置分层。"^] 。
 
 
 
@@ -99,7 +99,7 @@ NOTE: 您无法为分层到StorageGRID或 S3 兼容存储的数据选择生命�
 
 将数据分层到StorageGRID时无需支付任何费用。不需要 BYOL 许可证或 PAYGO 注册。
 
-https://bluexp.netapp.com/pricing#tiering["查看定价详情"^] 。
+https://bluexp.netapp.com/pricing#tiering["查看定价详情"^]。
 
 由于 Cloud Tiering 保留了源卷的存储效率，因此您需要为ONTAP效率之后的分层数据（应用重复数据删除和压缩后的较少量数据）向云提供商对象存储支付费用。
 
@@ -131,7 +131,7 @@ Cloud Tiering 以即用即付模式提供基于消费的许可。通过云提供
 
 在免费试用期间或未超出 Cloud Tiering BYOL 许可证的情况下，您无需支付即用即付订阅费用。
 
-link:task-licensing-cloud-tiering.html#use-a-bluexp-tiering-paygo-subscription["了解如何设置即用即付订阅"] 。
+link:task-licensing-cloud-tiering.html#use-a-bluexp-tiering-paygo-subscription["了解如何设置即用即付订阅"]。
 
 
 
@@ -145,9 +145,9 @@ link:task-licensing-cloud-tiering.html#use-a-bluexp-tiering-paygo-subscription["
 
 === 自带驾照
 
-通过从NetApp购买 *Cloud Tiering* 许可证（以前称为“Cloud Tiering”许可证）来自带许可证。您可以购买 1 年、2 年或 3 年期许可证，并指定任意数量的分层容量（最低 10 TiB）。 BYOL Cloud Tiering 许可证是一种浮动许可证，您可以在多个本地ONTAP集群中使用它。您在 Cloud Tiering 许可证中定义的总分层容量可供所有本地集群使用。
+通过从NetApp购买 *Cloud Tiering* 许可证（以前称为“Cloud Tiering”许可证）来获取您自己的许可证。您可以购买 1 年、2 年或 3 年期许可证，并指定任意数量的分层容量（最低 10 TiB）。 BYOL Cloud Tiering 许可证是一种浮动许可证，您可以在多个本地ONTAP集群中使用它。您在 Cloud Tiering 许可证中定义的总分层容量可供所有本地集群使用。
 
-购买 Cloud Tiering 许可证后，您需要将该许可证添加到NetApp控制台。link:task-licensing-cloud-tiering.html#use-a-bluexp-tiering-byol-license["了解如何使用 Cloud Tiering BYOL 许可证"] 。
+购买 Cloud Tiering 许可证后，您需要将该许可证添加到NetApp Console。link:task-licensing-cloud-tiering.html#use-a-bluexp-tiering-byol-license["了解如何使用 Cloud Tiering BYOL 许可证"] 。
 
 如上所述，即使您已经购买了 BYOL 许可证，我们也建议您设置即用即付订阅。
 
@@ -166,7 +166,7 @@ image:diagram_cloud_tiering.png["架构图像显示了云分层服务与云提�
 
 从高层次来看，云分层的工作原理如下：
 
-. 您可以从NetApp控制台发现您的内部部署集群。
+. 您可以从NetApp Console发现您的内部部署集群。
 . 您可以通过提供有关对象存储的详细信息来设置分层，包括存储桶/容器、存储类或访问层以及分层数据的生命周期规则。
 . 控制台将ONTAP配置为使用对象存储提供程序并发现集群上的活动和非活动数据量。
 . 您选择要分层的卷以及要应用于这些卷的分层策略。
@@ -230,7 +230,7 @@ NOTE: 仅当有空间时，重新加热的数据才会写回到性能层。如�
 +
 由于数据是立即分层的，因此SnapMirror将从云层而不是性能层读取数据。这将导致SnapMirror操作速度变慢 - 甚至可能减慢队列中后面的其他SnapMirror操作速度 - 即使它们使用不同的分层策略。
 
-* NetApp Backup and Recovery 同样受到采用分层策略设置的卷的影响。 https://docs.netapp.com/us-en/bluexp-backup-recovery/concept-ontap-backup-to-cloud.html#fabricpool-tiering-policy-considerations["了解备份和恢复的分层策略注意事项"^] 。
+* NetApp Backup and Recovery同样受到采用分层策略设置的卷的影响。 https://docs.netapp.com/us-en/bluexp-backup-recovery/concept-ontap-backup-to-cloud.html#fabricpool-tiering-policy-considerations["了解备份和恢复的分层策略注意事项"^] 。
 
 
 --

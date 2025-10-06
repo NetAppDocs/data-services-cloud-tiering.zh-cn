@@ -2,9 +2,9 @@
 sidebar: sidebar 
 permalink: task-tiering-onprem-storagegrid.html 
 keywords: data tiering, fabricpool, cloud tiering, tiering cold data, tiering inactive data, tiering aff, tiering fas, tiering ontap, tiering volumes, tier data, tier cold data, tier fas, tier aff, tier ontap, storagegrid, tier to storagegrid, fabricpool storagegrid 
-summary: 通过将非活动数据分层到NetApp Cloud Tiering 中的StorageGRID ，释放本地ONTAP集群上的空间。 
+summary: 通过将非活动数据分层到NetApp Cloud Tiering中的StorageGRID ，释放本地ONTAP集群上的空间。 
 ---
-= 将数据从本地ONTAP集群分层到NetApp Cloud Tiering 中的StorageGRID
+= 将数据从本地ONTAP集群分层到NetApp Cloud Tiering中的StorageGRID
 :hardbreaks:
 :allow-uri-read: 
 :nofooter: 
@@ -14,7 +14,7 @@ summary: 通过将非活动数据分层到NetApp Cloud Tiering 中的StorageGRID
 
 
 [role="lead"]
-通过将非活动数据分层到NetApp Cloud Tiering 中的StorageGRID ，释放本地ONTAP集群上的空间。
+通过将非活动数据分层到NetApp Cloud Tiering中的StorageGRID ，释放本地ONTAP集群上的空间。
 
 
 
@@ -27,7 +27,7 @@ summary: 通过将非活动数据分层到NetApp Cloud Tiering 中的StorageGRID
 您需要以下内容：
 
 [role="quick-margin-list"]
-* 已添加到NetApp控制台的运行ONTAP 9.4 或更高版本的源本地ONTAP集群，以及通过用户指定端口到StorageGRID 的连接。 https://docs.netapp.com/us-en/bluexp-ontap-onprem/task-discovering-ontap.html["了解如何发现集群"^] 。
+* 已添加到NetApp Console的运行ONTAP 9.4 或更高版本的源本地ONTAP集群，以及通过用户指定端口到StorageGRID 的连接。 https://docs.netapp.com/us-en/bluexp-ontap-onprem/task-discovering-ontap.html["了解如何发现集群"^] 。
 * 具有 S3 权限的 AWS 访问密钥的StorageGRID 10.3 或更高版本。
 * 在您的场所安装控制台代理。
 * 代理的网络可实现与ONTAP集群、 StorageGRID和 Cloud Tiering 服务的出站 HTTPS 连接。
@@ -35,7 +35,7 @@ summary: 通过将非活动数据分层到NetApp Cloud Tiering 中的StorageGRID
 
 .image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-2.png["两个"]设置分层
 [role="quick-margin-para"]
-在NetApp控制台中，选择一个本地系统，选择“启用”云分层，然后按照提示将数据分层到StorageGRID。
+在NetApp Console中，选择一个本地系统，选择“启用”云分层，然后按照提示将数据分层到StorageGRID。
 
 
 
@@ -65,7 +65,7 @@ NOTE: 代理和StorageGRID之间的通信仅用于对象存储设置。
 
 --
 支持的ONTAP版本:: ONTAP 9.4 或更高版本
-许可:: 将数据分层到StorageGRID时，您的NetApp Console 组织不需要 Cloud Tiering 许可证， ONTAP集群上也不需要FabricPool许可证。
+许可:: 将数据分层到StorageGRID时，您的NetApp Console组织不需要 Cloud Tiering 许可证， ONTAP集群上也不需要FabricPool许可证。
 集群网络要求::
 +
 --
@@ -94,9 +94,9 @@ NOTE: 从ONTAP 9.5 开始，Cloud Tiering 支持FlexGroup卷。设置方式与�
 
 === 发现ONTAP集群
 
-您需要先将本地ONTAP系统添加到NetApp控制台，然后才能开始分层冷数据。
+您需要先将本地ONTAP系统添加到NetApp Console，然后才能开始分层冷数据。
 
-https://docs.netapp.com/us-en/bluexp-ontap-onprem/task-discovering-ontap.html["了解如何发现集群"^] 。
+https://docs.netapp.com/us-en/bluexp-ontap-onprem/task-discovering-ontap.html["了解如何发现集群"^]。
 
 
 
@@ -159,7 +159,7 @@ S3 凭证:: 当您设置分层到StorageGRID时，您需要向 Cloud Tiering 提
 准备好环境后，开始从第一个集群中分层非活动数据。
 
 .你需要什么
-* https://docs.netapp.com/us-en/bluexp-ontap-onprem/task-discovering-ontap.html["添加到NetApp控制台的本地系统"^] 。
+* https://docs.netapp.com/us-en/bluexp-ontap-onprem/task-discovering-ontap.html["添加到NetApp Console的本地系统"^]。
 * StorageGRID网关节点的 FQDN 以及将用于 HTTPS 通信的端口。
 * 具有所需 S3 权限的 AWS 访问密钥。
 
@@ -168,7 +168,7 @@ S3 凭证:: 当您设置分层到StorageGRID时，您需要向 Cloud Tiering 提
 . 选择本地ONTAP系统。
 . 单击右侧面板中的“启用云分层”****。
 +
-如果StorageGRID分层目标作为NetApp控制台中的系统存在，则可以将集群拖到StorageGRID系统上以启动设置向导。
+如果StorageGRID分层目标作为NetApp Console中的系统存在，则可以将集群拖到StorageGRID系统上以启动设置向导。
 
 +
 image:screenshot_setup_tiering_onprem.png["屏幕截图显示了选择本地ONTAP系统后屏幕右侧出现的“设置分层”选项。"]
@@ -210,7 +210,7 @@ image:screenshot_tiering_initial_volumes.png["屏幕截图显示了如何选择�
 . 在“分层策略”对话框中，选择分层策略，选择性地调整所选卷的冷却天数，然后选择“应用”。
 . 在“分层策略”对话框中，选择分层策略，选择性地调整所选卷的冷却天数，然后选择“应用”。
 +
-link:concept-cloud-tiering.html#volume-tiering-policies["了解有关容量分层策略和冷却天数的更多信息"] 。
+link:concept-cloud-tiering.html#volume-tiering-policies["了解有关容量分层策略和冷却天数的更多信息"]。
 
 +
 image:screenshot_tiering_initial_policy_settings.png["显示可配置分层策略设置的屏幕截图。"]

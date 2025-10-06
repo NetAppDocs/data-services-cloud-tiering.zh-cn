@@ -4,7 +4,7 @@ permalink: task-tiering-onprem-azure.html
 keywords: data tiering, fabricpool, cloud tiering, tiering cold data, tiering inactive data, tiering aff, tiering fas, tiering ontap, tiering volumes, tier data, tier cold data, tier fas, tier aff, tier ontap, azure, blob, azure blob 
 summary: 通过将非活动数据分层到 Azure Blob 存储来释放本地ONTAP集群上的空间。 
 ---
-= 将本地ONTAP集群中的数据分层到NetApp Cloud Tiering 中的 Azure Blob 存储
+= 将本地ONTAP集群中的数据分层到NetApp Cloud Tiering中的 Azure Blob 存储
 :hardbreaks:
 :allow-uri-read: 
 :nofooter: 
@@ -27,14 +27,14 @@ summary: 通过将非活动数据分层到 Azure Blob 存储来释放本地ONTAP
 您需要以下内容：
 
 [role="quick-margin-list"]
-* 已添加到NetApp控制台的运行ONTAP 9.4 或更高版本的源本地ONTAP集群，以及与 Azure Blob 存储的 HTTPS 连接。 https://docs.netapp.com/us-en/bluexp-ontap-onprem/task-discovering-ontap.html["了解如何发现集群"^] 。
+* 已添加到NetApp Console的运行ONTAP 9.4 或更高版本的源本地ONTAP集群，以及与 Azure Blob 存储的 HTTPS 连接。 https://docs.netapp.com/us-en/bluexp-ontap-onprem/task-discovering-ontap.html["了解如何发现集群"^] 。
 * 安装在 Azure VNet 或您的本地的控制台代理。
 * 代理的网络可实现与数据中心中的ONTAP集群、Azure 存储和 Cloud Tiering 服务的出站 HTTPS 连接。
 
 
 .image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-2.png["两个"]设置分层
 [role="quick-margin-para"]
-在NetApp控制台中，选择一个本地ONTAP系统，为分层服务选择“启用”，然后按照提示将数据分层到 Azure Blob 存储。
+在NetApp Console中，选择一个本地ONTAP系统，为分层服务选择“启用”，然后按照提示将数据分层到 Azure Blob 存储。
 
 .image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-3.png["三"]设置许可
 [role="quick-margin-para"]
@@ -42,7 +42,7 @@ summary: 通过将非活动数据分层到 Azure Blob 存储来释放本地ONTAP
 
 [role="quick-margin-list"]
 * 要从 Azure 市场订阅， https://azuremarketplace.microsoft.com/en-us/marketplace/apps/netapp.cloud-manager?tab=Overview["前往市场"^] ，选择*订阅*，然后按照提示操作。
-* 要使用 Cloud Tiering BYOL 许可证付款，请发邮件至：ng-cloud-tiering@netapp.com?subject=Licensing[如果您需要购买，请联系我们]，然后link:https://docs.netapp.com/us-en/bluexp-digital-wallet/task-manage-data-services-licenses.html["将其添加到NetApp控制台"]。
+* 要使用 Cloud Tiering BYOL 许可证付款，请发邮件至：ng-cloud-tiering@netapp.com?subject=Licensing[如果您需要购买，请联系我们]，然后link:https://docs.netapp.com/us-en/bluexp-digital-wallet/task-manage-data-services-licenses.html["将其添加到NetApp Console"]。
 
 
 
@@ -104,9 +104,9 @@ NOTE: 从ONTAP 9.5 开始，Cloud Tiering 支持FlexGroup卷。设置方式与�
 
 === 发现ONTAP集群
 
-您需要先将本地ONTAP系统添加到NetApp控制台，然后才能开始分层冷数据。
+您需要先将本地ONTAP系统添加到NetApp Console，然后才能开始分层冷数据。
 
-https://docs.netapp.com/us-en/bluexp-ontap-onprem/task-discovering-ontap.html["了解如何发现集群"^] 。
+https://docs.netapp.com/us-en/bluexp-ontap-onprem/task-discovering-ontap.html["了解如何发现集群"^]。
 
 
 
@@ -166,7 +166,7 @@ NOTE: 如果您计划将 Cloud Tiering 配置为使用成本较低的访问层�
 准备好 Azure 环境后，开始从第一个群集分层非活动数据。
 
 .你需要什么
-https://docs.netapp.com/us-en/bluexp-ontap-onprem/task-discovering-ontap.html["将本地ONTAP系统迁移到NetApp控制台"^] 。
+https://docs.netapp.com/us-en/bluexp-ontap-onprem/task-discovering-ontap.html["将本地ONTAP系统迁移到NetApp Console"^]。
 
 .步骤
 . 选择本地ONTAP系统。
@@ -226,7 +226,7 @@ image:screenshot_tiering_initial_volumes.png["屏幕截图显示了如何选择�
 
 . 在“分层策略”对话框中，选择分层策略，选择性地调整所选卷的冷却天数，然后选择“应用”。
 +
-link:concept-cloud-tiering.html#volume-tiering-policies["了解有关容量分层策略和冷却天数的更多信息"] 。
+link:concept-cloud-tiering.html#volume-tiering-policies["了解有关容量分层策略和冷却天数的更多信息"]。
 
 +
 image:screenshot_tiering_initial_policy_settings.png["显示可配置分层策略设置的屏幕截图。"]
@@ -237,7 +237,7 @@ image:screenshot_tiering_initial_policy_settings.png["显示可配置分层策�
 您已成功设置从群集上的卷到 Azure Blob 对象存储的数据分层。
 
 .下一步是什么？
-link:task-licensing-cloud-tiering.html["请务必订阅 Cloud Tiering 服务"] 。
+link:task-licensing-cloud-tiering.html["请务必订阅 Cloud Tiering 服务"]。
 
 您可以查看有关集群上活动和非活动数据的信息。link:task-managing-tiering.html["了解有关管理分层设置的更多信息"] 。
 

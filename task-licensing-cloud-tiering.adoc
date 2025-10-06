@@ -2,9 +2,9 @@
 sidebar: sidebar 
 permalink: task-licensing-cloud-tiering.html 
 keywords: subscribe, digital wallet, trial, marketplace, subscription, paygo, pay as you go, byol, bring your own license, annual, tiering, cloud tiering, license, cloud tiering, bluexp 
-summary: 当您从第一个集群设置分层时， NetApp Cloud Tiering 的 30 天免费试用期就开始了。免费试用结束后，您需要通过云提供商市场的即用即付或年度订阅、 NetApp的 BYOL 许可证或两者结合的方式支付 Cloud Tiering 费用。 
+summary: 当您从第一个集群设置分层时， NetApp Cloud Tiering的 30 天免费试用期就开始了。免费试用结束后，您需要通过云提供商市场的即用即付或年度订阅、 NetApp的 BYOL 许可证或两者结合的方式支付 Cloud Tiering 费用。 
 ---
-= 设置NetApp Cloud Tiering 许可
+= 设置NetApp Cloud Tiering许可
 :hardbreaks:
 :allow-uri-read: 
 :nofooter: 
@@ -14,16 +14,16 @@ summary: 当您从第一个集群设置分层时， NetApp Cloud Tiering 的 30 
 
 
 [role="lead"]
-当您从第一个集群设置分层时， NetApp Cloud Tiering 的 30 天免费试用期就开始了。免费试用结束后，您需要通过云提供商市场的即用即付或年度订阅、 NetApp的 BYOL 许可证或两者结合的方式支付 Cloud Tiering 费用。
+当您从第一个集群设置分层时， NetApp Cloud Tiering的 30 天免费试用期就开始了。免费试用结束后，您需要通过云提供商市场的即用即付或年度订阅、 NetApp的 BYOL 许可证或两者结合的方式支付 Cloud Tiering 费用。
 
 在您继续阅读之前，请注意以下几点：
 
-* 如果您已经在云提供商的市场中订阅了 Cloud Tiering (PAYGO)，那么您也会自动订阅本地ONTAP系统的 Cloud Tiering。您将在 Cloud Tiering *On-Premises 仪表板* 选项卡中看到有效订阅。您无需再次订阅。您将在NetApp控制台中看到有效订阅。
-* BYOL 云分层许可证（以前称为“云分层”许可证）是一种浮动许可证，您可以在NetApp控制台组织中的多个本地ONTAP集群中使用它。这与过去为每个集群购买一个_FabricPool_许可证不同（并且容易得多）。
+* 如果您已经在云提供商的市场中订阅了 Cloud Tiering (PAYGO)，那么您也会自动订阅本地ONTAP系统的 Cloud Tiering。您将在 Cloud Tiering *On-Premises 仪表板* 选项卡中看到有效订阅。您无需再次订阅。您将在NetApp Console中看到有效订阅。
+* BYOL 云分层许可证（以前称为“云分层”许可证）是一种浮动许可证，您可以在NetApp Console组织中的多个本地ONTAP集群中使用它。这与过去为每个集群购买一个_FabricPool_许可证不同（并且容易得多）。
 * 将数据分层到StorageGRID时无需支付任何费用，因此不需要 BYOL 许可证或 PAYGO 注册。此分层数据不计入您在许可证中购买的容量。
 
 
-link:concept-cloud-tiering.html#pricing-and-licenses["详细了解 Cloud Tiering 的许可工作原理"] 。
+link:concept-cloud-tiering.html#pricing-and-licenses["详细了解 Cloud Tiering 的许可工作原理"]。
 
 
 
@@ -49,10 +49,10 @@ link:concept-cloud-tiering.html#pricing-and-licenses["详细了解 Cloud Tiering
 
 [[subscribe-aws]]
 .步骤
-. 在NetApp控制台中，选择 *Mobility > Cloud Tiering > On-Premises Dashboard*。
+. 在NetApp Console中，选择 *Mobility > Cloud Tiering > On-Premises Dashboard*。
 . 在“市场订阅”部分中，选择“Amazon Web Services”下的“订阅”，然后选择“继续”。
 . 在“市场订阅”部分中，选择“Amazon Web Services”下的“订阅”，然后选择“继续”。
-. 订阅来自 https://aws.amazon.com/marketplace/pp/prodview-oorxakq6lq7m4["AWS Marketplace"^]，然后重新登录NetApp控制台完成注册。
+. 订阅来自 https://aws.amazon.com/marketplace/pp/prodview-oorxakq6lq7m4["AWS Marketplace"^]，然后重新登录NetApp Console完成注册。
 +
 以下视频展示了该过程：
 
@@ -69,10 +69,10 @@ video::096e1740-d115-44cf-8c27-b051011611eb[panopto]
 
 [[subscribe-azure]]
 .步骤
-. 在NetApp控制台中，选择 *Mobility > Cloud Tiering > On-Premises Dashboard*。
+. 在NetApp Console中，选择 *Mobility > Cloud Tiering > On-Premises Dashboard*。
 . 在“市场订阅”部分中，选择“Microsoft Azure”下的“订阅”，然后选择“继续”。
 . 在“市场订阅”部分中，选择“Microsoft Azure”下的“订阅”，然后选择“继续”。
-. 订阅来自 https://azuremarketplace.microsoft.com/en-us/marketplace/apps/netapp.cloud-manager?tab=Overview["Azure 市场"^]，然后重新登录NetApp控制台完成注册。
+. 订阅来自 https://azuremarketplace.microsoft.com/en-us/marketplace/apps/netapp.cloud-manager?tab=Overview["Azure 市场"^]，然后重新登录NetApp Console完成注册。
 +
 以下视频展示了该过程：
 
@@ -89,10 +89,10 @@ video::b7e97509-2ecf-4fa0-b39b-b0510109a318[panopto]
 
 [[subscribe-gcp]]
 .步骤
-. 在NetApp控制台中，选择 *Mobility > Cloud Tiering > On-Premises Dashboard*。
+. 在NetApp Console中，选择 *Mobility > Cloud Tiering > On-Premises Dashboard*。
 . 在“市场订阅”部分中，选择 Google Cloud 下的“订阅”，然后选择“继续”。
 . 在“市场订阅”部分中，选择 Google Cloud 下的“订阅”，然后选择“继续”。
-. 订阅来自 https://console.cloud.google.com/marketplace/details/netapp-cloudmanager/cloud-manager?supportedpurview=project["谷歌云市场"^]，然后重新登录NetApp控制台完成注册。
+. 订阅来自 https://console.cloud.google.com/marketplace/details/netapp-cloudmanager/cloud-manager?supportedpurview=project["谷歌云市场"^]，然后重新登录NetApp Console完成注册。
 +
 以下视频展示了该过程：
 
@@ -117,7 +117,7 @@ video::373b96de-3691-4d84-b3f3-b05101161638[panopto]
 
 == 使用 Cloud Tiering BYOL 许可证
 
-NetApp提供的自带许可证的有效期为 1 年、2 年或 3 年。 BYOL *Cloud Tiering* 许可证（以前称为“Cloud Tiering”许可证）是一种浮动许可证，您可以在NetApp控制台组织中的多个本地ONTAP集群中使用它。您的 Cloud Tiering 许可证中定义的总分层容量在您的所有本地集群之间共享，从而简化了初始许可和续订。分层 BYOL 许可证的最小容量为 10 TiB。
+NetApp提供的自带许可证的有效期为 1 年、2 年或 3 年。 BYOL *Cloud Tiering* 许可证（以前称为“Cloud Tiering”许可证）是一种浮动许可证，您可以在NetApp Console组织中的多个本地ONTAP集群中使用它。您的 Cloud Tiering 许可证中定义的总分层容量在您的所有本地集群之间共享，从而简化了初始许可和续订。分层 BYOL 许可证的最小容量为 10 TiB。
 
 如果您没有 Cloud Tiering 许可证，请联系我们购买：
 
@@ -133,7 +133,7 @@ NetApp提供的自带许可证的有效期为 1 年、2 年或 3 年。 BYOL *Cl
 
 === Cloud Tiering BYOL 许可将于 2021 年开始
 
-新的 *Cloud Tiering* 许可证于 2021 年 8 月推出，用于使用 Cloud Tiering 服务在NetApp控制台中支持的分层配置。  NetApp控制台当前支持分层到以下云存储：Amazon S3、Azure Blob 存储、Google Cloud Storage、 NetApp StorageGRID和与 S3 兼容的对象存储。
+新的 *Cloud Tiering* 许可证于 2021 年 8 月推出，用于使用 Cloud Tiering 服务在NetApp Console中支持的分层配置。  NetApp Console当前支持分层到以下云存储：Amazon S3、Azure Blob 存储、Google Cloud Storage、 NetApp StorageGRID和与 S3 兼容的对象存储。
 
 您过去可能使用过的将本地ONTAP数据分层到云的 * FabricPool * 许可证仅保留用于没有互联网访问的站点（也称为“暗站”）中的ONTAP部署，以及用于将配置分层到 IBM Cloud Object Storage。如果您使用这种类型的配置，您将使用系统管理器或ONTAP CLI 在每个集群上安装FabricPool许可证。
 
@@ -156,10 +156,10 @@ TIP: 请注意，分层到StorageGRID不需要FabricPool或 Cloud Tiering 许可
 | 它是一个浮动许可证，您可以在多个本地ONTAP集群中使用。 | 这是您购买并授权给每个集群的每个集群的许可证。 
 
 
-| 它在NetApp控制台中注册。 | 它使用系统管理器或ONTAP CLI 应用于单个集群。 
+| 它在NetApp Console中注册。 | 它使用系统管理器或ONTAP CLI 应用于单个集群。 
 
 
-| 分层配置和管理通过NetApp控制台中的 Cloud Tiering 服务完成。 | 分层配置和管理通过系统管理器或ONTAP CLI 完成。 
+| 分层配置和管理通过NetApp Console中的 Cloud Tiering 服务完成。 | 分层配置和管理通过系统管理器或ONTAP CLI 完成。 
 
 
 | 配置分层后，您可以使用免费试用版在 30 天内无需许可证使用分层服务。 | 配置完成后，您可以免费分层前 10 TB 的数据。 
@@ -186,7 +186,7 @@ TIP: 请注意，分层到StorageGRID不需要FabricPool或 Cloud Tiering 许可
 
 === 具有FabricPool许可证的现有集群的流程
 
-当你link:task-managing-tiering.html#discovering-additional-clusters-from-bluexp-tiering["在 Cloud Tiering 中发现任何这些特殊集群类型"]，Cloud Tiering 识别FabricPool许可证并将许可证添加到控制台。这些集群将继续照常对数据进行分层。当FabricPool许可证到期时，您需要购买 Cloud Tiering 许可证。
+当你link:task-managing-tiering.html#discovering-additional-clusters-from-bluexp-tiering["在 Cloud Tiering 中发现任何这些特殊集群类型"]，Cloud Tiering 识别FabricPool许可证并将许可证添加到控制台。这些集群将继续照常分层数据。当FabricPool许可证到期时，您需要购买 Cloud Tiering 许可证。
 
 
 

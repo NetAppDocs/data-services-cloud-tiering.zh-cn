@@ -4,7 +4,7 @@ permalink: task-tiering-onprem-s3-compat.html
 keywords: data tiering, fabricpool, cloud tiering, tiering cold data, tiering inactive data, tiering aff, tiering fas, tiering ontap, tiering volumes, tier data, tier cold data, tier fas, tier aff, tier ontap, s3, tier to s3, minio 
 summary: '通过将非活动数据分层到使用简单存储服务 (S3) 协议的任何对象存储服务，释放本地ONTAP集群上的空间。' 
 ---
-= 将本地ONTAP集群中的数据分层到NetApp Cloud Tiering 中的 S3 对象存储
+= 将本地ONTAP集群中的数据分层到NetApp Cloud Tiering中的 S3 对象存储
 :hardbreaks:
 :allow-uri-read: 
 :nofooter: 
@@ -14,7 +14,7 @@ summary: '通过将非活动数据分层到使用简单存储服务 (S3) 协议�
 
 
 [role="lead"]
-通过将NetApp Cloud Tiering 中的非活动数据分层到使用简单存储服务 (S3) 协议的任何对象存储服务，释放本地ONTAP集群上的空间。
+通过将NetApp Cloud Tiering中的非活动数据分层到使用简单存储服务 (S3) 协议的任何对象存储服务，释放本地ONTAP集群上的空间。
 
 至此，MinIO对象存储已经合格。
 
@@ -36,7 +36,7 @@ NetApp不支持也不对任何第三方对象存储服务引起的任何问题�
 您需要以下内容：
 
 [role="quick-margin-list"]
-* 已添加到NetApp控制台的运行ONTAP 9.8 或更高版本的源本地ONTAP集群，以及通过用户指定端口到目标 S3 兼容对象存储的连接。 https://docs.netapp.com/us-en/bluexp-ontap-onprem/task-discovering-ontap.html["了解如何发现集群"^] 。
+* 已添加到NetApp Console的运行ONTAP 9.8 或更高版本的源本地ONTAP集群，以及通过用户指定端口到目标 S3 兼容对象存储的连接。 https://docs.netapp.com/us-en/bluexp-ontap-onprem/task-discovering-ontap.html["了解如何发现集群"^] 。
 * 对象存储服务器的 FQDN、访问密钥和密钥，以便ONTAP集群可以访问存储桶。
 * 在您的场所安装控制台代理。
 * 代理的网络可实现与源ONTAP集群、S3 兼容对象存储以及 Cloud Tiering 服务的出站 HTTPS 连接。
@@ -51,8 +51,8 @@ NetApp不支持也不对任何第三方对象存储服务引起的任何问题�
 通过云提供商的即用即付订阅、云分层自带许可证或两者结合的方式支付云分层费用：
 
 [role="quick-margin-list"]
-* 订阅 PAYGO 优惠 https://aws.amazon.com/marketplace/pp/prodview-oorxakq6lq7m4?sr=0-8&ref_=beagle&applicationId=AWSMPContessa["AWS Marketplace"^]， https://azuremarketplace.microsoft.com/en-us/marketplace/apps/netapp.cloud-manager?tab=Overview["Azure 市场"^] ， 或者 https://console.cloud.google.com/marketplace/details/netapp-cloudmanager/cloud-manager?supportedpurview=project&rif_reserved["GCP 市场"^]，选择*订阅*并按照提示操作。
-* 要使用 Cloud Tiering BYOL 许可证付款，请发邮件至：ng-cloud-tiering@netapp.com?subject=Licensing[如果您需要购买，请联系我们]，然后link:https://docs.netapp.com/us-en/bluexp-digital-wallet/task-manage-data-services-licenses.html["将其添加到NetApp控制台"^]。。
+* 订阅 PAYGO 优惠 https://aws.amazon.com/marketplace/pp/prodview-oorxakq6lq7m4?sr=0-8&ref_=beagle&applicationId=AWSMPContessa["AWS Marketplace"^]， https://azuremarketplace.microsoft.com/en-us/marketplace/apps/netapp.cloud-manager?tab=Overview["Azure 市场"^] ， 或者 https://console.cloud.google.com/marketplace/details/netapp-cloudmanager/cloud-manager?supportedpurview=project&rif_reserved["GCP Marketplace"^]，选择*订阅*并按照提示操作。
+* 要使用 Cloud Tiering BYOL 许可证付款，请发邮件至：ng-cloud-tiering@netapp.com?subject=Licensing[如果您需要购买，请联系我们]，然后link:https://docs.netapp.com/us-en/bluexp-digital-wallet/task-manage-data-services-licenses.html["将其添加到NetApp Console"^]。。
 
 
 
@@ -106,7 +106,7 @@ TIP: Cloud Tiering 支持FlexVol和FlexGroup卷。
 
 您需要先将本地ONTAP系统添加到控制台，然后才能开始分层冷数据。
 
-https://docs.netapp.com/us-en/bluexp-ontap-onprem/task-discovering-ontap.html["了解如何发现集群"^] 。
+https://docs.netapp.com/us-en/bluexp-ontap-onprem/task-discovering-ontap.html["了解如何发现集群"^]。
 
 
 
@@ -165,7 +165,7 @@ S3 凭证:: 当您设置分层到与 S3 兼容的对象存储时，系统会提�
 准备好环境后，开始从第一个集群中分层非活动数据。
 
 .你需要什么
-* https://docs.netapp.com/us-en/bluexp-ontap-onprem/task-discovering-ontap.html["已将本地系统添加到NetApp控制台"^] 。
+* https://docs.netapp.com/us-en/bluexp-ontap-onprem/task-discovering-ontap.html["已将本地系统添加到NetApp Console"^]。
 * S3 兼容对象存储服务器的 FQDN 和将用于 HTTPS 通信的端口。
 * 具有所需 S3 权限的访问密钥和密钥。
 
@@ -207,7 +207,7 @@ image:screenshot_tiering_initial_volumes.png["屏幕截图显示了如何选择�
 
 . 在“分层策略”对话框中，选择分层策略，选择性地调整所选卷的冷却天数，然后选择“应用”。
 +
-link:concept-cloud-tiering.html#volume-tiering-policies["了解有关容量分层策略和冷却天数的更多信息"] 。
+link:concept-cloud-tiering.html#volume-tiering-policies["了解有关容量分层策略和冷却天数的更多信息"]。
 
 +
 image:screenshot_tiering_initial_policy_settings.png["显示可配置分层策略设置的屏幕截图。"]
@@ -215,7 +215,7 @@ image:screenshot_tiering_initial_policy_settings.png["显示可配置分层策�
 
 
 .下一步是什么？
-link:task-licensing-cloud-tiering.html["请务必订阅 Cloud Tiering 服务"] 。
+link:task-licensing-cloud-tiering.html["请务必订阅 Cloud Tiering 服务"]。
 
 您可以查看有关集群上活动和非活动数据的信息。link:task-managing-tiering.html["了解有关管理分层设置的更多信息"] 。
 

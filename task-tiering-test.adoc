@@ -4,7 +4,7 @@ permalink: task-tiering-test.html
 keywords: throughput, latency, tiering performance, cloud performance test, tiering test, object storage performance 
 summary: 运行云性能测试来测量在设置数据分层之前和之后从ONTAP集群到对象存储的网络延迟和吞吐量性能。 
 ---
-= 测量NetApp Cloud Tiering 中的网络延迟和吞吐量性能
+= 测量NetApp Cloud Tiering中的网络延迟和吞吐量性能
 :hardbreaks:
 :allow-uri-read: 
 :nofooter: 
@@ -14,7 +14,7 @@ summary: 运行云性能测试来测量在设置数据分层之前和之后从ON
 
 
 [role="lead"]
-运行云性能测试来测量在NetApp Cloud Tiering 中设置数据分层之前和之后从ONTAP集群到对象存储的网络延迟和吞吐量性能。该测试还可以识别发生的任何故障。
+运行云性能测试来测量在NetApp Cloud Tiering中设置数据分层之前和之后从ONTAP集群到对象存储的网络延迟和吞吐量性能。该测试还可以识别发生的任何故障。
 
 以下是示例性能结果：
 

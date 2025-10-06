@@ -6,7 +6,7 @@
 
 === 使用自定义前缀作为存储桶名称
 
-过去，定义存储桶名称时需要使用默认的“fabric-pool”前缀，例如 _fabric-pool-bucket1_。现在您可以在命名存储桶时使用自定义前缀。仅当将数据分层到 Amazon S3 时，此功能才可用。 https://docs.netapp.com/us-en/bluexp-tiering/task-tiering-onprem-aws.html#prepare-your-aws-environment["了解更多"] 。
+过去，定义存储桶名称时需要使用默认的“fabric-pool”前缀，例如 _fabric-pool-bucket1_。现在您可以在命名存储桶时使用自定义前缀。仅当将数据分层到 Amazon S3 时此功能才可用。 https://docs.netapp.com/us-en/bluexp-tiering/task-tiering-onprem-aws.html#prepare-your-aws-environment["了解更多"] 。
 
 
 

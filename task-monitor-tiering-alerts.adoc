@@ -2,9 +2,9 @@
 sidebar: sidebar 
 permalink: task-monitor-tiering-alerts.html 
 keywords: tiering, status, monitor, alert, notification, cloud tiering, bluexp 
-summary: 您可以在NetApp控制台通知中心查看分层警报的状态。 
+summary: 您可以在NetApp Console通知中心查看分层警报的状态。 
 ---
-= 监控NetApp Cloud Tiering 的分层警报状态
+= 监控NetApp Cloud Tiering的分层警报状态
 :hardbreaks:
 :allow-uri-read: 
 :nofooter: 
@@ -14,7 +14,7 @@ summary: 您可以在NetApp控制台通知中心查看分层警报的状态。
 
 
 [role="lead"]
-您可以在NetApp控制台通知中心查看来自NetApp Cloud Tiering 的分层警报的状态。
+您可以在NetApp Console通知中心查看来自NetApp Cloud Tiering的分层警报的状态。
 
 通知中心跟踪分层事件的进度，以便您可以验证它们是否已解决。您可以通过选择 (image:icon_bell.png["通知铃"] ) 在控制台菜单栏中。
 
@@ -24,6 +24,6 @@ summary: 您可以在NetApp控制台通知中心查看分层警报的状态。
 
 此通知是提高系统效率、降低存储成本的“建议”。它表示集群分层的冷数据少于 20% - 包括没有分层数据的集群。它提供了一个链接 https://bluexp.netapp.com/cloud-tiering-service-tco["Cloud Tiering 总拥有成本和节省计算器"^]帮助您计算成本节省。
 
-NetApp控制台不会发送此通知的电子邮件。
+NetApp Console不会发送此通知的电子邮件。
 
-https://docs.netapp.com/us-en/bluexp-setup-admin/task-monitor-cm-operations.html["了解有关通知中心的更多信息"^] 。
+https://docs.netapp.com/us-en/bluexp-setup-admin/task-monitor-cm-operations.html["了解有关通知中心的更多信息"^]。
