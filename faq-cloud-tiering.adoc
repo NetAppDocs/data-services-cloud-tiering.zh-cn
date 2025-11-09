@@ -158,10 +158,6 @@ https://bluexp.netapp.com/pricing["查看定价详情"]。
 
 === 云提供商对于从对象存储读取/检索数据到本地存储是否收取额外费用？
 
-
-
-=== 云提供商对于从对象存储读取/检索数据到本地存储是否收取额外费用？
-
 是查看 https://aws.amazon.com/s3/pricing/["Amazon S3 定价"]， https://azure.microsoft.com/en-us/pricing/details/storage/blobs/["Block Blob 定价"] ， 和 https://cloud.google.com/storage/pricing["云存储定价"]了解数据读取/检索产生的额外定价。
 
 

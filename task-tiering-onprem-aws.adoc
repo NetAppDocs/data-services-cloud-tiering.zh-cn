@@ -255,7 +255,7 @@ https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html
 
 如果您计划使用标准公共互联网连接，则所有权限均由代理设置，您无需执行任何其他操作。此类连接显示在<<连接选项的网络图,上面的第一张图>>。
 
-如果您希望通过互联网从本地数据中心到 VPC 建立更安全的连接，则可以在分层激活向导中选择 AWS PrivateLink 连接。如果您计划使用 VPN 或 AWS Direct Connect 通过使用私有 IP 地址的 VPC 终端节点接口连接您的本地系统，则需要它。这种连接类型显示在<<连接选项的网络图,上面的第二张图>>。如果您希望通过互联网从本地数据中心到 VPC 建立更安全的连接，则可以在分层激活向导中选择 AWS PrivateLink 连接。如果您计划使用 VPN 或 AWS Direct Connect 通过使用私有 IP 地址的 VPC 终端节点接口连接您的本地系统，则需要它。这种连接类型显示在<<连接选项的网络图,上面的第二张图>>。
+如果您希望通过互联网从本地数据中心到 VPC 建立更安全的连接，则可以在分层激活向导中选择 AWS PrivateLink 连接。如果您计划使用 VPN 或 AWS Direct Connect 通过使用私有 IP 地址的 VPC 终端节点接口连接您的本地系统，则需要它。这种连接类型显示在<<连接选项的网络图,上面的第二张图>>。
 
 . 使用 Amazon VPC 控制台或命令行创建接口终端节点配置。 https://docs.aws.amazon.com/AmazonS3/latest/userguide/privatelink-interface-endpoints.html["查看有关将 AWS PrivateLink 用于 Amazon S3 的详细信息"^] 。
 . 修改与代理关联的安全组配置。您必须将策略更改为“自定义”（从“完全访问”），并且您必须<<设置 S3 权限,添加所需的 S3 代理权限>>如前所示。
@@ -323,13 +323,11 @@ image:screenshot_setup_tiering_onprem.png["屏幕截图显示了选择本地ONTA
 
 . *定义对象存储名称*：输入此对象存储的名称。它必须与您可能在此集群上与聚合一起使用的任何其他对象存储不同。
 . *选择提供商*：选择*Amazon Web Services*并选择*继续*。
-. *选择提供商*：选择*Amazon Web Services*并选择*继续*。
 +
 image:screenshot_tiering_aws_s3_bucket.png["屏幕截图显示了设置 S3 存储桶分层必须提供的数据。"]
 
 . 完成“分层设置”页面中的部分：
 +
-.. *S3 存储桶*：添加新的 S3 存储桶或选择现有的 S3 存储桶，选择存储桶区域，然后选择*继续*。
 .. *S3 存储桶*：添加新的 S3 存储桶或选择现有的 S3 存储桶，选择存储桶区域，然后选择*继续*。
 +
 使用本地代理时，您必须输入可访问现有 S3 存储桶或将要创建的新 S3 存储桶的 AWS 账户 ID。

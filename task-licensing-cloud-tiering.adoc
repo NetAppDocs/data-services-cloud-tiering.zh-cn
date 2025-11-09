@@ -51,7 +51,6 @@ link:concept-cloud-tiering.html#pricing-and-licenses["详细了解 Cloud Tiering
 .步骤
 . 在NetApp Console中，选择 *Mobility > Cloud Tiering > On-Premises Dashboard*。
 . 在“市场订阅”部分中，选择“Amazon Web Services”下的“订阅”，然后选择“继续”。
-. 在“市场订阅”部分中，选择“Amazon Web Services”下的“订阅”，然后选择“继续”。
 . 订阅来自 https://aws.amazon.com/marketplace/pp/prodview-oorxakq6lq7m4["AWS Marketplace"^]，然后重新登录NetApp Console完成注册。
 +
 以下视频展示了该过程：
@@ -71,7 +70,6 @@ video::096e1740-d115-44cf-8c27-b051011611eb[panopto]
 .步骤
 . 在NetApp Console中，选择 *Mobility > Cloud Tiering > On-Premises Dashboard*。
 . 在“市场订阅”部分中，选择“Microsoft Azure”下的“订阅”，然后选择“继续”。
-. 在“市场订阅”部分中，选择“Microsoft Azure”下的“订阅”，然后选择“继续”。
 . 订阅来自 https://azuremarketplace.microsoft.com/en-us/marketplace/apps/netapp.cloud-manager?tab=Overview["Azure 市场"^]，然后重新登录NetApp Console完成注册。
 +
 以下视频展示了该过程：
@@ -90,7 +88,6 @@ video::b7e97509-2ecf-4fa0-b39b-b0510109a318[panopto]
 [[subscribe-gcp]]
 .步骤
 . 在NetApp Console中，选择 *Mobility > Cloud Tiering > On-Premises Dashboard*。
-. 在“市场订阅”部分中，选择 Google Cloud 下的“订阅”，然后选择“继续”。
 . 在“市场订阅”部分中，选择 Google Cloud 下的“订阅”，然后选择“继续”。
 . 订阅来自 https://console.cloud.google.com/marketplace/details/netapp-cloudmanager/cloud-manager?supportedpurview=project["谷歌云市场"^]，然后重新登录NetApp Console完成注册。
 +

@@ -175,16 +175,13 @@ image:screenshot_setup_tiering_onprem.png["屏幕截图显示了选择本地ONTA
 
 . *定义对象存储名称*：输入此对象存储的名称。它必须与您可能在此集群上与聚合一起使用的任何其他对象存储不同。
 . *选择提供商*：选择* StorageGRID*并选择*继续*。
-. *选择提供商*：选择* StorageGRID*并选择*继续*。
 . 完成*创建对象存储*页面上的步骤：
 +
 .. *服务器*：输入StorageGRID网关节点的 FQDN、 ONTAP应使用 HTTPS 与StorageGRID进行通信的端口，以及具有所需 S3 权限的帐户的访问密钥和密钥。
 .. *Bucket*：添加一个新的 bucket 或选择一个以前缀 _fabric-pool_ 开头的现有 bucket，然后选择 *Continue*。
-.. *Bucket*：添加一个新的 bucket 或选择一个以前缀 _fabric-pool_ 开头的现有 bucket，然后选择 *Continue*。
 +
 需要 _fabric-pool_ 前缀，因为代理的 IAM 策略允许实例对以该精确前缀命名的存储桶执行 S3 操作。例如，您可以将 S3 存储桶命名为 _fabric-pool-AFF1_，其中 AFF1 是集群的名称。
 
-.. *集群网络*：选择ONTAP应用于连接对象存储的 IP 空间，然后选择*继续*。
 .. *集群网络*：选择ONTAP应用于连接对象存储的 IP 空间，然后选择*继续*。
 +
 选择正确的 IP 空间可确保 Cloud Tiering 可以建立从ONTAP到StorageGRID对象存储的连接。
@@ -199,15 +196,11 @@ image:screenshot_setup_tiering_onprem.png["屏幕截图显示了选择本地ONTA
 ** 要选择所有卷，请选中标题行中的复选框（image:button_backup_all_volumes.png[""] ) 并选择 *配置卷*。
 ** 要选择多个卷，请选中每个卷对应的复选框（image:button_backup_1_volume.png[""] ) 并选择 *配置卷*。
 ** 要选择单个卷，请选择行（或image:screenshot_edit_icon.gif["编辑铅笔图标"]图标）来表示音量。
-** 要选择所有卷，请选中标题行中的复选框（image:button_backup_all_volumes.png[""] ) 并选择 *配置卷*。
-** 要选择多个卷，请选中每个卷对应的复选框（image:button_backup_1_volume.png[""] ) 并选择 *配置卷*。
-** 要选择单个卷，请选择行（或image:screenshot_edit_icon.gif["编辑铅笔图标"]图标）来表示音量。
 +
 image:screenshot_tiering_initial_volumes.png["屏幕截图显示了如何选择单个卷、多个卷或所有卷以及修改选定卷按钮。"]
 
 
 
-. 在“分层策略”对话框中，选择分层策略，选择性地调整所选卷的冷却天数，然后选择“应用”。
 . 在“分层策略”对话框中，选择分层策略，选择性地调整所选卷的冷却天数，然后选择“应用”。
 +
 link:concept-cloud-tiering.html#volume-tiering-policies["了解有关容量分层策略和冷却天数的更多信息"]。

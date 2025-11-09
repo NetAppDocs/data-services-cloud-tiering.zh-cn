@@ -24,7 +24,6 @@ summary: 在配置本地ONTAP集群以将数据分层到特定对象存储后，
 
 .步骤
 . 从*Clusters*页面中，选择集群的菜单图标并选择*Object Store Info*。
-. 从*Clusters*页面中，选择集群的菜单图标并选择*Object Store Info*。
 . 查看有关对象存储的详细信息。
 +
 此示例显示了附加到集群上不同聚合的 Amazon S3 和 Azure Blob 对象存储。
@@ -42,8 +41,6 @@ image:screenshot_tiering_object_store_view.png["显示对象存储信息的屏�
 
 .步骤
 . 从*Clusters*页面中，选择集群的菜单图标并选择*Object Store Info*。
-. 从*Clusters*页面中，选择集群的菜单图标并选择*Object Store Info*。
-. 从对象存储信息页面中，选择*创建新对象存储*。
 . 从对象存储信息页面中，选择*创建新对象存储*。
 +
 image:screenshot_tiering_object_store_create_button.png["显示用于创建新对象存储的“创建新对象存储”按钮的屏幕截图。"]
