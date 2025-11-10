@@ -123,7 +123,7 @@ https://docs.netapp.com/us-en/bluexp-ontap-onprem/task-discovering-ontap.html["�
 
 === 验证您是否拥有必要的代理权限
 
-如果您使用 3.9.25 或更高版本创建了控制台代理，那么一切就绪了。默认情况下，将设置自定义角色，该角色提供代理管理 Azure 网络内的资源和流程所需的权限。查看 https://docs.netapp.com/us-en/bluexp-setup-admin/reference-permissions-azure.html#custom-role-permissions["所需的自定义角色权限"^]以及 https://docs.netapp.com/us-en/bluexp-setup-admin/reference-permissions-azure.html#cloud-tiering["Cloud Tiering 所需的特定权限"^]。
+如果您使用 3.9.25 或更高版本创建了控制台代理，那么一切就绪了。默认情况下，将设置自定义角色，该角色提供代理管理 Azure 网络内的资源和流程所需的权限。查看 https://docs.netapp.com/us-en/console-setup-admin/reference-permissions-azure.html["所需的自定义角色权限"^]以及 https://docs.netapp.com/us-en/console-setup-admin/reference-permissions-azure.html#tiering["Cloud Tiering 所需的特定权限"^]。
 
 如果您使用早期版本创建了代理，则需要编辑 Azure 帐户的权限列表以添加任何缺少的权限。
 

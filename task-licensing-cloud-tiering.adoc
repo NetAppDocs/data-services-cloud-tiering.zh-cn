@@ -183,7 +183,7 @@ TIP: 请注意，分层到StorageGRID不需要FabricPool或 Cloud Tiering 许可
 
 === 具有FabricPool许可证的现有集群的流程
 
-当你link:task-managing-tiering.html#discovering-additional-clusters-from-bluexp-tiering["在 Cloud Tiering 中发现任何这些特殊集群类型"]，Cloud Tiering 识别FabricPool许可证并将许可证添加到控制台。这些集群将继续照常分层数据。当FabricPool许可证到期时，您需要购买 Cloud Tiering 许可证。
+当你link:task-managing-tiering.html#discovering-additional-clusters-from-cloud-tiering["在 Cloud Tiering 中发现任何这些特殊集群类型"]，Cloud Tiering 识别FabricPool许可证并将许可证添加到控制台。这些集群将继续照常分层数据。当FabricPool许可证到期时，您需要购买 Cloud Tiering 许可证。
 
 
 
@@ -207,9 +207,9 @@ NOTE: 系统管理器或ONTAP CLI 中显示的“子”许可证的许可容量�
 +
 此时不要配置分层。
 
-. link:task-licensing-cloud-tiering.html#use-a-bluexp-tiering-byol-license["购买 Cloud Tiering 许可证"]满足新集群或多个集群所需的容量。
+. link:task-licensing-cloud-tiering.html#use-a-cloud-tiering-byol-license["购买 Cloud Tiering 许可证"]满足新集群或多个集群所需的容量。
 . 在控制台中<<licenses,将许可证添加到数字钱包>>[添加许可证]。
-. 在云分层中，link:task-managing-tiering.html#discovering-additional-clusters-from-bluexp-tiering["发现新的集群"] 。
+. 在云分层中，link:task-managing-tiering.html#discovering-additional-clusters-from-cloud-tiering["发现新的集群"] 。
 . 在“集群”页面中，选择image:screenshot_horizontal_more_button.gif["更多图标"]对于集群并选择*部署许可证*。
 +
 image:screenshot_tiering_deploy_license.png["显示如何将分层许可证部署到ONTAP集群的屏幕截图。"]

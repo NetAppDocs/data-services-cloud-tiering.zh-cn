@@ -66,7 +66,7 @@ NetApp Console建立在增强和重组的BlueXP基础之上，可在企业级内
 
 当集群分层的冷数据少于 20%（包括未分层任何数据的集群）时，分层事件“将集群 <name> 中的其他数据分层到对象存储以提高存储效率”现在会作为通知出现。
 
-此通知是一项“建议”，旨在帮助您提高系统效率并节省存储成本。它提供了一个链接 https://bluexp.netapp.com/cloud-tiering-service-tco["Cloud Tiering 总拥有成本和节省计算器"^]帮助您计算成本节省。
+此通知是一项“建议”，旨在帮助您提高系统效率并节省存储成本。它提供了一个链接 https://www.netapp.com/data-services/tiering/tco-calculator/["Cloud Tiering 总拥有成本和节省计算器"^]帮助您计算成本节省。
 
 
 

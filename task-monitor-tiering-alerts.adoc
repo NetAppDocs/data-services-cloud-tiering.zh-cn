@@ -22,7 +22,7 @@ summary: 您可以在NetApp Console通知中心查看分层警报的状态。
 
 将集群 <name> 中的附加数据分层到对象存储以节省存储空间
 
-此通知是提高系统效率、降低存储成本的“建议”。它表示集群分层的冷数据少于 20% - 包括没有分层数据的集群。它提供了一个链接 https://bluexp.netapp.com/cloud-tiering-service-tco["Cloud Tiering 总拥有成本和节省计算器"^]帮助您计算成本节省。
+此通知是提高系统效率、降低存储成本的“建议”。它表示集群分层的冷数据少于 20% - 包括没有分层数据的集群。它提供了一个链接 https://www.netapp.com/data-services/tiering/tco-calculator/["Cloud Tiering 总拥有成本和节省计算器"^]帮助您计算成本节省。
 
 NetApp Console不会发送此通知的电子邮件。
 

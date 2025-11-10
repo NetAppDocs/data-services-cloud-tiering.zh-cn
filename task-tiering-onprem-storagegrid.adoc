@@ -105,6 +105,9 @@ https://docs.netapp.com/us-en/bluexp-ontap-onprem/task-discovering-ontap.html["�
 StorageGRID必须满足以下要求。
 
 支持的StorageGRID版本:: 支持StorageGRID 10.3 及更高版本。
+
+
+[[preparing-storagegrid]]
 S3 凭证:: 当您设置分层到StorageGRID时，您需要向 Cloud Tiering 提供 S3 访问密钥和密钥。  Cloud Tiering 使用密钥来访问您的存储桶。
 +
 --
