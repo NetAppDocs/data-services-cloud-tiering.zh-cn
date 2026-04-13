@@ -90,7 +90,6 @@
   <block id="09c7ee4be0db4e9240de27e931212553" category="inline-link-macro">了解如何设置即用即付订阅</block>
   <block id="421539f25601331f9f5f1e59cdb43e21" category="section-title">年度合同</block>
   <block id="87e8f36409134ebae86e6c9935f8f457" category="paragraph">当将非活动数据分层到 Amazon S3 或 Azure 时，Cloud Tiering 提供年度合同。其期限分为 1 年、2 年或 3 年。</block>
-  <block id="8a2304319d2e68c914c95280f8d1b529" category="paragraph">目前，分级到 Google CLoud 时不支持年度合同。</block>
   <block id="fce5aebaf837d23e27b8a9d6a54a6467" category="section-title">自带驾照</block>
   <block id="ce9d3c4a1b1b4d789b90174349030aaf" category="paragraph">通过从NetApp购买 *Cloud Tiering* 许可证（以前称为“Cloud Tiering”许可证）来获取您自己的许可证。您可以购买 1 年、2 年或 3 年期许可证，并指定任意数量的分层容量（最低 10 TiB）。 BYOL Cloud Tiering 许可证是一种浮动许可证，您可以在多个本地ONTAP集群中使用它。您在 Cloud Tiering 许可证中定义的总分层容量可供所有本地集群使用。</block>
   <block id="7b31eba1fa6d2aa1d3bf4ddb10d4b302" category="inline-link-macro">了解如何使用 Cloud Tiering BYOL 许可证</block>
@@ -499,112 +498,10 @@
   <block id="6d9dd74e7709ef802d299966f7898f6b" category="list-text">*查看案例*：查看有关特定案例的完整详细信息。</block>
   <block id="8e6b52a532a4fbbfc98dca3ebfa5f1e6" category="list-text">*更新案例说明*：提供有关您的问题的更多详细信息，或选择*上传文件*以附加最多五个文件。</block>
   <block id="bb6d5d351525342dd6b3cf4d15b6f298" category="list-text">*结案*：提供有关结案原因的详细信息，然后选择*结案*。</block>
-  <block id="47295dc1d9c97151e1239a3f1c8e00f7" category="summary">当您从第一个集群设置分层时， NetApp Cloud Tiering的 30 天免费试用期就开始了。免费试用结束后，您需要通过云提供商市场的即用即付或年度订阅、 NetApp的 BYOL 许可证或两者结合的方式支付 Cloud Tiering 费用。</block>
   <block id="d4cdf3ad28a947017bac9a28090b4755" category="doc">设置NetApp Cloud Tiering许可</block>
-  <block id="80186f1230af2267e2c2e4d2ab8c030e" category="paragraph">在您继续阅读之前，请注意以下几点：</block>
-  <block id="62c129e97c5ee80c24e44b10e3b78808" category="list-text">如果您已经在云提供商的市场中订阅了 Cloud Tiering (PAYGO)，那么您也会自动订阅本地ONTAP系统的 Cloud Tiering。您将在 Cloud Tiering *On-Premises 仪表板* 选项卡中看到有效订阅。您无需再次订阅。您将在NetApp Console中看到有效订阅。</block>
-  <block id="d13664b79e47261c681469ef4114071a" category="list-text">BYOL 云分层许可证（以前称为“云分层”许可证）是一种浮动许可证，您可以在NetApp Console组织中的多个本地ONTAP集群中使用它。这与过去为每个集群购买一个_FabricPool_许可证不同（并且容易得多）。</block>
-  <block id="d181cf69cc22712ade6a0c67ca47d824" category="list-text">将数据分层到StorageGRID时无需支付任何费用，因此不需要 BYOL 许可证或 PAYGO 注册。此分层数据不计入您在许可证中购买的容量。</block>
-  <block id="d42e6c6c0bd600babc489630de73058f" category="inline-link-macro">详细了解 Cloud Tiering 的许可工作原理</block>
-  <block id="6cba13359069adfeb75d96e433421999" category="paragraph"><block ref="4e584f79910f9a3a7129b23d958f91fd" category="inline-link-macro-rx"></block>。</block>
-  <block id="4e06fcbdd87dccfbea49bd9c084521b4" category="paragraph">如果您没有 Cloud Tiering 许可证，则当您为第一个集群设置分层时，将开始 30 天的 Cloud Tiering 免费试用。  30 天免费试用期结束后，您需要通过即用即付订阅、年度订阅、BYOL 许可证或组合方式支付 Cloud Tiering 费用。</block>
-  <block id="2c747bf611c932e034372048fa569c80" category="section-title">使用 Cloud Tiering PAYGO 订阅</block>
-  <block id="bf842c9a2352dda7ee452c6389dda8b8" category="paragraph">通过云提供商市场的即用即付订阅，您可以获得Cloud Volumes ONTAP系统和许多云数据服务（例如 Cloud Tiering）的使用许可。</block>
-  <block id="04feed588dafed177e545fb17eb2abf7" category="inline-link-macro">查看和管理您的订阅。</block>
-  <block id="64f5478313f04f7c5a2169052a948d5d" category="paragraph">订阅 Cloud Tiering 后，您可以在控制台中管理您的订阅。<block ref="a6785eaf43e5124756d493e8691d84c1" category="inline-link-macro-rx"></block></block>
-  <block id="a70c9916d691b1eb3e72bf59caa27ce2" category="section-title">从 AWS Marketplace 订阅</block>
-  <block id="df5f272e4f3bf41f36db01caae48f251" category="paragraph">从 AWS Marketplace 订阅 Cloud Tiering，以设置从ONTAP集群到 AWS S3 的数据分层的即用即付订阅。</block>
-  <block id="dde92a9474b6efeb2d8329883e015807" category="list-text">在NetApp Console中，选择 *Mobility &gt; Cloud Tiering &gt; On-Premises Dashboard*。</block>
-  <block id="d41c784e08f185af1ce1746989cf91d8" category="list-text">在“市场订阅”部分中，选择“Amazon Web Services”下的“订阅”，然后选择“继续”。</block>
   <block id="cab27dc53edb571cac663ce2e16450dc" category="inline-link">AWS Marketplace</block>
-  <block id="91dc59a4f1029bfd114c7080d99c6a7f" category="list-text">订阅来自<block ref="60fa25c896f0169de9e5a75989c9f27f" category="inline-link-rx"></block>，然后重新登录NetApp Console完成注册。</block>
-  <block id="03909f0465e674709c33e446a2657166" category="paragraph">以下视频展示了该过程：</block>
-  <block id="219885055ccb92e461f88b9ecd25570e" category="video-title">从 AWS Marketplace 订阅</block>
-  <block id="8feab303f9a851219461fc3a5bccb103" category="section-title">从 Azure 市场订阅</block>
-  <block id="852bc4eb9abdefdd230a032e3bb1c3f3" category="paragraph">从 Azure 市场订阅云分层，以设置从ONTAP集群到 Azure Blob 存储的数据分层的即用即付订阅。</block>
-  <block id="77824143d5448055b1a9e42829dff0fc" category="list-text">在“市场订阅”部分中，选择“Microsoft Azure”下的“订阅”，然后选择“继续”。</block>
   <block id="21e74b3c28d006317f38a2bc8eb1da3b" category="inline-link">Azure 市场</block>
-  <block id="7c106a7be3a83dd7a651793ee01ca157" category="list-text">订阅来自<block ref="41a6e7dc73b2f1e43bd8c26c6ce83782" category="inline-link-rx"></block>，然后重新登录NetApp Console完成注册。</block>
-  <block id="0657ebef311800dc99a68ad40de2965a" category="video-title">从 Azure 市场订阅</block>
-  <block id="4df3a4b719debe027add38476f2fd8fd" category="section-title">从 Google Cloud Marketplace 订阅</block>
-  <block id="28843f547e457e1963cacff34902c4c6" category="paragraph">从 Google Cloud Marketplace 订阅 Cloud Tiering，以设置从ONTAP集群到 Google Cloud 存储的数据分层的即用即付订阅。</block>
-  <block id="3d45a9bf38b0873906b93acb9347b2af" category="list-text">在“市场订阅”部分中，选择 Google Cloud 下的“订阅”，然后选择“继续”。</block>
-  <block id="98ad2c075d2fb10da4cf15c985c3f43f" category="inline-link">谷歌云市场</block>
-  <block id="a75ad0bcc2a886daf2d9c3cbfa521bc9" category="list-text">订阅来自<block ref="82ddec44156571798c68c5bde2400da5" category="inline-link-rx"></block>，然后重新登录NetApp Console完成注册。</block>
-  <block id="c9b7d3dfb0a91a99ab5deba597b6741a" category="video-title">从 Google Cloud Marketplace 订阅</block>
-  <block id="66145e361f72b54aa011f59d543dfb08" category="section-title">使用年度合同</block>
-  <block id="d096054edb7faff2ef0d9f1b47311274" category="paragraph">通过购买年度合同来每年支付云分层费用。年度合同期限有 1 年、2 年或 3 年。</block>
-  <block id="2351127acb653fd60dafc73c8efcb79d" category="inline-link">AWS Marketplace 页面</block>
-  <block id="54b98a81c2ba2da3e9c721b03a4585b5" category="inline-link">将订阅与您的 AWS 凭证关联</block>
-  <block id="b32259fac98434133e04f9d5edeccc2f" category="paragraph">将非活动数据分层到 AWS 时，您可以订阅<block ref="85c21eb306ec4bcbda7252ca6117fc5c" category="inline-link-rx"></block>。如果您想使用此选项，请从 Marketplace 页面设置您的订阅，然后<block ref="3e7d826ab39799649c48f6e2f8f11222" category="inline-link-rx"></block>。</block>
-  <block id="bd0202b4a5e368ede75c41822527f8dd" category="inline-link">Azure 市场页面</block>
-  <block id="f201c550f444b5128aeb063bf930d1e2" category="inline-link">将订阅与您的 Azure 凭据关联</block>
-  <block id="56623ade00abb157c138588791032ca9" category="paragraph">将非活动数据分层到 Azure 时，您可以从<block ref="d5a65c1c4876b0fa6968c9e08ffea7e8" category="inline-link-rx"></block>。如果您想使用此选项，请从 Marketplace 页面设置您的订阅，然后<block ref="81924c3896adc46721210987cc1f149c" category="inline-link-rx"></block>。</block>
   <block id="77d720d97cc99bdd67ce50e58655dc3f" category="paragraph">目前，分级到 Google Cloud 时不支持年度合同。</block>
-  <block id="8b09b5b1748988787957d62eb22076ff" category="section-title">使用 Cloud Tiering BYOL 许可证</block>
-  <block id="dd5858b636f3787f9dbc860d3add3563" category="paragraph">NetApp提供的自带许可证的有效期为 1 年、2 年或 3 年。 BYOL *Cloud Tiering* 许可证（以前称为“Cloud Tiering”许可证）是一种浮动许可证，您可以在NetApp Console组织中的多个本地ONTAP集群中使用它。您的 Cloud Tiering 许可证中定义的总分层容量在您的所有本地集群之间共享，从而简化了初始许可和续订。分层 BYOL 许可证的最小容量为 10 TiB。</block>
-  <block id="32d21336f5ff01b8e920d65646fad172" category="paragraph">如果您没有 Cloud Tiering 许可证，请联系我们购买：</block>
-  <block id="7d7553997a3a5a75a3b0c10d87de471a" category="list-text">联系您的NetApp销售代表</block>
-  <block id="1952ddeca0b71a5d88548a44205f2c9f" category="list-text">联系NetApp支持。</block>
-  <block id="6aa300e24ddf3ee5a99bbb1cf5bb4a72" category="inline-link">点击此处了解详情</block>
-  <block id="0f199f0273e305ba4201471ea51e0fda" category="paragraph">或者，如果您拥有未分配的基于节点的Cloud Volumes ONTAP许可证但不会使用，则可以将其转换为具有相同美元等值和相同到期日期的 Cloud Tiering 许可证。<block ref="f4c32a82791cf9fc58c736c0aed05092" category="inline-link-rx"></block> 。</block>
-  <block id="f0c53f91250600feccf10114405117b1" category="inline-link-macro">了解如何管理许可证。</block>
-  <block id="61c1df2a806ec005f5e026cf7e67bcac" category="paragraph">您可以在控制台中管理 Cloud Tiering BYOL 许可证。您可以添加新的许可证并更新现有的许可证。<block ref="91c9b0ce19e147acb9e693aa326ddc85" category="inline-link-macro-rx"></block></block>
-  <block id="b3419660fa710eee3796f588bd118539" category="section-title">Cloud Tiering BYOL 许可将于 2021 年开始</block>
-  <block id="4ade12024fa0d5b968287596f2637a52" category="paragraph">新的 *Cloud Tiering* 许可证于 2021 年 8 月推出，用于使用 Cloud Tiering 服务在NetApp Console中支持的分层配置。  NetApp Console当前支持分层到以下云存储：Amazon S3、Azure Blob 存储、Google Cloud Storage、 NetApp StorageGRID和与 S3 兼容的对象存储。</block>
-  <block id="beecf2fd8c511928c5d65a11860f7c21" category="paragraph">您过去可能使用过的将本地ONTAP数据分层到云的 * FabricPool * 许可证仅保留用于没有互联网访问的站点（也称为“暗站”）中的ONTAP部署，以及用于将配置分层到 IBM Cloud Object Storage。如果您使用这种类型的配置，您将使用系统管理器或ONTAP CLI 在每个集群上安装FabricPool许可证。</block>
-  <block id="b5a6f9ddeef29501280ea54ee2e1a6a9" category="admonition">请注意，分层到StorageGRID不需要FabricPool或 Cloud Tiering 许可证。</block>
-  <block id="63b75697f87dc9e5a0f1c93ebf6056b5" category="paragraph">如果您目前正在使用FabricPool许可，则在您的FabricPool许可证达到其到期日或最大容量之前，您不会受到影响。当您需要更新许可证时，或更早联系NetApp ，以确保将数据分层到云的能力不会中断。</block>
-  <block id="d2aa8768a477bdec7c3c1ce2d54f14c0" category="list-text">如果您使用控制台中支持的配置，则您的FabricPool许可证将转换为 Cloud Tiering 许可证，并且它们将出现在控制台中。当这些初始许可证到期时，您将需要更新 Cloud Tiering 许可证。</block>
-  <block id="bc09c653f410975fa6dd7b35c33b6c6c" category="inline-link">了解如何使用系统管理器进行许可分层</block>
-  <block id="399a2a1becfc475dfe9888938f76ff3c" category="list-text">如果您使用的配置不受控制台支持，那么您将继续使用FabricPool许可证。<block ref="f4b8492105dcaca906c2ce90b9ccab9e" category="inline-link-rx"></block> 。</block>
-  <block id="a00fd369198fb13481097340d501bf38" category="paragraph">以下是您需要了解的有关这两个许可证的一些事项：</block>
-  <block id="d7050f5be573fbec3d0b437870a3a20d" category="cell">Cloud Tiering 许可证</block>
-  <block id="af6f7538512432a33b6eb5ae90974311" category="cell">FabricPool许可证</block>
-  <block id="fea02835528f4e4b182606c16346ded7" category="cell">它是一个浮动许可证，您可以在多个本地ONTAP集群中使用。</block>
-  <block id="7ef7e4f14899acc64a8c7b40a40b0c18" category="cell">这是您购买并授权给每个集群的每个集群的许可证。</block>
-  <block id="0526523bc353ee275b0e2bf1521b5ac9" category="cell">它在NetApp Console中注册。</block>
-  <block id="a63ad8d8cc3d36cf738227cc01faa143" category="cell">它使用系统管理器或ONTAP CLI 应用于单个集群。</block>
-  <block id="0f6d516038c14f2a2526568d93f78db8" category="cell">分层配置和管理通过NetApp Console中的 Cloud Tiering 服务完成。</block>
-  <block id="a7bd9725f68ab51f56b292638f876d9b" category="cell">分层配置和管理通过系统管理器或ONTAP CLI 完成。</block>
-  <block id="3eb0bcea83ab734f87536886d1331c74" category="cell">配置分层后，您可以使用免费试用版在 30 天内无需许可证使用分层服务。</block>
-  <block id="0f54a92e132940776f23febb26ca8ceb" category="cell">配置完成后，您可以免费分层前 10 TB 的数据。</block>
-  <block id="1a2775c2033d975fe4c3cac33877ff93" category="section-title">管理 Cloud Tiering 许可证</block>
-  <block id="fa007ebe399bde224b26e4cfb30db9bf" category="paragraph">如果您的许可期限即将到期，或者您的许可容量已达到限制，您将在 Cloud Tiering 和控制台中收到通知。</block>
-  <block id="ccff941d8f4885bcbcfd3639103bebe7" category="inline-link">了解如何管理许可证</block>
-  <block id="0970f6120d94a50520d76c0f63000f6d" category="paragraph">您可以通过控制台更新现有许可证、查看许可证状态以及添加新许可证。<block ref="bb882bdc6ec13e200eceea14292fcaf3" category="inline-link-rx"></block> 。</block>
-  <block id="d99641589694e93765fada1790db2a0e" category="section-title">将 Cloud Tiering 许可证应用于特殊配置的集群</block>
-  <block id="6b96b48c014b5645274b443e9b351af2" category="paragraph">以下配置中的ONTAP集群可以使用 Cloud Tiering 许可证，但许可证的应用方式必须不同于单节点集群、HA 配置的集群、分层镜像配置中的集群以及使用FabricPool Mirror 的MetroCluster配置：</block>
-  <block id="04b39654e6e5a443553195d1e2779190" category="list-text">分层到 IBM Cloud Object Storage 的集群</block>
-  <block id="788e22af5bb5495bee686a619fa97145" category="list-text">安装在“暗站”的集群</block>
-  <block id="c8fe0ffee9071759c56b9a7d98bae676" category="section-title">具有FabricPool许可证的现有集群的流程</block>
-  <block id="1451b23352470f925dac87a3da139fca" category="inline-link-macro">在 Cloud Tiering 中发现任何这些特殊集群类型</block>
-  <block id="eb5050df74a7237bec4864cad6113b55" category="section-title">新创建集群的流程</block>
-  <block id="9cf61e4fc9ad253b398c1c3be905176d" category="paragraph">当您在 Cloud Tiering 中发现典型集群时，您将使用 Cloud Tiering 界面配置分层。在这些情况下，会发生以下操作：</block>
-  <block id="0c61daf569ae994053d87f8ed15c641d" category="list-text">“父级”云分层许可证跟踪所有集群用于分层的容量，以确保许可证中有足够的容量。总许可容量和到期日期显示在控制台中。</block>
-  <block id="7598b57246c073bebfc5a46a79eecdd5" category="list-text">每个集群上都会自动安装“子”分层许可证，以便与“父”许可证进行通信。</block>
-  <block id="6a20454f9405b48e4d24bf4c97b565d2" category="admonition">系统管理器或ONTAP CLI 中显示的“子”许可证的许可容量和到期日期不是真实信息，因此如果信息不一样，请不要担心。这些值由 Cloud Tiering 软件内部管理。真实信息在控制台中进行跟踪。</block>
-  <block id="5c47f5b94c062cb59e1084e7104a35ad" category="paragraph">对于上面列出的两种配置，您需要使用 System Manager 或ONTAP CLI（而不是使用 Cloud Tiering 界面）配置分层。因此在这些情况下，您需要从 Cloud Tiering 界面手动将“子”许可证推送到这些集群。</block>
-  <block id="8646b811e05af9f8486c9225ac0c39f3" category="paragraph">请注意，由于分层镜像配置的数据分层到两个不同的对象存储位置，因此您需要购买具有足够容量的许可证，以便将数据分层到两个位置。</block>
-  <block id="f457a5079118a07f91a021318abf923e" category="list-text">使用 System Manager 或ONTAP CLI 安装和配置ONTAP集群。</block>
-  <block id="a91bdb81c68f1a37a469fa1d5933a14b" category="paragraph">此时不要配置分层。</block>
-  <block id="a49fb32c3dc821374473edfc6c43950a" category="inline-link-macro">购买 Cloud Tiering 许可证</block>
-  <block id="475dfcedf495d633f40c9b9bfd57b55a" category="inline-xref">将许可证添加到数字钱包</block>
-  <block id="fead545b6a0a8d6e90228df1c8e35f19" category="list-text">在控制台中<block ref="8856d761fe4c327e372ed95088b45b9a" category="inline-xref-macro-rx"></block>[添加许可证]。</block>
-  <block id="2ef78cf4a1d7bf5f762483337e16bb3b" category="inline-link-macro">发现新的集群</block>
-  <block id="8f0a75d2d5a82f31f2cf069c3b0ee684" category="inline-image-macro">更多图标</block>
-  <block id="8e089abf3b3debe599fb2866aabd4320" category="list-text">在“集群”页面中，选择<block ref="50acd719b1954eb4890c002b3b5e71a6" category="inline-image-macro-rx" type="image"></block>对于集群并选择*部署许可证*。</block>
-  <block id="b84ead730259e42d0aaa3247f1351b36" category="inline-image-macro">显示如何将分层许可证部署到ONTAP集群的屏幕截图。</block>
-  <block id="54cfdff2d2e56824adbc46c622ea54b0" category="paragraph"><block ref="54cfdff2d2e56824adbc46c622ea54b0" category="inline-image-macro-rx" type="image"></block></block>
-  <block id="c4eff2f1ba49500ec073f2a1087a6a62" category="list-text">在“部署许可证”对话框中，选择“部署”。</block>
-  <block id="9b0c8b391da3036b3219d496d996a102" category="paragraph">子许可证已部署到ONTAP集群。</block>
-  <block id="8b0a08ec64fa62214a614acb1efe653a" category="list-text">返回系统管理器或ONTAP CLI 并设置分层配置。</block>
-  <block id="4bd3288276aa6f67f33d76d6902047a2" category="inline-link">FabricPool镜像配置信息</block>
-  <block id="b197b4bf8520425c8c0b02a971bb8d16" category="paragraph"><block ref="b197b4bf8520425c8c0b02a971bb8d16" category="inline-link-rx"></block></block>
-  <block id="d01fd2b5b65b8c38cd7db8dbebfd0ac6" category="inline-link">FabricPool MetroCluster配置信息</block>
-  <block id="6dfc91892c8d766a3db42ec08d3c133e" category="paragraph"><block ref="6dfc91892c8d766a3db42ec08d3c133e" category="inline-link-rx"></block></block>
-  <block id="653000cdcda1dc1026b9ce4d1c8f33bd" category="inline-link">分层到 IBM Cloud Object Storage 信息</block>
-  <block id="7c14243eb88d8593d5e3377a174647d2" category="paragraph"><block ref="7c14243eb88d8593d5e3377a174647d2" category="inline-link-rx"></block></block>
   <block id="ca9f4f35a593196b4cd509de82138f42" category="summary">在配置本地ONTAP集群以将数据分层到特定对象存储后，您可以在NetApp Cloud Tiering中执行其他对象存储任务。您可以添加新的对象存储、将分层数据镜像到辅助对象存储、交换主对象存储和镜像对象存储、从聚合中删除镜像对象存储等等。</block>
   <block id="9c99b502766cd4588e110c3ba482e7b5" category="doc">管理NetApp Cloud Tiering中用于数据分层的对象存储</block>
   <block id="16f6208ef37c5366aebe53da32612604" category="paragraph">在配置本地ONTAP集群以将数据分层到特定对象存储后，您可以使用NetApp Cloud Tiering执行其他对象存储任务。您可以添加新的对象存储、将分层数据镜像到辅助对象存储、交换主对象存储和镜像对象存储、从聚合中删除镜像对象存储等等。</block>
@@ -826,9 +723,7 @@
   <block id="e9b1f53d6cabb3394833a4e102eb6a69" category="section-title">NetApp全新产品</block>
   <block id="c20c107d0d4eef6351660f3590324232" category="paragraph">如果您是NetApp新用户并且没有 NSS 帐户，请按照以下步骤操作。</block>
   <block id="b50f0a46135bcb7083b1f2f82032fc26" category="inline-image-macro">帮助菜单的屏幕截图，其中支持是第一个选项</block>
-  <block id="e8d4092baef6680c6a35d5228ae31de2" category="paragraph"><block ref="e8d4092baef6680c6a35d5228ae31de2" category="inline-image-macro-rx" type="image"></block></block>
   <block id="2974170a8b1b5b4a2ac69aacd4c1c9c3" category="list-text">从支持注册页面找到您的帐户 ID 序列号。</block>
-  <block id="379f9cd57d97013f3f7fdd24f692a0b1" category="paragraph"><block ref="379f9cd57d97013f3f7fdd24f692a0b1" category="inline-image-macro-rx" type="image"></block></block>
   <block id="dd50e314c18933734174c1156dd9237f" category="inline-link">NetApp 的支持注册网站</block>
   <block id="78f94e749b89d69dcbf3baff21ccb958" category="list-text">导航至<block ref="e1c4be66250fd76d5c52bfe2cb7daee2" category="inline-link-rx"></block>并选择*我不是注册的NetApp客户*。</block>
   <block id="d4f633ef130727b2776fa7f45024ca7d" category="list-text">填写必填字段（带有红色星号的字段）。</block>
@@ -856,8 +751,6 @@
   <block id="a04a3a5322782e8c18d0d64be7e1ccbc" category="paragraph">如果您已有客户级 NSS 帐户并尝试添加合作伙伴级帐户，情况也是如此。</block>
   <block id="1afe8a81cfddc9fa9559e272bb6b9496" category="list-text">成功登录后， NetApp将存储 NSS 用户名。</block>
   <block id="1dcb63fd55c4d22e87cb32275b8cc808" category="inline-image-macro">三个水平点的图标</block>
-  <block id="0dfcbbbe02d3e96f8ad78782e8772587" category="paragraph">这是系统生成的映射到您的电子邮件的 ID。在*NSS 管理*页面上，您可以显示来自<block ref="5151db0ded96d46f40ae09b5e5b167a1" category="inline-image-macro-rx" type="image"></block>菜单。</block>
-  <block id="fc79de85a483938f72fbcb9822ec0ae3" category="list-text">如果您需要刷新登录凭证令牌，还有一个*更新凭证*选项<block ref="5151db0ded96d46f40ae09b5e5b167a1" category="inline-image-macro-rx" type="image"></block>菜单。</block>
   <block id="b14d512a3c64fb5df16f6721b0603c63" category="paragraph">使用此选项会提示您再次登录。请注意，这些帐户的令牌将在 90 天后过期。我们将发布通知来提醒您此事。</block>
   <block id="1e815fba6366f359ca04df3ada68a629" category="summary">通过将非活动数据分层到 Amazon S3 来释放本地ONTAP集群上的空间。</block>
   <block id="4f14f95613078b00f83b67ec7531e02d" category="doc">将本地ONTAP集群中的数据分层到NetApp Cloud Tiering中的 Amazon S3</block>
@@ -872,8 +765,6 @@
   <block id="aada29daee1d64ed0fe907043855cb7e" category="inline-image-macro">两个</block>
   <block id="2c6a3868135c65f9cfa432554e55a593" category="paragraph-title"><block ref="54f425ce8d89f4ed6b8a546561af5d60" category="inline-image-macro-rx" type="image"></block>准备控制台代理</block>
   <block id="f7fcc7c2f2139e5cb13bfebee90dde37" category="paragraph">如果您已经在 AWS VPC 或您的场所部署了控制台代理，那么一切就绪了。如果没有，那么您将需要创建代理以将ONTAP数据分层到 AWS S3 存储。您还需要自定义代理的网络设置，以便它可以连接到 AWS S3。</block>
-  <block id="4c7ba4eb148038d4b94f33fef475e6a1" category="inline-xref">了解如何创建代理以及如何定义所需的网络设置。</block>
-  <block id="75cc4ddfc5deace371775eae0c1996c5" category="paragraph"><block ref="fa6bb7b5effe2b7ea5e23a734f4acc0b" category="inline-xref-macro-rx"></block></block>
   <block id="ca8a2087e5557e317599344687a57391" category="inline-image-macro">三</block>
   <block id="0ccb6a37cea873b6899d9aa76a81d884" category="paragraph-title"><block ref="05b2444faffd66d76e88602ea7dd353f" category="inline-image-macro-rx" type="image"></block>准备本地ONTAP集群</block>
   <block id="1f617ea578d1dda25a8d1343fc33f208" category="paragraph">在NetApp Console中发现您的ONTAP集群，验证集群是否满足最低要求，并自定义网络设置，以便集群可以连接到 AWS S3。</block>
@@ -1425,15 +1316,26 @@
   <block id="833f66976dfb40b1fff1906d00d81e43" category="paragraph">如果您希望通过互联网从本地数据中心到 VPC 建立更安全的连接，则可以在分层激活向导中选择 AWS PrivateLink 连接。如果您计划使用 VPN 或 AWS Direct Connect 通过使用私有 IP 地址的 VPC 终端节点接口连接您的本地系统，则需要它。这种连接类型显示在<block ref="2050915bab4f6759cf373f4985750764" category="inline-xref-macro-rx"></block>。</block>
   <block id="e264fed64c86a30dfb5ff8b811d8fe4e" category="paragraph">此通知是一项“建议”，旨在帮助您提高系统效率并节省存储成本。它提供了一个链接<block ref="42e4a442d762b5369e021e8b363199d3" category="inline-link-rx"></block>帮助您计算成本节省。</block>
   <block id="6be39c6bfafab590f236e258f50b9b12" category="paragraph"><block ref="1c2f8aa0bfcd23a7f9487ab2cefe0855" category="inline-link-rx"></block>。</block>
-  <block id="4513a79372ed27e3c5ed54e755dd2b0b" category="paragraph">Cloud Tiering 许可证还可以与将数据分层到 IBM Cloud Object Storage 的集群共享。必须使用 System Manager 或ONTAP CLI 设置FabricPool配置，但<block ref="ad5a72c96253a511839f7d21241e389f" category="inline-link-macro-rx"></block></block>
-  <block id="02778b04e5a037c1f79623dbe0edaeaa" category="paragraph"><block ref="ec35df1b46bc45bcde27ce05d4c1911f" category="inline-link-macro-rx"></block>。</block>
-  <block id="bc9c7ebd48973adea5231f10a190728f" category="paragraph">购买 Cloud Tiering 许可证后，您需要将该许可证添加到NetApp Console。<block ref="14bb9fa35d1b0028e213cd470536d52e" category="inline-link-macro-rx"></block>。</block>
-  <block id="5cc30a9be8f6ac2be14e01b2d4904d11" category="admonition">从 2021 年 8 月开始，旧的 * FabricPool* 许可证被 * Cloud Tiering * 许可证取代。<block ref="22e02f8ddb60d0feddfbbce882c0c8e2" category="inline-link-macro-rx"></block>。</block>
   <block id="9eef93f992624bd8e7298c05ca77b7fa" category="paragraph">要获得估算，请将您的ONTAP集群添加到NetApp Console并通过 Cloud Tiering Clusters 页面进行检查。选择集群的“计算潜在的分层节省”以启动<block ref="f9f8011c8d4b0dcc7c11e9eaffe3ab07" category="inline-link-rx"></block>看看您能节省多少钱。</block>
   <block id="15a4c60a0f86c99eaac0eebe021afdfe" category="list-text"><block ref="15a4c60a0f86c99eaac0eebe021afdfe" category="inline-link-macro-rx"></block></block>
-  <block id="6c28a4f0eec0b4b8b7a2fd2b16db0bf0" category="paragraph">当你<block ref="20b85fbda0982633cbcc10be992f4ea5" category="inline-link-macro-rx"></block>，Cloud Tiering 识别FabricPool许可证并将许可证添加到控制台。这些集群将继续照常分层数据。当FabricPool许可证到期时，您需要购买 Cloud Tiering 许可证。</block>
-  <block id="1bde59815d02b55060d6e8d13346a689" category="list-text"><block ref="7f252ad1d739a8ecccf6d5db96c80d7b" category="inline-link-macro-rx"></block>满足新集群或多个集群所需的容量。</block>
-  <block id="8ba93d5fbdf24a09ecf1780c63d1122d" category="list-text">在云分层中，<block ref="7e9f01463f0c1bdc0791002bcf190788" category="inline-link-macro-rx"></block> 。</block>
   <block id="a3f4872361bc7d041bb3195ac8d2c127" category="paragraph">此通知是提高系统效率、降低存储成本的“建议”。它表示集群分层的冷数据少于 20% - 包括没有分层数据的集群。它提供了一个链接<block ref="42e4a442d762b5369e021e8b363199d3" category="inline-link-rx"></block>帮助您计算成本节省。</block>
   <block id="992d77728a30a0b6ec30278644a2aba6" category="paragraph">如果您使用 3.9.25 或更高版本创建了控制台代理，那么一切就绪了。默认情况下，将设置自定义角色，该角色提供代理管理 Azure 网络内的资源和流程所需的权限。查看<block ref="f8b5fc8308ce6fe4ed8cf98ab578e96f" category="inline-link-rx"></block>以及<block ref="e1fd674ce022ebb18ca6d2753458c1ab" category="inline-link-rx"></block>。</block>
+  <block id="bde6bbfbb596382f506558c6bab1343b" category="paragraph">自 2026 年 4 月 26 日起，NetApp Cloud Tiering 不再可供购买或续订许可证。</block>
+  <block id="bb94a9ffb3205557387f0b00f8e24dca" category="paragraph">现有客户可以继续使用并获得 NetApp Cloud Tiering 支持，直至其订阅或许可合同到期。订阅到期后，客户将无法再访问 NetApp Cloud Tiering 功能或支持。</block>
+  <block id="f8a967869572457212675a5d470c728f" category="inline-link-macro">在 ONTAP 集群上安装 FabricPool 许可证</block>
+  <block id="f1a805b989e2fd716c6ed52db78b4c09" category="paragraph">NetApp 建议客户与其 NetApp 代表合作，将其现有分层许可证转换为 ONTAP FabricPool 许可证，该许可证提供 ONTAP 中数据分层的功能。有关如何在 ONTAP 中使用 FabricPool 设置数据分层的更多信息，请参见 <block ref="ecd46e7261f4b06a38f69686168fad8b" category="inline-link-macro-rx"></block>。</block>
+  <block id="d5b1e29a38c69118ebb52ddd25078a82" category="inline-link-macro">NetApp Cloud Tiering 停止提供通知</block>
+  <block id="3c1b98a4347b1e75ca57e51e43e141b2" category="list-text"><block ref="bc9f3746ee1a6c6e91093bc2b9ff13fb" category="inline-link-macro-rx"></block></block>
+  <block id="65afa52dc402fa4f804d1fad742f5b32" category="inline-link-macro">NetApp Cloud Tiering 停止可用性常见问题解答</block>
+  <block id="91140b6bf054d442adb9178830663a05" category="list-text"><block ref="317d9243bec15035f876da17dbcf900e" category="inline-link-macro-rx"></block></block>
+  <block id="3eaabe1c9f6af35b08c69d2a08c539f7" category="paragraph">Cloud Tiering 许可证还可以与将数据分层到 IBM Cloud Object Storage 的集群共享。FabricPool 配置必须使用 System Manager 或 ONTAP CLI 进行设置，但 <block ref="df7a2efda45472793208a56bceed9a6a" category="inline-link-macro-rx"></block></block>
+  <block id="d5b396b1c5d337663080cada3fbf93a9" category="paragraph"><block ref="cb03f4cf7a034ce9ccf8e59e75f88132" category="inline-link-macro-rx"></block>.</block>
+  <block id="c9f703238144b3bfd7bc67795b94fec8" category="paragraph">购买 Cloud Tiering 许可证后，您需要将该许可证添加到 NetApp Console。<block ref="d5683b1800dc170565d6b8ebe7ed8974" category="inline-link-macro-rx"></block>。</block>
+  <block id="a143d86f6236f76d3322acea76d2434b" category="admonition">自 2021 年 8 月起，旧的 *FabricPool* 许可证已被 *Cloud Tiering* 许可证取代。<block ref="5fef56bc71b7561eeca0a8dd2ab51ead" category="inline-link-macro-rx"></block>.</block>
+  <block id="6600665c92651337976c584df2122a6a" category="paragraph">如果您当前正在使用 Cloud Tiering 许可，则在您的 Cloud Tiering 许可证达到其到期日期或最大容量之前，您不会受到影响。当您需要更新许可证时，或提前联系 NetApp，以确保您将数据分层到云的能力没有中断。</block>
+  <block id="38fc1b337c0ea26463916fc2913205c1" category="paragraph"><block ref="38fc1b337c0ea26463916fc2913205c1" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="7019a39846e9a2c7f7a80eaba91e4a41" category="paragraph"><block ref="7019a39846e9a2c7f7a80eaba91e4a41" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="1d593c3f7480ada9580d93cd753c3f93" category="paragraph">这是一个系统生成的 ID，映射到您的电子邮件。在 *NSS Management* 页面上，您可以从 <block ref="5444f6f0c3983523c8933a1864b2b390" category="inline-image-macro-rx" type="image"></block> 菜单中显示您的电子邮件。</block>
+  <block id="872eaae7deb6035c20f9bfe6deefd03d" category="list-text">如果您需要刷新登录凭据令牌，<block ref="5444f6f0c3983523c8933a1864b2b390" category="inline-image-macro-rx" type="image"></block> 菜单中还有 *Update Credentials* 选项。</block>
+  <block id="403f4a170e2d1c03d329e0f0dd8d1b84" category="section-title">2026 年 4 月 13 日</block>
 </blocks>

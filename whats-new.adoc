@@ -18,6 +18,23 @@ summary: 了解NetApp Cloud Tiering的新功能。
 
 
 
+== 2026 年 4 月 13 日
+
+[NOTE]
+====
+自 2026 年 4 月 26 日起，NetApp Cloud Tiering 不再可供购买或续订许可证。
+
+现有客户可以继续使用并获得 NetApp Cloud Tiering 支持，直至其订阅或许可合同到期。订阅到期后，客户将无法再访问 NetApp Cloud Tiering 功能或支持。
+
+NetApp 建议客户与其 NetApp 代表合作，将其现有分层许可证转换为 ONTAP FabricPool 许可证，该许可证提供 ONTAP 中数据分层的功能。有关如何在 ONTAP 中使用 FabricPool 设置数据分层的更多信息，请参见 link:https://docs.netapp.com/us-en/ontap/fabricpool/install-license-aws-azure-ibm-task.html["在 ONTAP 集群上安装 FabricPool 许可证"]。
+
+* link:https://go.digital.netapp.com/rs/683-HWH-936/images/Cloud-Tiering-EOA-Notice2.pdf?version=0&mkt_tok=NjgzLUhXSC05MzYAAAGgvTOT_9L2PauNXYE0fOs0RIz8KK2q5Jb6sg8Yv-97NNJ53ceAab9UAqpKOrAvByxsOWqhIQHNCHgFfM0q3TI["NetApp Cloud Tiering 停止提供通知"]
+* link:https://go.digital.netapp.com/rs/683-HWH-936/images/Cloud-Tiering-EOA-FAQ-v3.pdf?version=0&mkt_tok=NjgzLUhXSC05MzYAAAGgvTOT_rplJe_ZtlY4PQAQRQlewsDa0W4JR55muT0KCThR46zI7-uOhIYfVsxODDKFrnYYvy5uZzvhEKHOwBI["NetApp Cloud Tiering 停止可用性常见问题解答"]
+
+
+====
+
+
 == 2025年10月6日
 
 
